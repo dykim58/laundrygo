@@ -1,0 +1,747 @@
+<div id="lgb-root"></div>
+
+<style>
+  #lgb-root {
+    /* 앱(런드리고) = 그린 */
+    --g: #00c389; --g-d:#00a876; --g-soft:#e7f8f1;
+    /* 비즈니스 웹 = 독립 브랜딩 (딥네이비 + 앰버 포인트) */
+    --nv:#15233f; --nv-2:#1d3050; --am:#f5a623; --am-soft:#fff6e6;
+    --ink:#16191f; --g1:#5f6672; --g2:#9aa0ab; --line:#eceef1; --line2:#e2e5e9;
+    --bg:#ffffff; --bg2:#f6f7f9; --card:#fff;
+    --r:18px; --r-sm:12px;
+    --sh:0 4px 16px rgba(0,0,0,.05); --sh-lg:0 18px 48px rgba(20,24,31,.18);
+    font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    color:var(--ink); display:flex; justify-content:center; padding:24px 12px; -webkit-font-smoothing:antialiased;
+  }
+  #lgb-root *{box-sizing:border-box;margin:0;padding:0}
+
+  #lgb-root .phone{
+    width:390px;max-width:100%;height:800px;background:var(--bg);border-radius:44px;
+    box-shadow:var(--sh-lg);border:1px solid #e3e4e8;position:relative;overflow:hidden;display:flex;flex-direction:column;
+  }
+  #lgb-root .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:26px;background:#000;border-radius:0 0 18px 18px;z-index:60}
+  #lgb-root .sbar{height:44px;flex:0 0 44px;display:flex;align-items:flex-end;justify-content:space-between;padding:0 26px 4px;font-size:13px;font-weight:600;z-index:40}
+  #lgb-root .sbar.dark{color:#fff}
+  #lgb-root .screen{flex:1;overflow-y:auto;position:relative;-webkit-overflow-scrolling:touch}
+  #lgb-root .screen::-webkit-scrollbar{width:0}
+
+  /* ===== APP HOME (green) ===== */
+  #lgb-root .ah-head{padding:14px 20px 10px;display:flex;align-items:flex-start;justify-content:space-between;background:var(--card)}
+  #lgb-root .ah-head .t{font-size:17px;font-weight:800;line-height:1.4;letter-spacing:-.3px}
+  #lgb-root .ah-days{display:flex;align-items:center;gap:5px;margin-top:7px}
+  #lgb-root .ah-days .d{width:24px;height:30px;background:var(--ink);color:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
+  #lgb-root .ah-days .s{font-size:14px;font-weight:700;margin-left:3px}
+  #lgb-root .ah-lock{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--g);display:flex;align-items:center;justify-content:center;color:var(--g);font-size:16px}
+
+  #lgb-root .hero{margin:10px 16px;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:24px 22px;box-shadow:var(--sh)}
+  #lgb-root .hero h3{font-size:20px;font-weight:800;line-height:1.4;letter-spacing:-.4px}
+  #lgb-root .hero .basket{height:130px;margin:14px 0;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:64px;background:linear-gradient(160deg,#f3f5f6,#e9edef)}
+  #lgb-root .hero .meta{display:flex;padding:6px 0 16px}
+  #lgb-root .hero .meta>div{flex:1;text-align:center}
+  #lgb-root .hero .meta .l{font-size:12px;color:var(--g1)}
+  #lgb-root .hero .meta .v{font-size:15px;font-weight:800;margin-top:4px}
+  #lgb-root .hero .meta .dv{flex:0;border-left:1px solid var(--line2)}
+  #lgb-root .hero .cta{width:100%;height:54px;border:none;border-radius:13px;color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;background:var(--g)}
+
+  #lgb-root .quick{margin:8px 16px;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:20px 10px;display:flex;box-shadow:var(--sh)}
+  #lgb-root .quick>div{flex:1;text-align:center}
+  #lgb-root .quick .qi{width:46px;height:46px;border-radius:50%;background:var(--ink);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff}
+  #lgb-root .quick .ql{font-size:12px;font-weight:700}
+
+  /* === BUSINESS BANNER (핵심 진입) === */
+  #lgb-root .biz-banner{
+    margin:10px 16px;border-radius:var(--r);overflow:hidden;cursor:pointer;position:relative;
+    background:linear-gradient(115deg,var(--nv),#0f1b33);color:#fff;padding:22px 20px;
+    box-shadow:0 8px 24px rgba(21,35,63,.25);
+  }
+  #lgb-root .biz-banner::after{content:'';position:absolute;right:-30px;bottom:-40px;width:150px;height:150px;background:radial-gradient(circle,rgba(245,166,35,.35),transparent 65%);border-radius:50%}
+  #lgb-root .biz-banner .tag{font-size:10.5px;font-weight:800;letter-spacing:.5px;color:var(--am);position:relative}
+  #lgb-root .biz-banner .tt{font-size:19px;font-weight:800;margin-top:7px;line-height:1.4;position:relative}
+  #lgb-root .biz-banner .dd{font-size:12.5px;color:#b9c3d6;margin-top:9px;line-height:1.5;position:relative}
+  #lgb-root .biz-banner .go{margin-top:16px;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;background:var(--am);color:var(--nv);padding:9px 16px;border-radius:22px;position:relative}
+
+  #lgb-root .svc{margin:8px 16px;background:var(--card);border:1px solid var(--line2);border-radius:var(--r);padding:18px 18px 20px;box-shadow:var(--sh)}
+  #lgb-root .svc .st{font-size:15px;font-weight:800}
+  #lgb-root .svc .ss{font-size:12px;color:var(--g1);margin-top:3px}
+  #lgb-root .svc .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px 8px;margin-top:16px}
+  #lgb-root .svc .it{text-align:center}
+  #lgb-root .svc .ic{width:48px;height:48px;border-radius:14px;background:var(--bg2);margin:0 auto 7px;display:flex;align-items:center;justify-content:center;font-size:23px}
+  #lgb-root .svc .ln{font-size:11.5px;font-weight:600}
+
+  #lgb-root .gnb{flex:0 0 64px;display:flex;background:var(--card);border-top:1px solid var(--line)}
+  #lgb-root .gnb button{flex:1;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;color:var(--g2);font-weight:600}
+  #lgb-root .gnb button .gi{font-size:20px}
+  #lgb-root .gnb button.on{color:var(--g-d)}
+
+  /* ===== TRANSITION CHROME (별도 웹임을 강조) ===== */
+  #lgb-root .web-chrome{
+    height:46px;flex:0 0 46px;display:flex;align-items:center;gap:8px;padding:0 14px;
+    background:var(--nv);color:#fff;
+  }
+  #lgb-root .web-chrome .x{width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.15);color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #lgb-root .web-chrome .url{margin-left:4px;font-size:11.5px;color:#aeb8cc;display:flex;align-items:center;gap:5px}
+  #lgb-root .web-chrome .url b{color:#fff;font-weight:700}
+
+  /* ===== BUSINESS WEB (independent brand) ===== */
+  #lgb-root .w-screen{flex:1;overflow-y:auto;background:var(--bg)}
+  #lgb-root .w-screen::-webkit-scrollbar{width:0}
+
+  #lgb-root .w-hero{background:linear-gradient(165deg,var(--nv),#0c1526);color:#fff;padding:34px 24px 30px;position:relative;overflow:hidden}
+  #lgb-root .w-hero::before{content:'';position:absolute;right:-50px;top:10px;width:200px;height:200px;background:radial-gradient(circle,rgba(245,166,35,.3),transparent 65%);border-radius:50%}
+  #lgb-root .w-hero .logo{font-size:13px;font-weight:800;letter-spacing:.5px;color:var(--am);position:relative}
+  #lgb-root .w-hero h1{font-size:27px;font-weight:800;line-height:1.32;margin-top:18px;letter-spacing:-.5px;position:relative}
+  #lgb-root .w-hero p{font-size:13.5px;color:#c2cce0;margin-top:13px;line-height:1.65;position:relative}
+  #lgb-root .w-hero .cta{margin-top:22px;width:100%;height:52px;border:none;border-radius:13px;background:var(--am);color:var(--nv);font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;position:relative}
+
+  #lgb-root .w-sec{padding:28px 24px}
+  #lgb-root .w-sec .eye{font-size:11.5px;font-weight:800;color:var(--am);letter-spacing:.4px}
+  #lgb-root .w-sec .h{font-size:21px;font-weight:800;margin-top:7px;letter-spacing:-.4px;line-height:1.35}
+  #lgb-root .w-sec .lead{font-size:13.5px;color:var(--g1);margin-top:10px;line-height:1.65}
+
+  #lgb-root .vgrid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}
+  #lgb-root .vcard{background:var(--card);border:1px solid var(--line2);border-radius:var(--r-sm);padding:16px 14px}
+  #lgb-root .vcard .vi{font-size:22px}
+  #lgb-root .vcard .vt{font-size:14px;font-weight:800;margin-top:9px}
+  #lgb-root .vcard .vd{font-size:11.5px;color:var(--g1);margin-top:5px;line-height:1.5}
+
+  #lgb-root .segs{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+  #lgb-root .seg{display:flex;gap:13px;align-items:center;background:var(--bg2);border-radius:var(--r-sm);padding:14px 15px}
+  #lgb-root .seg .e{font-size:25px}
+  #lgb-root .seg .t{font-size:14px;font-weight:800}
+  #lgb-root .seg .d{font-size:11.5px;color:var(--g1);margin-top:3px}
+
+  #lgb-root .plans{display:flex;flex-direction:column;gap:13px;margin-top:6px}
+  #lgb-root .plan{border:1.5px solid var(--line2);border-radius:var(--r);padding:18px;background:var(--card);cursor:pointer;transition:.18s;position:relative}
+  #lgb-root .plan.sel{border-color:var(--am);box-shadow:0 0 0 3px var(--am-soft)}
+  #lgb-root .plan .reco{position:absolute;top:-10px;right:16px;background:var(--nv);color:#fff;font-size:10.5px;font-weight:800;padding:4px 11px;border-radius:20px}
+  #lgb-root .plan .pn{font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px}
+  #lgb-root .plan .ck{width:20px;height:20px;border-radius:50%;border:2px solid var(--line2);margin-left:auto;display:flex;align-items:center;justify-content:center}
+  #lgb-root .plan.sel .ck{background:var(--am);border-color:var(--am);color:var(--nv);font-size:12px}
+  #lgb-root .plan .ft{margin-top:13px;display:flex;flex-direction:column;gap:9px}
+  #lgb-root .plan .fr{display:flex;justify-content:space-between;font-size:12.5px}
+  #lgb-root .plan .fr .k{color:var(--g1)}
+  #lgb-root .plan .fr .vv{font-weight:700}
+  #lgb-root .plan .fr .vv.hot{color:var(--am)}
+
+  /* steps */
+  #lgb-root .ob{padding:22px 24px 8px}
+  #lgb-root .ob-bar{display:flex;gap:5px;margin-bottom:18px}
+  #lgb-root .ob-bar i{flex:1;height:4px;border-radius:4px;background:var(--line2)}
+  #lgb-root .ob-bar i.on{background:var(--am)}
+  #lgb-root .ob-step{font-size:12px;font-weight:800;color:var(--am)}
+  #lgb-root .ob-t{font-size:21px;font-weight:800;margin-top:6px;letter-spacing:-.4px;line-height:1.35}
+  #lgb-root .ob-s{font-size:13px;color:var(--g1);margin-top:8px;line-height:1.55}
+  #lgb-root .ob-body{padding:6px 24px 20px}
+
+  #lgb-root .fld{margin-top:16px}
+  #lgb-root .fld label{font-size:12.5px;font-weight:700;display:block;margin-bottom:7px}
+  #lgb-root .fld input,#lgb-root .fld select{width:100%;height:48px;border:1.5px solid var(--line2);border-radius:12px;padding:0 14px;font-size:14px;font-family:inherit;color:var(--ink);background:var(--card);outline:none}
+  #lgb-root .fld input:focus,#lgb-root .fld select:focus{border-color:var(--am)}
+  #lgb-root .fld .up{height:84px;border:1.5px dashed var(--line2);border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--g1);font-size:12.5px;cursor:pointer}
+  #lgb-root .fld .up.done{border-style:solid;border-color:var(--g);color:var(--g-d);background:var(--g-soft)}
+
+  #lgb-root .seg-pick{display:flex;gap:9px;margin-top:8px}
+  #lgb-root .seg-pick button{flex:1;height:78px;border:1.5px solid var(--line2);border-radius:12px;background:var(--card);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;color:var(--ink);font-family:inherit}
+  #lgb-root .seg-pick button .e{font-size:22px}
+  #lgb-root .seg-pick button.on{border-color:var(--am);background:var(--am-soft)}
+
+  /* service select & detail */
+  #lgb-root .svc-card{background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:18px;margin-top:12px;cursor:pointer;position:relative}
+  #lgb-root .svc-card.in{border-color:var(--nv);background:#f7f9fc}
+  #lgb-root .svc-card .top{display:flex;align-items:center;gap:13px}
+  #lgb-root .svc-card .ci{width:52px;height:52px;border-radius:14px;background:var(--bg2);display:flex;align-items:center;justify-content:center;font-size:25px;flex:0 0 52px}
+  #lgb-root .svc-card .ct{font-size:15.5px;font-weight:800;display:flex;align-items:center;gap:7px}
+  #lgb-root .svc-card .cd{font-size:12px;color:var(--g1);margin-top:4px}
+  #lgb-root .svc-card .pl{margin-left:auto;width:26px;height:26px;border-radius:50%;background:var(--nv);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 26px}
+  #lgb-root .svc-card .pl.added{background:var(--am);color:var(--nv);font-weight:800;font-size:13px}
+  #lgb-root .svc-card .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+  #lgb-root .svc-card .tg{font-size:11.5px;font-weight:600;color:var(--g1);background:var(--bg2);padding:5px 10px;border-radius:7px}
+  #lgb-root .bdg{font-size:10px;font-weight:800;color:#fff;padding:2px 7px;border-radius:6px}
+  #lgb-root .bdg.rent{background:var(--nv)}
+  #lgb-root .bdg.wash{background:var(--am);color:var(--nv)}
+
+  #lgb-root .pd-hero{height:190px;background:linear-gradient(160deg,#eef1f6,#dde3ee);display:flex;align-items:center;justify-content:center;font-size:70px}
+  #lgb-root .pd-body{padding:20px 22px}
+  #lgb-root .pd-t{font-size:19px;font-weight:800}
+  #lgb-root .pd-s{font-size:13px;color:var(--g1);margin-top:7px;line-height:1.55}
+  #lgb-root .pd-it{display:flex;align-items:center;gap:12px;padding:16px 0;border-top:1px solid var(--line)}
+  #lgb-root .pd-it:first-of-type{margin-top:8px}
+  #lgb-root .pd-it .n{font-size:14.5px;font-weight:700}
+  #lgb-root .pd-it .p{font-size:12px;color:var(--g2);margin-top:3px}
+  #lgb-root .pd-it .pr{font-size:13px;font-weight:800;color:var(--nv);margin-top:3px}
+  #lgb-root .step{margin-left:auto;display:flex;align-items:center;gap:10px}
+  #lgb-root .step button{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--line2);background:var(--card);font-size:17px;cursor:pointer;color:var(--ink);display:flex;align-items:center;justify-content:center}
+  #lgb-root .step .qv{font-size:15px;font-weight:700;min-width:26px;text-align:center}
+
+  #lgb-root .or-sec{background:var(--card);border-bottom:8px solid var(--bg2);padding:18px 22px}
+  #lgb-root .or-sec .ot{font-size:14px;font-weight:800;margin-bottom:12px}
+  #lgb-root .or-grp{font-size:12px;font-weight:800;color:var(--nv);margin:12px 0 2px;padding-top:8px}
+  #lgb-root .or-grp:first-child{padding-top:0}
+  #lgb-root .or-l{display:flex;align-items:center;justify-content:space-between;padding:11px 0;font-size:13px;border-bottom:1px solid var(--line)}
+  #lgb-root .or-l:last-child{border-bottom:none}
+  #lgb-root .or-l .k{color:var(--g1)}
+  #lgb-root .or-l .vv{font-weight:700;display:flex;align-items:center;gap:6px}
+  #lgb-root .or-l .ed{font-size:11px;color:var(--am);font-weight:700}
+  #lgb-root .or-date{display:flex;gap:8px;margin-top:8px}
+  #lgb-root .or-date button{flex:1;height:60px;border:1.5px solid var(--line2);border-radius:12px;background:var(--card);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-family:inherit}
+  #lgb-root .or-date button.on{border-color:var(--nv);background:#f3f5fb}
+  #lgb-root .or-date button .dd{font-size:11px;color:var(--g1)}
+  #lgb-root .or-date button .dn{font-size:14px;font-weight:800;color:var(--ink)}
+  #lgb-root .or-vou{display:flex;align-items:center;gap:10px;background:var(--am-soft);border-radius:11px;padding:13px 14px;margin-top:6px;font-size:12.5px;font-weight:700;color:#9a6512}
+  #lgb-root .or-tot{padding:18px 22px;background:var(--card)}
+  #lgb-root .or-tot .r{display:flex;justify-content:space-between;font-size:13px;color:var(--g1);padding:6px 0}
+  #lgb-root .or-tot .r .vv{color:var(--ink);font-weight:600}
+  #lgb-root .or-tot .fin{display:flex;justify-content:space-between;align-items:baseline;margin-top:8px;padding-top:14px;border-top:1.5px solid var(--line2)}
+  #lgb-root .or-tot .fin .l{font-size:14px;font-weight:800}
+  #lgb-root .or-tot .fin .vv{font-size:23px;font-weight:800;color:var(--nv)}
+
+  #lgb-root .notice{background:var(--bg2);border-radius:12px;padding:15px;margin-top:18px}
+  #lgb-root .notice .nt{font-size:12.5px;font-weight:800;margin-bottom:9px}
+  #lgb-root .notice ul{list-style:none}
+  #lgb-root .notice li{font-size:11.5px;color:var(--g1);line-height:1.6;padding-left:12px;position:relative;margin-bottom:5px}
+  #lgb-root .notice li::before{content:'·';position:absolute;left:3px}
+
+  #lgb-root .agree{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid var(--line);font-size:13px}
+  #lgb-root .agree .cb{width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line2);flex:0 0 22px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff}
+  #lgb-root .agree .cb.on{background:var(--am);border-color:var(--am);color:var(--nv)}
+  #lgb-root .agree.all{font-weight:800;font-size:14px;border-bottom:1.5px solid var(--ink)}
+  #lgb-root .pay{display:flex;align-items:center;gap:12px;border:1.5px solid var(--line2);border-radius:12px;padding:15px;margin-top:11px;cursor:pointer}
+  #lgb-root .pay.on{border-color:var(--am);background:var(--am-soft)}
+
+  /* done */
+  #lgb-root .done{padding:54px 30px;text-align:center}
+  #lgb-root .done .ck{width:78px;height:78px;border-radius:50%;background:var(--g);margin:0 auto 22px;display:flex;align-items:center;justify-content:center;font-size:38px;color:#fff;animation:pop .4s cubic-bezier(.2,1.4,.5,1)}
+  @keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+  #lgb-root .done h2{font-size:22px;font-weight:800;letter-spacing:-.4px}
+  #lgb-root .done p{font-size:13.5px;color:var(--g1);margin-top:12px;line-height:1.6}
+  #lgb-root .done .sum{background:var(--bg2);border-radius:var(--r);padding:18px;margin-top:22px;text-align:left}
+  #lgb-root .done .sum .r{display:flex;justify-content:space-between;font-size:13px;padding:6px 0}
+  #lgb-root .done .sum .r .k{color:var(--g1)}
+  #lgb-root .done .sum .r .vv{font-weight:700}
+
+  /* web home (가입 후) */
+  #lgb-root .wh-top{background:linear-gradient(135deg,var(--nv),#0f1b33);color:#fff;padding:22px 24px 24px}
+  #lgb-root .wh-top .n{font-size:12px;color:#9fb0d0}
+  #lgb-root .wh-top .b{font-size:19px;font-weight:800;margin-top:3px;display:flex;align-items:center;gap:8px}
+  #lgb-root .wh-top .chip{font-size:10px;font-weight:800;background:var(--am);color:var(--nv);padding:3px 9px;border-radius:20px}
+  #lgb-root .wh-top .meta{display:flex;gap:10px;margin-top:16px}
+  #lgb-root .wh-top .meta>div{flex:1;background:rgba(255,255,255,.1);border-radius:11px;padding:11px 13px}
+  #lgb-root .wh-top .meta .l{display:block;font-size:10.5px;color:#9fb0d0}
+  #lgb-root .wh-top .meta .v{display:block;font-size:14px;font-weight:800;margin-top:3px;color:#fff}
+  #lgb-root .wh-order{margin:16px;background:var(--am);border:none;border-radius:14px;width:calc(100% - 32px);height:54px;font-size:16px;font-weight:800;color:var(--nv);cursor:pointer;font-family:inherit}
+  #lgb-root .sec-h{padding:6px 24px 4px;font-size:14px;font-weight:800}
+  #lgb-root .tcard{margin:6px 16px;background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:15px}
+  #lgb-root .tcard .tt{display:flex;align-items:center;gap:11px}
+  #lgb-root .tcard .te{font-size:20px}
+  #lgb-root .tcard .tl{font-size:14px;font-weight:800}
+  #lgb-root .tcard .ts{font-size:11.5px;color:var(--g1);margin-top:2px}
+  #lgb-root .tcard .tp{margin-left:auto;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:20px;background:var(--am-soft);color:#9a6512}
+  #lgb-root .tsteps{display:flex;align-items:center;margin-top:12px}
+  #lgb-root .tsteps .ts2{flex:1;text-align:center;position:relative}
+  #lgb-root .tsteps .dot{width:9px;height:9px;border-radius:50%;background:var(--line2);margin:0 auto 5px}
+  #lgb-root .tsteps .ts2.done .dot{background:var(--nv)}
+  #lgb-root .tsteps .ts2.cur .dot{background:var(--am);box-shadow:0 0 0 4px var(--am-soft)}
+  #lgb-root .tsteps .nm{font-size:9.5px;color:var(--g2)}
+  #lgb-root .tsteps .ts2.done .nm,#lgb-root .tsteps .ts2.cur .nm{color:var(--ink);font-weight:700}
+  #lgb-root .tsteps .bar{position:absolute;top:4px;left:50%;width:100%;height:1.5px;background:var(--line2);z-index:-1}
+  #lgb-root .tsteps .ts2.done .bar{background:var(--nv)}
+
+  #lgb-root .cta-bar{position:sticky;bottom:0;padding:14px 22px;background:linear-gradient(to top,var(--card) 75%,rgba(255,255,255,0))}
+  #lgb-root .btn{width:100%;height:54px;border:none;border-radius:14px;background:var(--nv);color:#fff;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+  #lgb-root .btn.am{background:var(--am);color:var(--nv)}
+  #lgb-root .btn.ghost{background:var(--card);color:var(--nv);border:1.5px solid var(--line2)}
+  #lgb-root .btn:disabled{background:var(--line2);color:var(--g2);cursor:not-allowed}
+  #lgb-root .hint{text-align:center;font-size:11px;color:var(--g2);padding:8px}
+  #lgb-root .reset{text-align:center;padding:14px 8px 18px}
+  #lgb-root .reset button{font-size:11.5px;font-weight:700;color:var(--g1);background:var(--bg2);border:1px solid var(--line2);border-radius:20px;padding:9px 18px;cursor:pointer;font-family:inherit}
+
+  #lgb-root .ord-head{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}
+  #lgb-root .ord-head .bk{width:32px;height:32px;border:none;background:none;font-size:20px;cursor:pointer;color:var(--ink)}
+  #lgb-root .ord-head .ot{font-size:16px;font-weight:800}
+  #lgb-root .ord-wrap{padding:18px 22px 16px}
+  #lgb-root .ord-q{font-size:20px;font-weight:800;letter-spacing:-.4px;line-height:1.4}
+</style>
+
+<script>
+(function(){
+  const root = document.getElementById('lgb-root');
+  const S = {
+    view:'app_home',  // app_home | web_landing | web_plans | ob1..ob3 | web_done | web_home | wo_select | wo_detail | wo_request | wo_done
+    seg:'stay', plan:'premium', agreeAll:false, payMethod:'card',
+    isMember:false,
+    orderItem:0, cart:{}, orderDate:0, activeOrders:[],
+  };
+
+  const SEG = {
+    stay:{e:'🏨',label:'숙박형',desc:'50객실 이하 호텔·펜션·풀빌라'},
+    fnb:{e:'🍽️',label:'F&B형',desc:'카페·비스트로·파인다이닝'},
+    wellness:{e:'💪',label:'웰니스형',desc:'피트니스·에스테틱·미용실'},
+  };
+  const VOUCHER={standard:100000,premium:200000};
+  const won=n=>n.toLocaleString('ko-KR');
+
+  const ORDER_SVC={
+    stay:[
+      {ic:'🛏️',name:'객실 린넨 렌탈',type:'rent',desc:'시트·커버·베개피',tags:['시트','커버','베개피'],emoji:'🛏️',
+        items:[{n:'시트 (싱글)',p:'82×210cm',price:1200},{n:'시트 (더블)',p:'152×210cm',price:1400},{n:'베개피',p:'50×70cm',price:600}]},
+      {ic:'🧻',name:'타월 렌탈',type:'rent',desc:'대·중·소 타월, 발매트',tags:['대타월','중타월','발매트'],emoji:'🧺',
+        items:[{n:'대 타월',p:'70×140cm',price:900},{n:'중 타월',p:'40×80cm',price:700},{n:'발매트',p:'45×65cm',price:700}]},
+      {ic:'👔',name:'직원 유니폼 렌탈',type:'rent',desc:'와이셔츠 S~2XL',tags:['와이셔츠','S~2XL'],emoji:'👔',
+        items:[{n:'와이셔츠 (S~L)',p:'사이즈 선택',price:1500},{n:'와이셔츠 (XL~2XL)',p:'사이즈 선택',price:1500}]},
+      {ic:'🪟',name:'커튼·이불 세탁',type:'wash',desc:'커튼, 이불, 패드 (2~3일)',tags:['커튼','이불','패드'],emoji:'🪟',
+        items:[{n:'암막 커튼',p:'장 단위',price:12000},{n:'이불·패드',p:'점 단위',price:9000}]},
+    ],
+    fnb:[
+      {ic:'🍽️',name:'테이블 린넨 렌탈',type:'rent',desc:'테이블보·냅킨',tags:['테이블보','냅킨'],emoji:'🍽️',
+        items:[{n:'테이블보 (2인)',p:'90×90cm',price:1300},{n:'테이블보 (4인)',p:'140×140cm',price:1600},{n:'냅킨',p:'45×45cm',price:400}]},
+      {ic:'👨‍🍳',name:'유니폼 렌탈',type:'rent',desc:'앞치마·조리복',tags:['앞치마','조리복'],emoji:'👨‍🍳',
+        items:[{n:'앞치마 (홀)',p:'사이즈 선택',price:1200},{n:'조리복 (S~2XL)',p:'사이즈 선택',price:1800}]},
+      {ic:'🪟',name:'커튼·유니폼 세탁',type:'wash',desc:'커튼, 자켓·바지 (2~3일)',tags:['커튼','자켓'],emoji:'🪟',
+        items:[{n:'암막 커튼',p:'장 단위',price:12000},{n:'유니폼 자켓·바지',p:'점 단위',price:6000}]},
+    ],
+    wellness:[
+      {ic:'🧖',name:'타월 렌탈',type:'rent',desc:'대·중·소·오일 타월',tags:['대타월','오일타월'],emoji:'🧖',
+        items:[{n:'대 타월',p:'70×140cm',price:800},{n:'오일 타월',p:'40×80cm',price:700},{n:'베딩타월',p:'90×180cm',price:900}]},
+      {ic:'🩳',name:'운동복·가운 렌탈',type:'rent',desc:'운동복 상·하의, 가운',tags:['운동복','가운'],emoji:'🩳',
+        items:[{n:'운동복 상의',p:'S~3XL',price:1600},{n:'운동복 하의',p:'S~3XL',price:1600},{n:'가운',p:'프리',price:1500}]},
+      {ic:'🪟',name:'유니폼·가운 세탁',type:'wash',desc:'유니폼, 가운 (2~3일)',tags:['유니폼','가운'],emoji:'🪟',
+        items:[{n:'유니폼 티셔츠·스커트',p:'점 단위',price:5000},{n:'가운·베딩타월',p:'점 단위',price:4500}]},
+    ],
+  };
+  const svcList=()=>ORDER_SVC[S.seg];
+  const cartQty=(s,i)=>(S.cart[s]&&S.cart[s][i])||0;
+  function setCart(s,i,q){ if(!S.cart[s])S.cart[s]={}; if(q<=0){delete S.cart[s][i]; if(!Object.keys(S.cart[s]).length)delete S.cart[s];} else S.cart[s][i]=q; }
+  const cartCount=()=>{let n=0;Object.values(S.cart).forEach(o=>Object.values(o).forEach(q=>n+=q));return n;};
+  const cartSvcCount=()=>Object.keys(S.cart).length;
+  function cartTotal(){let s=0;Object.entries(S.cart).forEach(([si,o])=>{const sv=svcList()[si];Object.entries(o).forEach(([ii,q])=>s+=sv.items[ii].price*q);});return s;}
+  const cartHasWash=()=>Object.keys(S.cart).some(si=>svcList()[si].type==='wash');
+
+  function sbar(dark){return `<div class="sbar ${dark?'dark':''}"><span>9:41</span><span>● ● ● &nbsp; 5G &nbsp; 🔋</span></div>`;}
+
+  // ===== APP HOME =====
+  function appHome(){
+    return `
+    ${sbar(false)}
+    <div class="screen" style="background:var(--bg2)">
+      <div class="ah-head">
+        <div><div class="t">세탁 없는 생활</div>
+          <div class="ah-days"><span class="d">0</span><span class="d">0</span><span class="d">9</span><span class="s">일 째</span></div>
+        </div>
+        <div class="ah-lock">🔒</div>
+      </div>
+      <div class="hero">
+        <h3>오늘 바로 세탁해요<br>한밤배송 받아보세요</h3>
+        <div class="basket">🧺</div>
+        <div class="meta">
+          <div><div class="l">사용 가능 쿠폰</div><div class="v">3장 ›</div></div>
+          <div class="dv"></div>
+          <div><div class="l">마지막 수거신청</div><div class="v">32일 전 ›</div></div>
+        </div>
+        <button class="cta">수거신청</button>
+      </div>
+      <div class="quick">
+        <div><div class="qi">🅦</div><div class="ql">세탁가격</div></div>
+        <div><div class="qi">📅</div><div class="ql">구독안내</div></div>
+        <div><div class="qi">🔖</div><div class="ql">쉬운가이드</div></div>
+        <div><div class="qi">📍</div><div class="ql">서비스지역</div></div>
+      </div>
+
+      <div class="biz-banner" data-go="${S.isMember?'web_home':'web_landing'}">
+        <div class="tag">LAUNDRYGO BUSINESS</div>
+        <div class="tt">${S.isMember?'내 사업장 관리하기':'사업장을 운영하시나요?'}</div>
+        <div class="dd">${S.isMember?'수거신청·세탁현황·결제를 비즈니스 웹에서':'린넨·타월·유니폼 렌탈 & 세탁<br>소규모 숙박·F&B·웰니스 사업장 전용 서비스'}</div>
+        <span class="go">${S.isMember?'비즈니스 웹 열기':'비즈니스 시작하기'} →</span>
+      </div>
+
+      <div class="svc">
+        <div class="st">런드리고 서비스</div>
+        <div class="ss">필요할 때 편리하게 쓰는 서비스</div>
+        <div class="grid">
+          <div class="it"><div class="ic">👕</div><div class="ln">개별 빨래</div></div>
+          <div class="it"><div class="ic">🧥</div><div class="ln">생활빨래</div></div>
+          <div class="it"><div class="ic">🧼</div><div class="ln">프리미엄</div></div>
+          <div class="it"><div class="ic">🪡</div><div class="ln">수선</div></div>
+          <div class="it"><div class="ic">📦</div><div class="ln">의류 보관</div></div>
+          <div class="it"><div class="ic">♻️</div><div class="ln">헌옷 수거</div></div>
+        </div>
+      </div>
+      <div class="reset"><button data-reset="1">↺ 목업 초기화</button></div>
+    </div>
+    <div class="gnb">
+      <button class="on"><span class="gi">🏠</span>홈</button>
+      <button><span class="gi">👕</span>옷장</button>
+      <button><span class="gi">👤</span>MY</button>
+    </div>`;
+  }
+
+  // ===== 별도 웹 chrome (전체화면 전환 강조) =====
+  function chrome(dark){
+    return `<div class="web-chrome">
+      <button class="x" data-go="app_home">✕</button>
+      <span class="url">🔒 <b>business.laundrygo.com</b></span>
+    </div>`;
+  }
+
+  // ===== WEB LANDING =====
+  function webLanding(){
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="w-hero">
+        <div class="logo">LAUNDRYGO BUSINESS</div>
+        <h1>사는 대신 빌리고,<br>관리 대신 맡기세요</h1>
+        <p>소규모 숙박·F&B·웰니스 사업장을 위한<br>린넨·타월·유니폼 렌탈 & 세탁 서비스</p>
+        <button class="cta" data-go="web_plans">요금제 보고 시작하기</button>
+      </div>
+      <div class="w-sec">
+        <div class="eye">WHY BUSINESS</div>
+        <div class="h">사업장 운영, 더 가볍게</div>
+        <div class="vgrid">
+          <div class="vcard"><div class="vi">🧺</div><div class="vt">구매비 Zero</div><div class="vd">제품을 임대해 초기 구매비가 없어요</div></div>
+          <div class="vcard"><div class="vi">♻️</div><div class="vt">재고부담 Zero</div><div class="vd">마모·폐기 걱정 없이 클린 제품</div></div>
+          <div class="vcard"><div class="vi">🚚</div><div class="vt">당일 배송</div><div class="vd">수거 즉시 재고에서 출고</div></div>
+          <div class="vcard"><div class="vi">📱</div><div class="vt">웹으로 관리</div><div class="vd">수거·현황·결제를 한 곳에서</div></div>
+        </div>
+      </div>
+      <div class="w-sec" style="padding-top:0">
+        <div class="eye">WHO IT'S FOR</div>
+        <div class="h">우리 사업장에 딱 맞게</div>
+        <div class="segs">
+          <div class="seg"><div class="e">🏨</div><div><div class="t">숙박형</div><div class="d">호텔·펜션 · 매일 높은 회전율</div></div></div>
+          <div class="seg"><div class="e">🍽️</div><div><div class="t">F&B형</div><div class="d">카페·다이닝 · 위생·브랜드 일관성</div></div></div>
+          <div class="seg"><div class="e">💪</div><div><div class="t">웰니스형</div><div class="d">피트니스·에스테틱 · 높은 위생</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn am" data-go="web_plans">요금제 보고 시작하기</button></div>`;
+  }
+
+  function webPlans(){
+    const sP=k=>S.plan===k?'sel':'';
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="w-sec" style="padding-bottom:8px">
+        <div class="eye">PRICING</div>
+        <div class="h">두 가지 요금제</div>
+        <div class="lead">언제든 변경 가능하며, 신청할 때마다 수량을 직접 선택합니다.</div>
+        <div class="plans" style="margin-top:16px">
+          <div class="plan ${sP('standard')}" data-plan="standard">
+            <div class="pn">Standard <div class="ck">${S.plan==='standard'?'✓':''}</div></div>
+            <div class="ft">
+              <div class="fr"><span class="k">배송 주기</span><span class="vv">주 3회</span></div>
+              <div class="fr"><span class="k">긴급 배송</span><span class="vv">유료</span></div>
+              <div class="fr"><span class="k">세탁 바우처</span><span class="vv">월 10만원</span></div>
+              <div class="fr"><span class="k">품목 교체</span><span class="vv">마모 기준</span></div>
+            </div>
+          </div>
+          <div class="plan ${sP('premium')}" data-plan="premium">
+            <div class="reco">추천</div>
+            <div class="pn">Premium <div class="ck">${S.plan==='premium'?'✓':''}</div></div>
+            <div class="ft">
+              <div class="fr"><span class="k">배송 주기</span><span class="vv hot">주 6회</span></div>
+              <div class="fr"><span class="k">긴급 배송</span><span class="vv hot">월 3회 무료</span></div>
+              <div class="fr"><span class="k">세탁 바우처</span><span class="vv hot">월 20만원</span></div>
+              <div class="fr"><span class="k">품목 교체</span><span class="vv hot">주기 보장 (RFID)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn" data-go="ob1">이 요금제로 가입하기</button></div>`;
+  }
+
+  function bar(n){let s='';for(let i=1;i<=3;i++)s+=`<i class="${i<=n?'on':''}"></i>`;return `<div class="ob-bar">${s}</div>`;}
+
+  function ob1(){
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="ob">${bar(1)}<div class="ob-step">STEP 1 · 비즈니스 회원가입</div>
+        <div class="ob-t">사업자 정보를<br>입력해 주세요</div>
+        <div class="ob-s">런드리고 비즈니스 회원으로 가입합니다. 별도 웹 계정으로 운영돼요.</div>
+      </div>
+      <div class="ob-body">
+        <div class="fld"><label>대표자명</label><input placeholder="홍길동" /></div>
+        <div class="fld"><label>대표자 연락처</label><input placeholder="010-0000-0000" /></div>
+        <div class="fld"><label>사업장 주소</label><input placeholder="주소를 검색하세요" /></div>
+        <div class="fld"><label>사업자등록증</label><div class="up" id="up"><span style="font-size:22px">📄</span><span>탭하여 업로드</span></div></div>
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn" data-go="ob2">다음</button></div>`;
+  }
+
+  function ob2(){
+    const sc=k=>S.seg===k?'on':'';
+    const ex = S.seg==='stay'
+      ? `<div class="fld"><label>객실 수</label><input placeholder="예: 32" /></div><div class="fld"><label>일 평균 고객 수</label><input placeholder="예: 50" /></div>`
+      : S.seg==='fnb'
+      ? `<div class="fld"><label>좌석 수</label><input placeholder="예: 40" /></div><div class="fld"><label>일 평균 고객 수</label><input placeholder="예: 120" /></div>`
+      : `<div class="fld"><label>회원 수</label><input placeholder="예: 300" /></div><div class="fld"><label>일 평균 방문 고객 수</label><input placeholder="예: 60" /></div>`;
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="ob">${bar(2)}<div class="ob-step">STEP 2 · 기본 정보</div>
+        <div class="ob-t">사업장 유형을<br>선택해 주세요</div>
+        <div class="ob-s">유형·규모로 품목별 권장 수량을 자동 제안해 드려요.</div>
+      </div>
+      <div class="ob-body">
+        <div class="fld"><label>업종</label>
+          <div class="seg-pick">
+            <button class="${sc('stay')}" data-seg="stay"><span class="e">🏨</span>숙박형</button>
+            <button class="${sc('fnb')}" data-seg="fnb"><span class="e">🍽️</span>F&B형</button>
+            <button class="${sc('wellness')}" data-seg="wellness"><span class="e">💪</span>웰니스형</button>
+          </div>
+        </div>
+        ${ex}
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn" data-go="ob3">다음</button></div>`;
+  }
+
+  function ob3(){
+    const ck=S.agreeAll?'on':'';
+    const pm=k=>S.payMethod===k?'on':'';
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="ob">${bar(3)}<div class="ob-step">STEP 3 · 약관 · 결제</div>
+        <div class="ob-t">마지막 단계예요</div>
+        <div class="ob-s">약관 동의 후 결제 수단을 등록하면 가입이 완료됩니다.</div>
+      </div>
+      <div class="ob-body">
+        <div class="agree all" id="aAll"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>전체 동의</span></div>
+        <div class="agree"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>비즈니스 이용약관 (필수)</span></div>
+        <div class="agree"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>렌탈 자산 분실·파손 정책 (필수)</span></div>
+        <div class="agree"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>자동 결제·청구 동의 (필수)</span></div>
+        <div style="margin-top:22px;font-size:13px;font-weight:800">결제 수단</div>
+        <div class="pay ${pm('card')}" data-pay="card"><span style="font-size:20px">💳</span><span style="font-weight:700">신용/체크카드</span></div>
+        <div class="pay ${pm('account')}" data-pay="account"><span style="font-size:20px">🏦</span><span style="font-weight:700">계좌 자동이체</span></div>
+        <div class="notice" style="margin-top:18px"><ul><li>렌탈 품목은 런드리고 자산이며 분실 시 별도 과금될 수 있습니다.</li><li>모든 렌탈 품목에 RFID가 부착되어 입·출고가 자동 기록됩니다.</li></ul></div>
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn am" data-go="web_done" data-finish="1" ${S.agreeAll?'':'disabled'}>가입 완료하기</button></div>`;
+  }
+
+  function webDone(){
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="done">
+        <div class="ck">✓</div>
+        <h2>비즈니스 회원이 되었어요!</h2>
+        <p>이제 이 웹에서 수거신청·세탁현황·결제를<br>한 곳에서 관리할 수 있어요.</p>
+        <div class="sum">
+          <div class="r"><span class="k">사업장 유형</span><span class="vv">${SEG[S.seg].label}</span></div>
+          <div class="r"><span class="k">요금제</span><span class="vv">${S.plan==='premium'?'Premium':'Standard'}</span></div>
+          <div class="r"><span class="k">바우처</span><span class="vv">월 ${won(VOUCHER[S.plan])}원</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn" data-go="web_home">비즈니스 홈으로</button></div>`;
+  }
+
+  // ===== WEB HOME (가입 후 비즈니스 웹 메인) =====
+  function webHome(){
+    const tSteps=['신청','수거','입고','세탁','배송'];
+    const orders=S.activeOrders.map(o=>{
+      const pill=['신청완료','수거예약','수거완료','세탁중','배송중'][o.step];
+      const steps=tSteps.map((nm,i)=>{const c=i<o.step?'done':(i===o.step?'cur':'');return `<div class="ts2 ${c}">${i>0?'<div class="bar"></div>':''}<div class="dot"></div><div class="nm">${nm}</div></div>`;}).join('');
+      return `<div class="tcard">
+        <div class="tt"><div class="te">${o.hasWash?'🧺':'📦'}</div>
+          <div><div class="tl">${o.names[0]}${o.svcCount>1?` 외 ${o.svcCount-1}건`:''}</div><div class="ts">${o.date} 수거 예정 · 총 ${o.qty}개</div></div>
+          <div class="tp">${pill}</div></div>
+        <div class="tsteps">${steps}</div>
+      </div>`;
+    }).join('');
+    return `
+    ${sbar(true)}
+    ${chrome()}
+    <div class="w-screen">
+      <div class="wh-top">
+        <div class="n">LAUNDRYGO BUSINESS</div>
+        <div class="b">김다예 사업장 <span class="chip">${S.plan==='premium'?'PREMIUM':'STANDARD'}</span></div>
+        <div class="meta">
+          <div><span class="l">바우처 잔액</span><span class="v">${won(S.plan==='premium'?180000:90000)}원</span></div>
+          <div><span class="l">이번 달 예상</span><span class="v">${won(420000)}원</span></div>
+          <div><span class="l">진행 건</span><span class="v">${S.activeOrders.length}건</span></div>
+        </div>
+      </div>
+      <button class="wh-order" data-go="wo_select">＋ 수거신청</button>
+      ${S.activeOrders.length>0 ? `<div class="sec-h">진행 중인 수거</div>${orders}` : `<div class="hint" style="padding:30px 24px;color:var(--g1)">아직 진행 중인 수거가 없어요.<br>＋ 수거신청으로 시작해 보세요.</div>`}
+      <div class="reset"><button data-reset="1">↺ 목업 초기화</button></div>
+    </div>`;
+  }
+
+  // ===== 수거신청 (웹 내부) =====
+  function woSelect(){
+    let cards='';
+    svcList().forEach((s,i)=>{
+      const bdg=s.type==='rent'?'<span class="bdg rent">렌탈</span>':'<span class="bdg wash">세탁</span>';
+      const inC=S.cart[i]?Object.values(S.cart[i]).reduce((a,b)=>a+b,0):0;
+      cards+=`<div class="svc-card ${inC>0?'in':''}" data-osvc="${i}">
+        <div class="top"><div class="ci">${s.ic}</div>
+          <div><div class="ct">${s.name} ${bdg}</div><div class="cd">${inC>0?`담은 수량 ${inC}개 · 탭하여 수정`:s.desc}</div></div>
+          <div class="pl ${inC>0?'added':''}">${inC>0?inC:'＋'}</div>
+        </div>
+        <div class="tags">${s.tags.map(t=>`<span class="tg">${t}</span>`).join('')}</div>
+      </div>`;
+    });
+    const cnt=cartCount();
+    const ctabar=cnt>0?`<div class="cta-bar"><button class="btn am" data-go="wo_request"><span style="display:flex;align-items:center;justify-content:center;gap:8px"><span style="background:rgba(21,35,63,.12);border-radius:20px;padding:2px 10px;font-size:13px">${cartSvcCount()}종 ${cnt}개</span>${won(cartTotal())}원 수거신청</span></button></div>`:'';
+    return `
+    ${sbar(false)}
+    <div class="w-screen" style="background:var(--bg2)">
+      <div class="ord-head"><button class="bk" data-go="web_home">‹</button><span class="ot">수거신청</span></div>
+      <div class="ord-wrap">
+        <div class="ord-q">${SEG[S.seg].label} 사업장<br>어떤 품목을 신청하세요?</div>
+        ${cards}
+        <div class="hint" style="padding:16px 8px 8px">여러 서비스를 담아 한 번에 신청할 수 있어요</div>
+      </div>
+      ${ctabar}
+    </div>`;
+  }
+
+  function woDetail(){
+    const s=svcList()[S.orderItem];
+    let rows='';
+    s.items.forEach((it,i)=>{rows+=`<div class="pd-it"><div style="flex:1"><div class="n">${it.n}</div><div class="p">${it.p}</div><div class="pr">${won(it.price)}원${s.type==='wash'?' / 점':' / 회전'}</div></div><div class="step"><button data-oq="${i}|-1">−</button><span class="qv">${cartQty(S.orderItem,i)}</span><button data-oq="${i}|1">＋</button></div></div>`;});
+    const svcQ=S.cart[S.orderItem]?Object.values(S.cart[S.orderItem]).reduce((a,b)=>a+b,0):0;
+    const notice=s.type==='wash'
+      ?['수거 후 팩토리에서 세탁 공정 (2~3일).','완료 품목은 다음 렌탈 배송 시 합포장 출고.']
+      :['사용 후 다음 수거신청 시 반납해 주세요.','RFID로 입·출고가 자동 기록됩니다.'];
+    const cnt=cartCount();
+    return `
+    ${sbar(false)}
+    <div class="w-screen" style="background:var(--card)">
+      <div class="ord-head"><button class="bk" data-go="wo_select">‹</button><span class="ot">${s.name}</span></div>
+      <div class="pd-hero">${s.emoji}</div>
+      <div class="pd-body">
+        <div class="pd-t">${s.name}</div>
+        <div class="pd-s">${SEG[S.seg].label} 권장 구성입니다. 필요한 수량만큼 담아주세요.${s.type==='wash'?' 세탁은 2~3일 리드타임이 있어요.':''}</div>
+        ${rows}
+        <div class="notice"><div class="nt">안내사항</div><ul>${notice.map(n=>`<li>${n}</li>`).join('')}</ul></div>
+      </div>
+    </div>
+    <div class="cta-bar" style="display:flex;gap:10px">
+      <button class="btn ghost" data-go="wo_select" style="flex:1">${cnt>0?`목록 (${cnt}개)`:'목록'}</button>
+      <button class="btn" data-go="wo_select" style="flex:1.3" ${svcQ>0?'':'disabled'}>${svcQ>0?'담기 완료':'수량 선택'}</button>
+    </div>`;
+  }
+
+  function woRequest(){
+    const itemSum=cartTotal(), totalQ=cartCount();
+    const vBal=S.plan==='premium'?180000:90000;
+    let washSum=0;
+    Object.entries(S.cart).forEach(([si,o])=>{const sv=svcList()[si];if(sv.type==='wash')Object.entries(o).forEach(([ii,q])=>washSum+=sv.items[ii].price*q);});
+    const useV=Math.min(washSum,vBal), fin=Math.max(0,itemSum-useV);
+    const dates=[{dd:'내일',dn:'6/9 (화)'},{dd:'모레',dn:'6/10 (수)'},{dd:'목요일',dn:'6/11 (목)'}];
+    let lines='';
+    Object.entries(S.cart).forEach(([si,o])=>{
+      const sv=svcList()[si];
+      const tag=sv.type==='wash'?'<span class="bdg wash" style="margin-left:6px">세탁</span>':'<span class="bdg rent" style="margin-left:6px">렌탈</span>';
+      lines+=`<div class="or-grp">${sv.name}${tag}</div>`;
+      Object.entries(o).forEach(([ii,q])=>{const it=sv.items[ii];lines+=`<div class="or-l"><span class="k">${it.n}</span><span class="vv">${q}개 · ${won(it.price*q)}원</span></div>`;});
+    });
+    const hasWash=cartHasWash(), hasRent=Object.keys(S.cart).some(si=>svcList()[si].type==='rent');
+    const typeLabel=hasWash&&hasRent?'렌탈(당일)+세탁(2~3일)':(hasWash?'세탁 (2~3일)':'렌탈 (당일 출고)');
+    return `
+    ${sbar(false)}
+    <div class="w-screen" style="background:var(--bg2)">
+      <div class="ord-head"><button class="bk" data-go="wo_select">‹</button><span class="ot">수거신청</span></div>
+      <div class="or-sec"><div class="ot">신청 품목 · ${cartSvcCount()}종 ${totalQ}개</div>${lines}<div class="or-l"><span class="k">처리 방식</span><span class="vv">${typeLabel}</span></div></div>
+      <div class="or-sec"><div class="ot">수거 · 배송</div>
+        <div class="or-l"><span class="k">사업장 주소</span><span class="vv">서울 강남구 …<span class="ed">변경</span></span></div>
+        <div class="or-l"><span class="k">수거 방법</span><span class="vv">문 앞 수거<span class="ed">변경</span></span></div>
+        <div class="ot" style="margin-top:16px">수거 날짜</div>
+        <div class="or-date">${dates.map((d,i)=>`<button class="${S.orderDate===i?'on':''}" data-od="${i}"><span class="dd">${d.dd}</span><span class="dn">${d.dn}</span></button>`).join('')}</div>
+      </div>
+      <div class="or-sec"><div class="ot">할인 · 바우처</div>${hasWash?`<div class="or-vou">🎟️ 세탁 바우처 자동 적용 · ${won(useV)}원 (잔액 ${won(vBal-useV)}원)</div>`:`<div class="or-l"><span class="k">렌탈은 바우처 미적용</span><span class="vv" style="color:var(--g2)">—</span></div>`}</div>
+      <div class="or-sec"><div class="ot">결제 수단</div><div class="or-l"><span class="k">${S.payMethod==='card'?'💳 신용/체크카드':'🏦 계좌 자동이체'}</span><span class="ed">변경</span></div></div>
+      <div class="or-tot">
+        <div class="r"><span>품목 합계 (${totalQ}개)</span><span class="vv">${won(itemSum)}원</span></div>
+        ${useV>0?`<div class="r"><span>세탁 바우처</span><span class="vv" style="color:var(--g-d)">−${won(useV)}원</span></div>`:''}
+        <div class="fin"><span class="l">결제 예정</span><span class="vv">${won(fin)}원</span></div>
+      </div>
+      <div style="height:8px;background:var(--bg2)"></div>
+    </div>
+    <div class="cta-bar"><button class="btn am" data-go="wo_done">${won(fin)}원 신청하기</button></div>`;
+  }
+
+  function woDone(){
+    const dates=['6/9 (화)','6/10 (수)','6/11 (목)'];
+    const hasWash=cartHasWash();
+    return `
+    ${sbar(false)}
+    <div class="w-screen">
+      <div class="done">
+        <div class="ck">✓</div>
+        <h2>수거신청 완료!</h2>
+        <p>${dates[S.orderDate]} 문 앞에서 수거합니다.<br>${hasWash?'세탁 완료 후 다음 배송에 합포장돼요.':'클린 제품은 당일 출고됩니다.'}</p>
+        <div class="sum">
+          <div class="r"><span class="k">신청 품목</span><span class="vv">${cartSvcCount()}종 ${cartCount()}개</span></div>
+          <div class="r"><span class="k">수거 예정</span><span class="vv">${dates[S.orderDate]}</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar"><button class="btn" data-go="web_home" data-commit="1">비즈니스 홈으로</button></div>`;
+  }
+
+  function commit(){
+    const dates=['6/9 (화)','6/10 (수)','6/11 (목)'];
+    S.activeOrders.unshift({date:dates[S.orderDate],qty:cartCount(),svcCount:cartSvcCount(),names:Object.keys(S.cart).map(si=>svcList()[si].name),hasWash:cartHasWash(),step:1});
+    S.cart={}; S.orderDate=0;
+  }
+  function reset(){
+    Object.assign(S,{view:'app_home',seg:'stay',plan:'premium',agreeAll:false,payMethod:'card',isMember:false,orderItem:0,cart:{},orderDate:0,activeOrders:[]});
+    render();
+  }
+
+  function render(){
+    let h='';
+    switch(S.view){
+      case 'app_home':h=appHome();break;
+      case 'web_landing':h=webLanding();break;
+      case 'web_plans':h=webPlans();break;
+      case 'ob1':h=ob1();break;
+      case 'ob2':h=ob2();break;
+      case 'ob3':h=ob3();break;
+      case 'web_done':h=webDone();break;
+      case 'web_home':h=webHome();break;
+      case 'wo_select':h=woSelect();break;
+      case 'wo_detail':h=woDetail();break;
+      case 'wo_request':h=woRequest();break;
+      case 'wo_done':h=woDone();break;
+    }
+    root.innerHTML=`<div class="phone"><div class="notch"></div>${h}</div>`;
+    bind();
+  }
+
+  function bind(){
+    root.querySelectorAll('[data-go]').forEach(el=>el.addEventListener('click',()=>{
+      if(el.disabled)return;
+      if(el.getAttribute('data-finish'))S.isMember=true;
+      if(el.getAttribute('data-commit'))commit();
+      S.view=el.getAttribute('data-go');
+      render();
+      const sc=root.querySelector('.w-screen,.screen');if(sc)sc.scrollTop=0;
+    }));
+    root.querySelectorAll('[data-plan]').forEach(el=>el.addEventListener('click',()=>{S.plan=el.getAttribute('data-plan');render();}));
+    root.querySelectorAll('[data-seg]').forEach(el=>el.addEventListener('click',()=>{S.seg=el.getAttribute('data-seg');render();}));
+    root.querySelectorAll('[data-osvc]').forEach(el=>el.addEventListener('click',()=>{S.orderItem=Number(el.getAttribute('data-osvc'));S.view='wo_detail';render();const sc=root.querySelector('.w-screen');if(sc)sc.scrollTop=0;}));
+    root.querySelectorAll('[data-oq]').forEach(el=>el.addEventListener('click',()=>{const[i,d]=el.getAttribute('data-oq').split('|').map(Number);setCart(S.orderItem,i,cartQty(S.orderItem,i)+d);render();}));
+    root.querySelectorAll('[data-od]').forEach(el=>el.addEventListener('click',()=>{S.orderDate=Number(el.getAttribute('data-od'));render();}));
+    root.querySelectorAll('[data-reset]').forEach(el=>el.addEventListener('click',reset));
+    const up=root.querySelector('#up');if(up)up.addEventListener('click',()=>{up.classList.add('done');up.innerHTML='<span style="font-size:22px">✅</span><span>사업자등록증.jpg</span>';});
+    const aAll=root.querySelector('#aAll');if(aAll)aAll.addEventListener('click',()=>{S.agreeAll=!S.agreeAll;render();});
+  }
+
+  render();
+})();
+</script>
