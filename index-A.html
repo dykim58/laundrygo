@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<title>런드리고 비즈니스 A</title>
+<style>
+  html, body { margin:0; padding:0; background:#f6f7f9; min-height:100dvh; }
+  body { -webkit-text-size-adjust:100%; }
+  @media (max-width:480px){ html,body{ background:#fff; } }
+</style>
+</head>
+<body>
+<div id="lg-root"></div>
+
+<style>
+  /* ===== 런드리고 디자인 토큰 (피그마 DS 연동 시 이 값만 교체) ===== */
+  #lg-root {
+    /* 일반 런드리고 = 시그니처 그린 */
+    --lg-green: #00c389;
+    --lg-green-d: #00a876;
+    --lg-green-soft: #e7f8f1;
+    /* 비즈니스 = 구분되는 딥 네이비/블루 */
+    --lg-navy: #1a2b4a;
+    --lg-navy-2: #24355a;
+    --lg-blue: #2f6bff;
+    --lg-blue-soft: #eaf0ff;
+    --lg-ink: #1a1a1a;
+    --lg-gray-1: #6b7280;
+    --lg-gray-2: #a3a8b0;
+    --lg-line: #f0f0f2;
+    --lg-line-2: #e8e8eb;
+    --lg-bg: #ffffff;
+    --lg-bg-2: #f7f8f9;
+    --lg-card: #ffffff;
+    --lg-cream: #f5f5f0;
+    --lg-success: #00c389;
+    --lg-warn: #e8852b;
+    --lg-radius: 18px;
+    --lg-radius-sm: 12px;
+    --lg-shadow: 0 4px 16px rgba(0,0,0,.05);
+    --lg-shadow-lg: 0 18px 48px rgba(20,24,31,.18);
+
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    color: var(--lg-ink);
+    display: flex;
+    justify-content: center;
+    padding: 24px 12px;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  #lg-root * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  /* phone frame */
+  #lg-root .lg-phone {
+    width: 390px;
+    max-width: 100%;
+    height: 800px;
+    background: var(--lg-bg);
+    border-radius: 44px;
+    box-shadow: var(--lg-shadow-lg);
+    border: 1px solid #e3e4e8;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  #lg-root .lg-notch {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 150px; height: 26px; background: #000; border-radius: 0 0 18px 18px; z-index: 60;
+  }
+
+  /* 모바일: 풀스크린 (베젤·노치·고정높이 제거) */
+  @media (max-width: 480px) {
+    #lg-root { padding: 0; min-height: 100dvh; }
+    #lg-root .lg-phone {
+      width: 100%; height: 100dvh; border-radius: 0; border: none; box-shadow: none;
+    }
+    #lg-root .lg-notch { display: none; }
+    #lg-root .lg-statusbar { display: none; }
+  }
+  #lg-root .lg-statusbar {
+    height: 44px; flex: 0 0 44px; display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 0 26px 4px; font-size: 13px; font-weight: 600; color: var(--lg-ink); z-index: 40;
+  }
+  #lg-root .lg-statusbar.dark { color: #fff; }
+
+  /* screen container */
+  #lg-root .lg-screen {
+    flex: 1; overflow-y: auto; position: relative; -webkit-overflow-scrolling: touch;
+  }
+  #lg-root .lg-screen::-webkit-scrollbar { width: 0; }
+
+  /* nav bar (webview) */
+  #lg-root .lg-webnav {
+    height: 52px; display: flex; align-items: center; padding: 0 14px; gap: 8px;
+    background: var(--lg-card); border-bottom: 1px solid var(--lg-line); position: sticky; top: 0; z-index: 30;
+  }
+  #lg-root .lg-webnav .x {
+    width: 32px; height: 32px; border-radius: 50%; border: none; background: #f0f1f3; cursor: pointer;
+    font-size: 17px; color: var(--lg-ink); display: flex; align-items: center; justify-content: center;
+  }
+  #lg-root .lg-webnav .ttl { font-size: 15px; font-weight: 700; }
+  #lg-root .lg-webnav .lock { margin-left: auto; font-size: 11px; color: var(--lg-gray-2); }
+
+  /* ===== APP HOME (MY tab) ===== */
+  #lg-root .app-topbar {
+    padding: 18px 20px 12px; display: flex; align-items: center; justify-content: space-between;
+    background: var(--lg-bg-2);
+  }
+  #lg-root .app-topbar h1 { font-size: 21px; font-weight: 800; letter-spacing: -.4px; }
+  #lg-root .app-prof { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg,var(--lg-green),var(--lg-green-d)); }
+
+  #lg-root .my-card {
+    margin: 8px 16px; background: var(--lg-card); border:1px solid var(--lg-line-2);
+    border-radius: var(--lg-radius); padding: 20px; position: relative; overflow: hidden; box-shadow:var(--lg-shadow);
+  }
+  #lg-root .my-card .name { font-size: 17px; font-weight: 800; }
+  #lg-root .my-card .sub { font-size: 12px; color: var(--lg-green-d); font-weight:700; margin-top: 4px; }
+  #lg-root .my-card .pts { margin-top: 16px; display: flex; }
+  #lg-root .my-card .pts > div { flex:1; text-align:center; }
+  #lg-root .my-card .pts b { display:block; font-size: 18px; font-weight: 800; color:var(--lg-ink); }
+  #lg-root .my-card .pts span { font-size: 11px; color: var(--lg-gray-1); }
+
+  #lg-root .my-list { margin: 8px 16px 16px; background: var(--lg-card); border-radius: var(--lg-radius); overflow:hidden; }
+  #lg-root .my-row {
+    display: flex; align-items: center; gap: 13px; padding: 16px 18px; cursor: pointer;
+    border-bottom: 1px solid var(--lg-line); background: var(--lg-card); transition: background .15s;
+  }
+  #lg-root .my-row:last-child { border-bottom: none; }
+  #lg-root .my-row:active { background: #f7f8fa; }
+  #lg-root .my-row .ico {
+    width: 40px; height: 40px; border-radius: 11px; display:flex; align-items:center; justify-content:center;
+    font-size: 19px; flex:0 0 40px;
+  }
+  #lg-root .my-row .lab { font-size: 15px; font-weight: 600; }
+  #lg-root .my-row .desc { font-size: 12px; color: var(--lg-gray-1); margin-top: 2px; }
+  #lg-root .my-row .arr { margin-left: auto; color: var(--lg-gray-2); font-size: 18px; }
+
+  /* highlight business entry */
+  #lg-root .my-row.biz {
+    background: linear-gradient(100deg, #fbfcff, #f2f6ff);
+  }
+  #lg-root .my-row.biz .ico { background: var(--lg-navy); color: #fff; }
+  #lg-root .my-row.biz .badge {
+    margin-left: 8px; font-size: 10px; font-weight: 800; color: #fff; background: var(--lg-blue);
+    padding: 2px 7px; border-radius: 20px; letter-spacing: .3px;
+  }
+
+  /* bottom GNB */
+  #lg-root .gnb {
+    flex: 0 0 64px; display: flex; background: var(--lg-card); border-top: 1px solid var(--lg-line);
+  }
+  #lg-root .gnb button {
+    flex:1; border:none; background:none; cursor:pointer; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:3px; font-size:10.5px; color:var(--lg-gray-2); font-weight:600;
+  }
+  #lg-root .gnb button .gi { font-size: 20px; }
+  #lg-root .gnb button.on { color: var(--lg-green-d); }
+
+  /* ===== REAL LAUNDRYGO HOME ===== */
+  #lg-root .lgh-header {
+    padding: 14px 20px 10px; display:flex; align-items:flex-start; justify-content:space-between;
+    background: var(--lg-card);
+  }
+  #lg-root .lgh-header .htxt { font-size:17px; font-weight:800; line-height:1.4; letter-spacing:-.3px; }
+  #lg-root .lgh-days { display:flex; align-items:center; gap:5px; margin-top:7px; }
+  #lg-root .lgh-days .dnum {
+    width:24px; height:30px; background:var(--lg-ink); color:#fff; border-radius:6px;
+    display:flex; align-items:center; justify-content:center; font-size:17px; font-weight:800;
+  }
+  #lg-root .lgh-days .dsuf { font-size:14px; font-weight:700; margin-left:3px; }
+  #lg-root .lgh-lock {
+    width:38px; height:38px; border-radius:50%; border:1.5px solid var(--lg-green);
+    display:flex; align-items:center; justify-content:center; color:var(--lg-green); font-size:16px;
+  }
+
+  /* mode switcher A: segmented toggle */
+  #lg-root .mode-seg {
+    margin:8px 16px 4px; background:var(--lg-bg-2); border-radius:13px; padding:4px; display:flex; gap:4px;
+  }
+  #lg-root .mode-seg button {
+    flex:1; height:40px; border:none; border-radius:10px; background:transparent; cursor:pointer;
+    font-size:13.5px; font-weight:800; color:var(--lg-gray-1); font-family:inherit;
+    display:flex; align-items:center; justify-content:center; gap:6px; transition:.18s;
+  }
+  #lg-root .mode-seg button.on { background:var(--lg-card); color:var(--lg-ink); box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  #lg-root .mode-seg button.on.biz { color:var(--lg-navy); }
+  #lg-root .mode-seg button .md { width:7px; height:7px; border-radius:50%; }
+  #lg-root .mode-seg button.on .md.g { background:var(--lg-green); }
+  #lg-root .mode-seg button.on .md.b { background:var(--lg-blue); }
+
+  /* mode switcher B: dropdown chip (top-left) */
+  #lg-root .lgh-switch {
+    display:inline-flex; align-items:center; gap:7px; background:var(--lg-bg-2);
+    border-radius:20px; padding:6px 12px 6px 8px; margin-bottom:8px; cursor:pointer;
+  }
+  #lg-root .lgh-switch .av {
+    width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:13px; color:#fff;
+  }
+  #lg-root .lgh-switch .av.g { background:var(--lg-green); }
+  #lg-root .lgh-switch .av.b { background:var(--lg-navy); }
+  #lg-root .lgh-switch .sl { font-size:13px; font-weight:800; }
+  #lg-root .lgh-switch .ca { font-size:11px; color:var(--lg-gray-2); }
+
+  /* hero card (오늘 바로 세탁해요) */
+  #lg-root .lgh-hero {
+    margin:10px 16px; background:var(--lg-card); border:1px solid var(--lg-line-2); border-radius:var(--lg-radius);
+    padding:24px 22px; box-shadow:var(--lg-shadow);
+  }
+  #lg-root .lgh-hero h3 { font-size:20px; font-weight:800; line-height:1.4; letter-spacing:-.4px; }
+  #lg-root .lgh-hero .basket {
+    height:130px; margin:14px 0; border-radius:14px; display:flex; align-items:center; justify-content:center;
+    font-size:64px; background:linear-gradient(160deg,#f3f5f6,#e9edef);
+  }
+  #lg-root .lgh-hero .meta { display:flex; padding:6px 0 16px; }
+  #lg-root .lgh-hero .meta > div { flex:1; text-align:center; }
+  #lg-root .lgh-hero .meta .ml { font-size:12px; color:var(--lg-gray-1); }
+  #lg-root .lgh-hero .meta .mv { font-size:15px; font-weight:800; margin-top:4px; }
+  #lg-root .lgh-hero .meta .div { flex:0; border-left:1px solid var(--lg-line-2); }
+  #lg-root .lgh-cta-main {
+    width:100%; height:54px; border:none; border-radius:13px; color:#fff; font-size:16px; font-weight:800;
+    cursor:pointer; font-family:inherit; background:var(--lg-green);
+  }
+  #lg-root .lgh-cta-main.biz { background:var(--lg-navy); }
+
+  /* quick 4 icons */
+  #lg-root .lgh-quick {
+    margin:8px 16px; background:var(--lg-card); border:1px solid var(--lg-line-2); border-radius:var(--lg-radius);
+    padding:20px 10px; display:flex; box-shadow:var(--lg-shadow);
+  }
+  #lg-root .lgh-quick > div { flex:1; text-align:center; cursor:pointer; }
+  #lg-root .lgh-quick .qi {
+    width:46px; height:46px; border-radius:50%; background:var(--lg-ink); margin:0 auto 8px;
+    display:flex; align-items:center; justify-content:center; font-size:20px; color:#fff;
+  }
+  #lg-root .lgh-quick .qln { font-size:12px; font-weight:700; }
+
+  /* service grid (런드리고 서비스) */
+  #lg-root .lgh-svc {
+    margin:8px 16px; background:var(--lg-card); border:1px solid var(--lg-line-2); border-radius:var(--lg-radius);
+    padding:18px 18px 20px; box-shadow:var(--lg-shadow);
+  }
+  #lg-root .lgh-svc .st { font-size:15px; font-weight:800; }
+  #lg-root .lgh-svc .ss { font-size:12px; color:var(--lg-gray-1); margin-top:3px; }
+  #lg-root .lgh-svc .sgrid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px 8px; margin-top:16px; }
+  #lg-root .lgh-svc .sitem { text-align:center; }
+  #lg-root .lgh-svc .sic {
+    width:48px; height:48px; border-radius:14px; background:var(--lg-bg-2); margin:0 auto 7px;
+    display:flex; align-items:center; justify-content:center; font-size:23px;
+  }
+  #lg-root .lgh-svc .sln { font-size:11.5px; font-weight:600; }
+
+  /* biz entry promo banner (가입 전 발견 동선) */
+  #lg-root .biz-promo {
+    margin:8px 16px; border-radius:var(--lg-radius); overflow:hidden; cursor:pointer;
+    background:linear-gradient(110deg, var(--lg-navy), #16243f); color:#fff; padding:20px 20px;
+    position:relative;
+  }
+  #lg-root .biz-promo::after {
+    content:''; position:absolute; right:-20px; bottom:-30px; width:120px; height:120px;
+    background:radial-gradient(circle, rgba(47,107,255,.4), transparent 65%); border-radius:50%;
+  }
+  #lg-root .biz-promo .bp-tag { font-size:10.5px; font-weight:800; color:#9fc0ff; letter-spacing:.4px; }
+  #lg-root .biz-promo .bp-t { font-size:17px; font-weight:800; margin-top:6px; line-height:1.4; position:relative; }
+  #lg-root .biz-promo .bp-d { font-size:12px; color:#bcc7dd; margin-top:8px; position:relative; }
+  #lg-root .biz-promo .bp-go {
+    margin-top:14px; display:inline-flex; align-items:center; gap:5px; font-size:12.5px; font-weight:800;
+    background:rgba(255,255,255,.14); padding:8px 14px; border-radius:20px; position:relative;
+  }
+
+  /* biz mode home banner (전환 후) */
+  #lg-root .biz-mode-card {
+    margin:10px 16px; background:linear-gradient(135deg, var(--lg-navy), #16243f); border-radius:var(--lg-radius);
+    padding:20px; color:#fff; position:relative; overflow:hidden;
+  }
+  #lg-root .biz-mode-card::after {
+    content:''; position:absolute; right:-30px; top:-30px; width:130px; height:130px;
+    background:radial-gradient(circle, rgba(47,107,255,.4), transparent 70%); border-radius:50%;
+  }
+  #lg-root .biz-mode-card .bn { font-size:12px; color:#9fb0d0; position:relative; }
+  #lg-root .biz-mode-card .bb { font-size:18px; font-weight:800; margin-top:3px; display:flex; align-items:center; gap:8px; position:relative; }
+  #lg-root .biz-mode-card .plan-chip { font-size:10px; font-weight:800; background:var(--lg-blue); padding:3px 9px; border-radius:20px; }
+  #lg-root .biz-mode-card .nextd {
+    margin-top:16px; background:rgba(255,255,255,.1); border-radius:13px; padding:14px; display:flex; align-items:center; gap:12px; position:relative;
+  }
+  #lg-root .biz-mode-card .nextd .ne { font-size:24px; }
+  #lg-root .biz-mode-card .nextd .nl { font-size:11px; color:#9fb0d0; }
+  #lg-root .biz-mode-card .nextd .nv { font-size:14px; font-weight:800; margin-top:2px; }
+  #lg-root .biz-mode-card .biz-meta {
+    display:flex; gap:10px; margin-top:14px; position:relative;
+  }
+  #lg-root .biz-mode-card .biz-meta > div {
+    flex:1; background:rgba(255,255,255,.1); border-radius:11px; padding:11px 13px;
+  }
+  #lg-root .biz-mode-card .biz-meta .bml { display:block; font-size:10.5px; color:#9fb0d0; }
+  #lg-root .biz-mode-card .biz-meta .bmv { display:block; font-size:14px; font-weight:800; margin-top:3px; }
+  #lg-root .biz-mode-card .biz-order-btn {
+    width:100%; height:48px; margin-top:14px; border:none; border-radius:12px; cursor:pointer;
+    background:var(--lg-blue); color:#fff; font-size:14.5px; font-weight:800; font-family:inherit; position:relative;
+  }
+  #lg-root .biz-mode-card .biz-order-btn:active { transform:scale(.99); }
+
+  /* B안: 계정 전환 바텀시트 */
+  #lg-root .sheet-dim {
+    position:absolute; inset:0; background:rgba(0,0,0,.4); z-index:80; display:flex; align-items:flex-end;
+    animation: fade .2s ease;
+  }
+  @keyframes fade { from{opacity:0} to{opacity:1} }
+  #lg-root .sheet {
+    width:100%; background:var(--lg-card); border-radius:22px 22px 0 0; padding:10px 16px calc(20px + env(safe-area-inset-bottom));
+    animation: rise .26s cubic-bezier(.2,.9,.3,1);
+  }
+  @keyframes rise { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  #lg-root .sheet .grab { width:38px; height:4px; background:var(--lg-line-2); border-radius:4px; margin:6px auto 14px; }
+  #lg-root .sheet .sh-t { font-size:15px; font-weight:800; padding:0 4px 8px; }
+  #lg-root .sheet .acc {
+    display:flex; align-items:center; gap:12px; padding:14px 12px; border-radius:14px; cursor:pointer; border:1.5px solid transparent;
+  }
+  #lg-root .sheet .acc.on { border-color:var(--lg-line-2); background:var(--lg-bg-2); }
+  #lg-root .sheet .acc .av2 {
+    width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:19px; color:#fff; flex:0 0 42px;
+  }
+  #lg-root .sheet .acc .av2.g { background:var(--lg-green); }
+  #lg-root .sheet .acc .av2.b { background:var(--lg-navy); }
+  #lg-root .sheet .acc .an { font-size:14.5px; font-weight:800; }
+  #lg-root .sheet .acc .ad { font-size:11.5px; color:var(--lg-gray-1); margin-top:2px; }
+  #lg-root .sheet .acc .chk { margin-left:auto; color:var(--lg-green-d); font-size:18px; font-weight:800; }
+
+  /* ===== 사업장 수거신청 플로우 ===== */
+  #lg-root .ord-head {
+    display:flex; align-items:center; gap:10px; padding:12px 16px; background:var(--lg-card);
+    border-bottom:1px solid var(--lg-line); position:sticky; top:0; z-index:20;
+  }
+  #lg-root .ord-head .bk {
+    width:32px; height:32px; border:none; background:none; font-size:20px; cursor:pointer; color:var(--lg-ink);
+  }
+  #lg-root .ord-head .ot { font-size:16px; font-weight:800; }
+  #lg-root .ord-wrap { padding:18px 16px 16px; }
+  #lg-root .ord-q { font-size:20px; font-weight:800; letter-spacing:-.4px; line-height:1.4; }
+  #lg-root .ord-tabs { display:flex; gap:14px; margin:14px 0 4px; }
+  #lg-root .ord-tabs span { font-size:13px; font-weight:700; color:var(--lg-gray-2); }
+  #lg-root .ord-tabs span.on { color:var(--lg-ink); }
+
+  /* service select card */
+  #lg-root .svc-card {
+    background:var(--lg-card); border:1px solid var(--lg-line-2); border-radius:16px; padding:18px;
+    margin-top:12px; cursor:pointer; transition:.15s; position:relative;
+  }
+  #lg-root .svc-card:active { background:#fafbfc; }
+  #lg-root .svc-card .sc-top { display:flex; align-items:center; gap:13px; }
+  #lg-root .svc-card .sc-ic {
+    width:54px; height:54px; border-radius:14px; background:var(--lg-bg-2);
+    display:flex; align-items:center; justify-content:center; font-size:26px; flex:0 0 54px;
+  }
+  #lg-root .svc-card .sc-t { font-size:16px; font-weight:800; display:flex; align-items:center; gap:7px; }
+  #lg-root .svc-card .sc-d { font-size:12.5px; color:var(--lg-gray-1); margin-top:4px; }
+  #lg-root .svc-card .sc-plus {
+    margin-left:auto; width:26px; height:26px; border-radius:50%; background:var(--lg-navy); color:#fff;
+    display:flex; align-items:center; justify-content:center; font-size:16px; flex:0 0 26px;
+  }
+  #lg-root .svc-card .sc-tags { display:flex; flex-wrap:wrap; gap:7px; margin-top:13px; }
+  #lg-root .svc-card .sc-tag {
+    font-size:11.5px; font-weight:600; color:var(--lg-gray-1); background:var(--lg-bg-2);
+    padding:5px 10px; border-radius:7px;
+  }
+  #lg-root .svc-card .sc-badge {
+    font-size:10px; font-weight:800; color:#fff; padding:2px 7px; border-radius:6px;
+  }
+  #lg-root .sc-badge.rent { background:var(--lg-blue); }
+  #lg-root .sc-badge.wash { background:var(--lg-warn); }
+
+  /* product detail */
+  #lg-root .pd-hero {
+    height:200px; background:linear-gradient(160deg,#eef2fb,#dfe6f4); display:flex; align-items:center; justify-content:center;
+    font-size:72px;
+  }
+  #lg-root .pd-body { padding:20px 18px; }
+  #lg-root .pd-t { font-size:19px; font-weight:800; }
+  #lg-root .pd-sub { font-size:13px; color:var(--lg-gray-1); margin-top:7px; line-height:1.55; }
+  #lg-root .pd-item {
+    display:flex; align-items:center; gap:12px; padding:16px 0; border-top:1px solid var(--lg-line);
+  }
+  #lg-root .pd-item:first-of-type { margin-top:8px; }
+  #lg-root .pd-item .pin { font-size:14.5px; font-weight:700; }
+  #lg-root .pd-item .pip { font-size:12px; color:var(--lg-gray-2); margin-top:3px; }
+  #lg-root .pd-item .pprice { font-size:13px; font-weight:800; color:var(--lg-navy); margin-top:3px; }
+  #lg-root .pd-notice {
+    background:var(--lg-bg-2); border-radius:12px; padding:15px; margin-top:18px;
+  }
+  #lg-root .pd-notice .pnt { font-size:12.5px; font-weight:800; margin-bottom:9px; }
+  #lg-root .pd-notice ul { list-style:none; }
+  #lg-root .pd-notice li {
+    font-size:11.5px; color:var(--lg-gray-1); line-height:1.6; padding-left:12px; position:relative; margin-bottom:5px;
+  }
+  #lg-root .pd-notice li::before { content:'·'; position:absolute; left:3px; }
+
+  /* order request detail */
+  #lg-root .or-sec { background:var(--lg-card); border-bottom:8px solid var(--lg-bg-2); padding:18px 18px; }
+  #lg-root .or-sec .ost { font-size:14px; font-weight:800; margin-bottom:12px; }
+  #lg-root .or-line {
+    display:flex; align-items:center; justify-content:space-between; padding:11px 0; font-size:13px;
+    border-bottom:1px solid var(--lg-line);
+  }
+  #lg-root .or-line:last-child { border-bottom:none; }
+  #lg-root .or-line .olk { color:var(--lg-gray-1); }
+  #lg-root .or-line .olv { font-weight:700; display:flex; align-items:center; gap:6px; }
+  #lg-root .or-line .edit { font-size:11px; color:var(--lg-blue); font-weight:700; }
+  #lg-root .or-date {
+    display:flex; gap:8px; margin-top:8px;
+  }
+  #lg-root .or-date button {
+    flex:1; height:60px; border:1.5px solid var(--lg-line-2); border-radius:12px; background:var(--lg-card);
+    cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+    font-family:inherit;
+  }
+  #lg-root .or-date button.on { border-color:var(--lg-navy); background:#f3f5fb; }
+  #lg-root .or-date button .dd { font-size:11px; color:var(--lg-gray-1); }
+  #lg-root .or-date button .dn { font-size:14px; font-weight:800; color:var(--lg-ink); }
+  #lg-root .or-pay-row {
+    display:flex; align-items:center; justify-content:space-between; padding:11px 0; font-size:13px;
+  }
+  #lg-root .or-voucher {
+    display:flex; align-items:center; gap:10px; background:var(--lg-blue-soft); border-radius:11px;
+    padding:13px 14px; margin-top:6px; font-size:12.5px; font-weight:700; color:var(--lg-navy);
+  }
+  #lg-root .or-total {
+    padding:18px; background:var(--lg-card);
+  }
+  #lg-root .or-total .ot-row { display:flex; justify-content:space-between; font-size:13px; color:var(--lg-gray-1); padding:6px 0; }
+  #lg-root .or-total .ot-row .v { color:var(--lg-ink); font-weight:600; }
+  #lg-root .or-total .ot-final {
+    display:flex; justify-content:space-between; align-items:baseline; margin-top:8px; padding-top:14px;
+    border-top:1.5px solid var(--lg-line-2);
+  }
+  #lg-root .or-total .ot-final .l { font-size:14px; font-weight:800; }
+  #lg-root .or-total .ot-final .v { font-size:23px; font-weight:800; color:var(--lg-navy); }
+
+  /* ===== 사업장 수거신청 플로우 끝 ===== */
+
+  #lg-root .or-grp {
+    font-size:12px; font-weight:800; color:var(--lg-navy); margin:12px 0 2px; padding-top:8px;
+    display:flex; align-items:center;
+  }
+  #lg-root .or-grp:first-child { padding-top:0; }
+
+  /* 서비스카드 담김 상태 */
+  #lg-root .svc-card.in-cart { border-color:var(--lg-navy); background:#f7f9fd; }
+  #lg-root .sc-plus.added { background:var(--lg-blue); font-size:13px; font-weight:800; }
+
+  /* 홈 상단 수거 진행 현황 */
+  #lg-root .track-card {
+    margin:0 0 4px; background:rgba(255,255,255,.1); border-radius:13px; padding:14px; position:relative;
+  }
+  #lg-root .track-card + .track-card { margin-top:8px; }
+  #lg-root .track-top { display:flex; align-items:center; gap:10px; }
+  #lg-root .track-top .te { font-size:20px; }
+  #lg-root .track-top .tl { font-size:13.5px; font-weight:800; }
+  #lg-root .track-top .ts { font-size:11px; color:#9fb0d0; margin-top:2px; }
+  #lg-root .track-top .tpill {
+    margin-left:auto; font-size:10px; font-weight:800; padding:3px 9px; border-radius:20px;
+    background:rgba(255,255,255,.18); color:#fff;
+  }
+  #lg-root .track-steps { display:flex; align-items:center; margin-top:12px; }
+  #lg-root .track-steps .tstep { flex:1; text-align:center; position:relative; }
+  #lg-root .track-steps .tdot {
+    width:9px; height:9px; border-radius:50%; background:rgba(255,255,255,.3); margin:0 auto 5px;
+  }
+  #lg-root .track-steps .tstep.done .tdot { background:#fff; }
+  #lg-root .track-steps .tstep.cur .tdot { background:var(--lg-blue); box-shadow:0 0 0 4px rgba(47,107,255,.3); }
+  #lg-root .track-steps .tname { font-size:9.5px; color:#9fb0d0; }
+  #lg-root .track-steps .tstep.done .tname, #lg-root .track-steps .tstep.cur .tname { color:#fff; font-weight:700; }
+  #lg-root .track-steps .tbar { position:absolute; top:4px; left:50%; width:100%; height:1.5px; background:rgba(255,255,255,.2); z-index:-1; }
+  #lg-root .track-steps .tstep.done .tbar { background:#fff; }
+
+  /* 목업 리셋 버튼 */
+  #lg-root .reset-bar {
+    margin-top:14px; text-align:center;
+  }
+  #lg-root .reset-bar button {
+    font-size:11.5px; font-weight:700; color:var(--lg-gray-1); background:var(--lg-card);
+    border:1px solid var(--lg-line-2); border-radius:20px; padding:9px 18px; cursor:pointer; font-family:inherit;
+  }
+
+  /* ===== 히어로 캐러셀 ===== */
+  #lg-root .hero-carousel {
+    display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:10px 16px 4px; -webkit-overflow-scrolling:touch; align-items:stretch;
+  }
+  #lg-root .hero-carousel::-webkit-scrollbar { height:0; }
+  #lg-root .hero-slide {
+    flex:0 0 100%; scroll-snap-align:center; border-radius:var(--lg-radius); display:flex;
+  }
+  #lg-root .hero-slide > div { width:100%; }
+  #lg-root .hero-dots { display:flex; justify-content:center; gap:6px; padding:8px 0 2px; }
+  #lg-root .hero-dots i {
+    width:6px; height:6px; border-radius:50%; background:var(--lg-line-2); transition:.2s;
+  }
+  #lg-root .hero-dots i.on { width:18px; border-radius:6px; background:var(--lg-navy); }
+  #lg-root .hero-slide .lgh-hero,
+  #lg-root .hero-slide .biz-mode-card { margin:0; height:100%; }
+  #lg-root .hero-slide .lgh-hero { box-shadow:var(--lg-shadow); }
+
+  /* 사업장 카드 컴팩트 (캐러셀용) */
+  #lg-root .biz-slide-inner { display:flex; flex-direction:column; height:100%; }
+  #lg-root .biz-slide-inner .bsi-next { margin-top:auto; }
+
+  /* 라이트 배경 트래커 (캐러셀 아래 진행현황 리스트) */
+  #lg-root .track-list-wrap { margin-top:6px; }
+  #lg-root .track-steps-light .tdot { background:var(--lg-line-2); }
+  #lg-root .track-steps-light .tstep.done .tdot { background:var(--lg-navy); }
+  #lg-root .track-steps-light .tstep.cur .tdot { background:var(--lg-blue); box-shadow:0 0 0 4px var(--lg-blue-soft); }
+  #lg-root .track-steps-light .tname { color:var(--lg-gray-2); }
+  #lg-root .track-steps-light .tstep.done .tname,
+  #lg-root .track-steps-light .tstep.cur .tname { color:var(--lg-ink); font-weight:700; }
+  #lg-root .track-steps-light .tbar { background:var(--lg-line-2); }
+  #lg-root .track-steps-light .tstep.done .tbar { background:var(--lg-navy); }
+
+  /* ===== 히어로 캐러셀 끝 ===== */
+
+  /* ===== WEBVIEW LANDING ===== */
+  #lg-root .hero {
+    background: linear-gradient(165deg, var(--lg-navy) 0%, #0f1b33 100%);
+    color: #fff; padding: 32px 22px 30px; position: relative; overflow:hidden;
+  }
+  #lg-root .hero::before {
+    content:''; position:absolute; right:-40px; top:20px; width:180px; height:180px;
+    background: radial-gradient(circle, rgba(47,107,255,.4), transparent 65%); border-radius:50%;
+  }
+  #lg-root .hero .tag {
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:.5px; color:#9fc0ff;
+    border:1px solid rgba(159,192,255,.4); padding:5px 11px; border-radius:20px; margin-bottom:16px;
+  }
+  #lg-root .hero h2 { font-size: 26px; font-weight: 800; line-height: 1.32; letter-spacing:-.5px; position:relative; }
+  #lg-root .hero p { font-size: 14px; color: #c2cce0; margin-top: 13px; line-height:1.6; position:relative; }
+
+  #lg-root .biz-section { padding: 26px 20px; }
+  #lg-root .biz-section .eyebrow { font-size:12px; font-weight:800; color:var(--lg-blue); letter-spacing:.4px; }
+  #lg-root .biz-section .h3 { font-size:20px; font-weight:800; margin-top:6px; letter-spacing:-.4px; line-height:1.35; }
+  #lg-root .biz-section .lead { font-size:13.5px; color:var(--lg-gray-1); margin-top:9px; line-height:1.65; }
+
+  #lg-root .val-grid { display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-top:18px; }
+  #lg-root .val {
+    background:var(--lg-card); border:1px solid var(--lg-line); border-radius:var(--lg-radius-sm);
+    padding:16px 14px;
+  }
+  #lg-root .val .vi { font-size:22px; }
+  #lg-root .val .vt { font-size:14px; font-weight:800; margin-top:9px; }
+  #lg-root .val .vd { font-size:11.5px; color:var(--lg-gray-1); margin-top:5px; line-height:1.5; }
+
+  #lg-root .seg-cards { display:flex; flex-direction:column; gap:11px; margin-top:16px; }
+  #lg-root .seg {
+    display:flex; gap:13px; align-items:center; background:var(--lg-cream);
+    border-radius:var(--lg-radius-sm); padding:14px 15px;
+  }
+  #lg-root .seg .se { font-size:26px; }
+  #lg-root .seg .st { font-size:14px; font-weight:800; }
+  #lg-root .seg .sd { font-size:11.5px; color:var(--lg-gray-1); margin-top:3px; line-height:1.45; }
+
+  /* plan cards */
+  #lg-root .plans { display:flex; flex-direction:column; gap:13px; margin-top:16px; }
+  #lg-root .plan {
+    border:1.5px solid var(--lg-line); border-radius:var(--lg-radius); padding:18px; background:var(--lg-card);
+    cursor:pointer; transition:all .18s; position:relative;
+  }
+  #lg-root .plan.sel { border-color:var(--lg-blue); box-shadow:0 0 0 3px var(--lg-blue-soft); }
+  #lg-root .plan.rec { border-color:var(--lg-navy); }
+  #lg-root .plan .reco {
+    position:absolute; top:-10px; right:16px; background:var(--lg-navy); color:#fff;
+    font-size:10.5px; font-weight:800; padding:4px 11px; border-radius:20px;
+  }
+  #lg-root .plan .pn { font-size:17px; font-weight:800; display:flex; align-items:center; gap:8px; }
+  #lg-root .plan .check {
+    width:20px; height:20px; border-radius:50%; border:2px solid var(--lg-line); margin-left:auto; flex:0 0 20px;
+    display:flex; align-items:center; justify-content:center;
+  }
+  #lg-root .plan.sel .check { background:var(--lg-blue); border-color:var(--lg-blue); color:#fff; font-size:12px; }
+  #lg-root .plan .feat { margin-top:13px; display:flex; flex-direction:column; gap:9px; }
+  #lg-root .plan .frow { display:flex; justify-content:space-between; font-size:12.5px; }
+  #lg-root .plan .frow .k { color:var(--lg-gray-1); }
+  #lg-root .plan .frow .v { font-weight:700; }
+  #lg-root .plan .frow .v.hot { color:var(--lg-blue); }
+
+  /* steps / onboarding */
+  #lg-root .ob-head { padding:20px 20px 8px; }
+  #lg-root .ob-prog { display:flex; gap:5px; margin-bottom:18px; }
+  #lg-root .ob-prog i { flex:1; height:4px; border-radius:4px; background:var(--lg-line); }
+  #lg-root .ob-prog i.on { background:var(--lg-blue); }
+  #lg-root .ob-step { font-size:12px; font-weight:700; color:var(--lg-blue); }
+  #lg-root .ob-title { font-size:21px; font-weight:800; margin-top:6px; letter-spacing:-.4px; line-height:1.35; }
+  #lg-root .ob-sub { font-size:13px; color:var(--lg-gray-1); margin-top:8px; line-height:1.55; }
+  #lg-root .ob-body { padding:6px 20px 20px; }
+
+  #lg-root .field { margin-top:16px; }
+  #lg-root .field label { font-size:12.5px; font-weight:700; color:var(--lg-ink); display:block; margin-bottom:7px; }
+  #lg-root .field input, #lg-root .field select {
+    width:100%; height:48px; border:1.5px solid var(--lg-line); border-radius:12px; padding:0 14px;
+    font-size:14px; font-family:inherit; color:var(--lg-ink); background:var(--lg-card); outline:none;
+  }
+  #lg-root .field input:focus, #lg-root .field select:focus { border-color:var(--lg-blue); }
+  #lg-root .field .up {
+    height:88px; border:1.5px dashed var(--lg-line); border-radius:12px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; gap:6px; color:var(--lg-gray-1); font-size:12.5px; cursor:pointer;
+  }
+  #lg-root .field .up.done { border-style:solid; border-color:var(--lg-success); color:var(--lg-success); background:#f1faf5; }
+
+  #lg-root .seg-choice { display:flex; gap:9px; margin-top:8px; }
+  #lg-root .seg-choice button {
+    flex:1; height:78px; border:1.5px solid var(--lg-line); border-radius:12px; background:var(--lg-card);
+    cursor:pointer; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+    font-size:12px; font-weight:700; color:var(--lg-ink);
+  }
+  #lg-root .seg-choice button .e { font-size:22px; }
+  #lg-root .seg-choice button.on { border-color:var(--lg-blue); background:var(--lg-blue-soft); color:var(--lg-navy); }
+
+  /* qty rows */
+  #lg-root .qty-cat { font-size:12px; font-weight:800; color:var(--lg-gray-1); margin:18px 0 4px; letter-spacing:.3px; }
+  #lg-root .qty-row {
+    display:flex; align-items:center; gap:12px; padding:13px 0; border-bottom:1px solid var(--lg-line);
+  }
+  #lg-root .qty-row .qn { font-size:14px; font-weight:600; }
+  #lg-root .qty-row .qtag {
+    font-size:10px; font-weight:800; padding:2px 7px; border-radius:6px; margin-left:7px;
+  }
+  #lg-root .qty-row .qtag.rent { background:var(--lg-blue-soft); color:var(--lg-blue); }
+  #lg-root .qty-row .qtag.wash { background:#fff2e6; color:var(--lg-warn); }
+  #lg-root .qty-row .qp { font-size:11px; color:var(--lg-gray-2); margin-top:2px; }
+  #lg-root .stepper { margin-left:auto; display:flex; align-items:center; gap:10px; }
+  #lg-root .stepper button {
+    width:30px; height:30px; border-radius:8px; border:1.5px solid var(--lg-line); background:var(--lg-card);
+    font-size:17px; cursor:pointer; color:var(--lg-ink); display:flex; align-items:center; justify-content:center;
+  }
+  #lg-root .stepper .qv { font-size:15px; font-weight:700; min-width:26px; text-align:center; }
+
+  /* price summary */
+  #lg-root .price-card {
+    background:var(--lg-card); border:1px solid var(--lg-line); border-radius:var(--lg-radius); padding:18px; margin-top:8px;
+  }
+  #lg-root .price-row { display:flex; justify-content:space-between; font-size:13px; padding:8px 0; color:var(--lg-gray-1); }
+  #lg-root .price-row .pv { color:var(--lg-ink); font-weight:600; }
+  #lg-root .price-total {
+    display:flex; justify-content:space-between; align-items:baseline; margin-top:10px; padding-top:14px;
+    border-top:1.5px solid var(--lg-line);
+  }
+  #lg-root .price-total .pl { font-size:14px; font-weight:700; }
+  #lg-root .price-total .pt { font-size:24px; font-weight:800; color:var(--lg-navy); }
+  #lg-root .price-total .pt small { font-size:13px; color:var(--lg-gray-1); font-weight:600; }
+  #lg-root .note {
+    background:#fff8ef; border-radius:11px; padding:13px 14px; font-size:11.5px; color:#a86a23; margin-top:14px; line-height:1.55;
+  }
+
+  /* agree */
+  #lg-root .agree-row { display:flex; align-items:center; gap:11px; padding:13px 0; border-bottom:1px solid var(--lg-line); font-size:13px; }
+  #lg-root .agree-row .cb { width:22px; height:22px; border-radius:6px; border:1.5px solid var(--lg-line); flex:0 0 22px; cursor:pointer; display:flex; align-items:center; justify-content:center; color:#fff; }
+  #lg-root .agree-row .cb.on { background:var(--lg-blue); border-color:var(--lg-blue); }
+  #lg-root .agree-row.all { font-weight:800; font-size:14px; border-bottom:1.5px solid var(--lg-ink); }
+  #lg-root .pay-opt { display:flex; align-items:center; gap:12px; border:1.5px solid var(--lg-line); border-radius:12px; padding:15px; margin-top:11px; cursor:pointer; }
+  #lg-root .pay-opt.on { border-color:var(--lg-blue); background:var(--lg-blue-soft); }
+  #lg-root .pay-opt .pe { font-size:20px; }
+  #lg-root .pay-opt .pt2 { font-size:14px; font-weight:700; }
+
+  /* done */
+  #lg-root .done-wrap { padding:60px 30px; text-align:center; }
+  #lg-root .done-check {
+    width:80px; height:80px; border-radius:50%; background:var(--lg-success); margin:0 auto 24px;
+    display:flex; align-items:center; justify-content:center; font-size:40px; color:#fff;
+    animation: pop .4s cubic-bezier(.2,1.4,.5,1);
+  }
+  @keyframes pop { from{transform:scale(0)} to{transform:scale(1)} }
+  #lg-root .done-wrap h2 { font-size:23px; font-weight:800; letter-spacing:-.4px; }
+  #lg-root .done-wrap p { font-size:13.5px; color:var(--lg-gray-1); margin-top:12px; line-height:1.6; }
+  #lg-root .done-sum {
+    background:var(--lg-cream); border-radius:var(--lg-radius); padding:18px; margin-top:24px; text-align:left;
+  }
+  #lg-root .done-sum .dr { display:flex; justify-content:space-between; font-size:13px; padding:6px 0; }
+  #lg-root .done-sum .dr .dk { color:var(--lg-gray-1); }
+  #lg-root .done-sum .dr .dv { font-weight:700; }
+
+  /* ===== BIZ OPERATING HOME (in-app) ===== */
+  #lg-root .biz-home-top {
+    background: linear-gradient(135deg, var(--lg-navy), #16243f); color:#fff; padding:18px 20px 24px;
+  }
+  #lg-root .biz-home-top .bn { font-size:12px; color:#9fb0d0; }
+  #lg-root .biz-home-top .bb { font-size:19px; font-weight:800; margin-top:3px; display:flex; align-items:center; gap:8px; }
+  #lg-root .biz-home-top .plan-chip { font-size:10px; font-weight:800; background:var(--lg-blue); padding:3px 9px; border-radius:20px; }
+  #lg-root .biz-home-top .nextd {
+    margin-top:16px; background:rgba(255,255,255,.1); border-radius:13px; padding:14px 15px; display:flex; align-items:center; gap:12px;
+  }
+  #lg-root .biz-home-top .nextd .ne { font-size:24px; }
+  #lg-root .biz-home-top .nextd .nl { font-size:11px; color:#9fb0d0; }
+  #lg-root .biz-home-top .nextd .nv { font-size:14.5px; font-weight:800; margin-top:2px; }
+
+  #lg-root .quick { display:grid; grid-template-columns:1fr 1fr; gap:11px; padding:16px; }
+  #lg-root .quick button {
+    background:var(--lg-card); border:1px solid var(--lg-line); border-radius:var(--lg-radius); padding:16px;
+    text-align:left; cursor:pointer; transition:.15s;
+  }
+  #lg-root .quick button:active { background:#f7f8fa; }
+  #lg-root .quick button .qe { font-size:22px; }
+  #lg-root .quick button .qt { font-size:14px; font-weight:800; margin-top:9px; }
+  #lg-root .quick button .qd { font-size:11px; color:var(--lg-gray-1); margin-top:3px; }
+
+  #lg-root .sec-h { padding:6px 20px 4px; font-size:14px; font-weight:800; }
+  #lg-root .status-list { margin:6px 16px 16px; background:var(--lg-card); border-radius:var(--lg-radius); overflow:hidden; }
+  #lg-root .status-item { display:flex; align-items:center; gap:13px; padding:15px 16px; border-bottom:1px solid var(--lg-line); }
+  #lg-root .status-item:last-child { border-bottom:none; }
+  #lg-root .status-item .si {
+    width:42px; height:42px; border-radius:11px; display:flex; align-items:center; justify-content:center; font-size:19px; flex:0 0 42px;
+    background:var(--lg-cream);
+  }
+  #lg-root .status-item .stt { font-size:14px; font-weight:700; }
+  #lg-root .status-item .sds { font-size:11.5px; color:var(--lg-gray-1); margin-top:2px; }
+  #lg-root .status-item .pill {
+    margin-left:auto; font-size:10.5px; font-weight:800; padding:4px 10px; border-radius:20px;
+  }
+  #lg-root .pill.prog { background:#fff2e6; color:var(--lg-warn); }
+  #lg-root .pill.deliv { background:#e9f7f0; color:var(--lg-success); }
+  #lg-root .pill.wait { background:#eef0f3; color:var(--lg-gray-1); }
+
+  /* generic */
+  #lg-root .cta-bar {
+    position:sticky; bottom:0; padding:14px 20px calc(14px + env(safe-area-inset-bottom));
+    background:linear-gradient(to top, var(--lg-card) 75%, rgba(255,255,255,0)); 
+  }
+  #lg-root .btn {
+    width:100%; height:54px; border:none; border-radius:14px; background:var(--lg-navy); color:#fff;
+    font-size:16px; font-weight:800; cursor:pointer; font-family:inherit; transition:.15s;
+  }
+  #lg-root .btn:active { transform:scale(.98); }
+  #lg-root .btn.blue { background:var(--lg-blue); }
+  #lg-root .btn:disabled { background:var(--lg-line); color:var(--lg-gray-2); cursor:not-allowed; }
+  #lg-root .btn.ghost { background:var(--lg-card); color:var(--lg-navy); border:1.5px solid var(--lg-line); }
+
+  #lg-root .hint-flow {
+    text-align:center; font-size:11px; color:var(--lg-gray-2); padding:8px;
+  }
+</style>
+
+<script>
+(function(){
+  const root = document.getElementById('lg-root');
+
+  // ---------- state ----------
+  const S = {
+    view: 'home',            // home | app_my | wv_landing ... | done | order_*
+    isBizMember: false,      // 비즈니스 가입 여부 (데모: 가입 전부터 시작)
+    seg: 'stay',
+    plan: 'premium',
+    qty: {},
+    agreeAll: false,
+    payMethod: 'card',
+    orderItem: 0,            // 현재 보고 있는 서비스 인덱스
+    cart: {},                // { svcIndex: { itemIndex: qty } } 누적 장바구니
+    orderDate: 0,            // 선택한 수거 날짜 인덱스
+    activeOrders: [],        // 신청 완료된 수거 건 (홈 상단 현황)
+  };
+
+  const SEG = {
+    stay:     { e:'🏨', label:'숙박형', desc:'50객실 이하 호텔·펜션·풀빌라' },
+    fnb:      { e:'🍽️', label:'F&B형', desc:'카페·비스트로·파인다이닝' },
+    wellness: { e:'💪', label:'웰니스형', desc:'피트니스·에스테틱·미용실' },
+  };
+
+  // recommended qty + unit price per segment (예시 단가)
+  const ITEMS = {
+    stay: [
+      {cat:'침구', name:'시트 (싱글/더블)', type:'rent', q:30, price:1200},
+      {cat:'침구', name:'커버 (싱글/더블)', type:'rent', q:30, price:1400},
+      {cat:'침구', name:'베개피', type:'rent', q:40, price:600},
+      {cat:'타월', name:'대·중·소 타월', type:'rent', q:60, price:800},
+      {cat:'타월', name:'발매트', type:'rent', q:20, price:700},
+      {cat:'유니폼', name:'직원 와이셔츠 (S~2XL)', type:'rent', q:8, price:1500},
+      {cat:'세탁', name:'이불·패드·토퍼', type:'wash', q:10, price:9000},
+      {cat:'세탁', name:'커튼', type:'wash', q:6, price:12000},
+    ],
+    fnb: [
+      {cat:'홈/테이블', name:'테이블보 (2인/4인)', type:'rent', q:24, price:1300},
+      {cat:'홈/테이블', name:'냅킨·핸드타월', type:'rent', q:80, price:400},
+      {cat:'주방', name:'행주·걸레', type:'rent', q:40, price:500},
+      {cat:'유니폼', name:'앞치마 (홀/주방)', type:'rent', q:12, price:1200},
+      {cat:'유니폼', name:'조리복 (S~2XL)', type:'rent', q:8, price:1800},
+      {cat:'세탁', name:'유니폼 자켓·바지', type:'wash', q:10, price:6000},
+      {cat:'세탁', name:'커튼', type:'wash', q:4, price:12000},
+    ],
+    wellness: [
+      {cat:'타월', name:'대·중·소·오일 타월', type:'rent', q:100, price:700},
+      {cat:'타월', name:'베딩타월', type:'rent', q:30, price:900},
+      {cat:'의류', name:'운동복 상·하의 (S~3XL)', type:'rent', q:40, price:1600},
+      {cat:'의류', name:'가운', type:'rent', q:20, price:1500},
+      {cat:'기타', name:'플로어매트', type:'rent', q:8, price:700},
+      {cat:'세탁', name:'유니폼 티셔츠·스커트', type:'wash', q:14, price:5000},
+      {cat:'세탁', name:'가운·베딩타월 (세탁선택)', type:'wash', q:10, price:4500},
+    ],
+  };
+
+  const PLAN_PRICE = { standard: 1.0, premium: 1.18 }; // premium 단가 가산
+  const PLAN_BASE = { standard: 0, premium: 0 };
+  const VOUCHER = { standard: 100000, premium: 200000 };
+
+  function initQty(){
+    S.qty = {};
+    ITEMS[S.seg].forEach((it,i)=>{ S.qty[i] = it.q; });
+  }
+  initQty();
+
+  function calcMonthly(){
+    let rent=0, wash=0;
+    ITEMS[S.seg].forEach((it,i)=>{
+      const q = S.qty[i] ?? 0;
+      // 월 환산 대략: 렌탈 단가 * 수량 * 주기계수(주3~6회 → 12~24)
+      const cycle = S.plan==='premium' ? 24 : 12;
+      if(it.type==='rent') rent += it.price * q * cycle * PLAN_PRICE[S.plan];
+      else wash += it.price * q * 2; // 세탁 월 2회 가정
+    });
+    return { rent: Math.round(rent), wash: Math.round(wash), voucher: VOUCHER[S.plan] };
+  }
+
+  const won = n => n.toLocaleString('ko-KR');
+
+  // ---------- status bar ----------
+  function statusBar(dark){
+    return `<div class="lg-statusbar ${dark?'dark':''}">
+      <span>9:41</span>
+      <span>● ● ● &nbsp; 5G &nbsp; 🔋</span>
+    </div>`;
+  }
+
+  // ---------- shared GNB (실제 런드리고 4탭) ----------
+  function gnb(active){
+    const t = (key,ico,label)=>`<button class="${active===key?'on':''}" data-tab="${key}"><span class="gi">${ico}</span>${label}</button>`;
+    return `<div class="gnb">
+      ${t('home','🏠','홈')}
+      ${t('my','👤','MY')}
+    </div>`;
+  }
+
+  // ---------- REAL LAUNDRYGO HOME (단일 홈 + 사업장 섹션) ----------
+  function home(){
+    // 개인 세탁 히어로 슬라이드
+    const slidePersonal = `
+      <div class="hero-slide">
+        <div class="lgh-hero">
+          <h3>오늘 바로 세탁해요<br>한밤배송 받아보세요</h3>
+          <div class="basket">🧺</div>
+          <div class="meta">
+            <div><div class="ml">사용 가능 쿠폰</div><div class="mv">3장 ›</div></div>
+            <div class="div"></div>
+            <div><div class="ml">마지막 수거신청</div><div class="mv">32일 전 ›</div></div>
+          </div>
+          <button class="lgh-cta-main" data-go="home">수거신청</button>
+        </div>
+      </div>`;
+
+    const quick = `
+      <div class="lgh-quick">
+        <div><div class="qi">🅦</div><div class="qln">세탁가격</div></div>
+        <div><div class="qi">📅</div><div class="qln">구독안내</div></div>
+        <div><div class="qi">🔖</div><div class="qln">쉬운가이드</div></div>
+        <div><div class="qi">📍</div><div class="qln">서비스지역</div></div>
+      </div>`;
+
+    // 진행 현황 트래커 (사업장 주문)
+    const trackSteps = ['신청','수거','입고','세탁','배송'];
+    const ordersHtml = S.activeOrders.map(o=>{
+      const pillTxt = ['신청완료','수거예약','수거완료','세탁중','배송중'][o.step] || '진행중';
+      const steps = trackSteps.map((nm,i)=>{
+        const cls = i<o.step ? 'done' : (i===o.step ? 'cur' : '');
+        return `<div class="tstep ${cls}">${i>0?'<div class="tbar"></div>':''}<div class="tdot"></div><div class="tname">${nm}</div></div>`;
+      }).join('');
+      return `<div class="track-card" style="background:var(--lg-card);border:1px solid var(--lg-line-2)">
+        <div class="track-top">
+          <div class="te">${o.hasWash?'🧺':'📦'}</div>
+          <div>
+            <div class="tl" style="color:var(--lg-ink)">${o.names[0]}${o.svcCount>1?` 외 ${o.svcCount-1}건`:''}</div>
+            <div class="ts" style="color:var(--lg-gray-1)">${o.date} 수거 예정 · 총 ${o.qty}개</div>
+          </div>
+          <div class="tpill" style="background:var(--lg-blue-soft);color:var(--lg-blue)">${pillTxt}</div>
+        </div>
+        <div class="track-steps track-steps-light">${steps}</div>
+      </div>`;
+    }).join('');
+
+    // 사업장 카드 슬라이드 (요약형)
+    const slideBiz = S.isBizMember ? `
+      <div class="hero-slide">
+        <div class="biz-mode-card">
+          <div class="biz-slide-inner">
+            <div class="bn">🏢 런드리고 비즈니스 · 김다예 사업장</div>
+            <div class="bb">사업장 세탁·렌탈 <span class="plan-chip">${S.plan==='premium'?'PREMIUM':'STANDARD'}</span></div>
+            ${S.activeOrders.length>0
+              ? `<div class="nextd"><div class="ne">${S.activeOrders[0].hasWash?'🧺':'📦'}</div><div><div class="nl">진행 중 ${S.activeOrders.length}건 · 가장 최근</div><div class="nv">${S.activeOrders[0].names[0]}${S.activeOrders[0].svcCount>1?` 외 ${S.activeOrders[0].svcCount-1}건`:''} · ${['신청완료','수거예약','수거완료','세탁중','배송중'][S.activeOrders[0].step]}</div></div></div>`
+              : `<div class="nextd"><div class="ne">🚚</div><div><div class="nl">다음 배송</div><div class="nv">내일 오전 9–11시 · 클린 제품 12종</div></div></div>`}
+            <div class="biz-meta">
+              <div><span class="bml">바우처 잔액</span><span class="bmv">${won(S.plan==='premium'?180000:90000)}원</span></div>
+              <div><span class="bml">이번 달 예상</span><span class="bmv">${won(calcMonthly().rent+calcMonthly().wash)}원</span></div>
+            </div>
+            <button class="biz-order-btn bsi-next" data-go="order_select">＋ 사업장 수거신청</button>
+          </div>
+        </div>
+      </div>` : '';
+
+    // 캐러셀 + 점 인디케이터
+    const slideCount = S.isBizMember ? 2 : 1;
+    const carousel = `
+      <div class="hero-carousel" id="heroCarousel">
+        ${slidePersonal}
+        ${slideBiz}
+      </div>
+      ${slideCount>1 ? `<div class="hero-dots" id="heroDots">${Array.from({length:slideCount}).map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('')}</div>` : ''}`;
+
+    // 진행 현황 상세 리스트 (캐러셀 아래, 사업장 주문 있을 때만)
+    const trackSection = (S.isBizMember && S.activeOrders.length>0) ? `
+      <div class="track-list-wrap">
+        <div class="sec-h" style="padding:8px 20px 2px">사업장 수거 진행 현황</div>
+        <div style="padding:0 16px">${ordersHtml}</div>
+      </div>` : '';
+
+    // 가입 전 발견 배너
+    const promo = (!S.isBizMember) ? `
+      <div class="biz-promo" data-go="wv_landing">
+        <div class="bp-tag">FOR BUSINESS</div>
+        <div class="bp-t">사업장을 운영하시나요?</div>
+        <div class="bp-d">린넨·타월·유니폼 렌탈 & 세탁 — 런드리고 비즈니스</div>
+        <span class="bp-go">자세히 보기 →</span>
+      </div>` : '';
+
+    const svc = `
+      <div class="lgh-svc">
+        <div class="st">런드리고 서비스</div>
+        <div class="ss">필요할 때 편리하게 쓰는 서비스</div>
+        <div class="sgrid">
+          <div class="sitem"><div class="sic">👕</div><div class="sln">개별 빨래</div></div>
+          <div class="sitem"><div class="sic">🧥</div><div class="sln">생활빨래</div></div>
+          <div class="sitem"><div class="sic">🧼</div><div class="sln">프리미엄</div></div>
+          <div class="sitem"><div class="sic">🪡</div><div class="sln">수선</div></div>
+          <div class="sitem"><div class="sic">📦</div><div class="sln">의류 보관</div></div>
+          <div class="sitem"><div class="sic">♻️</div><div class="sln">헌옷 수거</div></div>
+        </div>
+      </div>`;
+
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen" style="background:var(--lg-bg-2)">
+      <div class="lgh-header">
+        <div>
+          <div class="htxt">세탁 없는 생활</div>
+          <div class="lgh-days"><span class="dnum">0</span><span class="dnum">0</span><span class="dnum">9</span><span class="dsuf">일 째</span></div>
+        </div>
+        <div class="lgh-lock">🔒</div>
+      </div>
+      ${carousel}
+      ${quick}
+      ${trackSection}
+      ${promo}
+      ${svc}
+      <div class="reset-bar" style="padding:14px 8px 18px">
+        <button data-reset="1">↺ 목업 초기화</button>
+      </div>
+    </div>
+    ${gnb('home')}`;
+  }
+
+  // ---------- screens ----------
+  function appMy(){
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen" style="background:var(--lg-bg-2)">
+      <div class="app-topbar"><h1>${S.isBizMember?'김다예 사업장 님':'런드리 님'}</h1><div class="app-prof"></div></div>
+
+      <div class="my-card">
+        <div class="name">${S.isBizMember?'런드리고 비즈니스':'와이셔츠&드라이 79'}</div>
+        <div class="sub">${S.isBizMember?(S.plan==='premium'?'Premium 요금제':'Standard 요금제'):'구독회원'}</div>
+        <div class="pts">
+          <div><b>${S.isBizMember?'12':'20'}</b><span>${S.isBizMember?'렌탈 품목':'잔여 / 제공'}</span></div>
+          <div><b>${S.isBizMember?(S.plan==='premium'?'18만P':'9만P'):'7/7'}</b><span>${S.isBizMember?'바우처 잔액':'개월 / 제공'}</span></div>
+          <div><b>${S.isBizMember?'4':'4/4'}</b><span>${S.isBizMember?'진행 건':'잔여 / 제공'}</span></div>
+        </div>
+      </div>
+
+      <div class="my-list">
+        ${ S.isBizMember ? '' : `
+        <div class="my-row biz" data-go="wv_landing">
+          <div class="ico">🏢</div>
+          <div><div class="lab">런드리고 비즈니스<span class="badge">NEW</span></div><div class="desc">사업장 린넨·타월·유니폼 렌탈 & 세탁</div></div>
+          <div class="arr">›</div>
+        </div>`}
+        <div class="my-row"><div class="ico" style="background:#eef0f3">🪪</div><div><div class="lab">회원정보</div></div><div class="arr">›</div></div>
+        <div class="my-row"><div class="ico" style="background:#eef0f3">📍</div><div><div class="lab">배송지 설정</div></div><div class="arr">›</div></div>
+        <div class="my-row"><div class="ico" style="background:#eef0f3">💳</div><div><div class="lab">결제수단 관리</div></div><div class="arr">›</div></div>
+        <div class="my-row"><div class="ico" style="background:#eef0f3">🧾</div><div><div class="lab">결제내역</div></div><div class="arr">›</div></div>
+        <div class="my-row"><div class="ico" style="background:#eef0f3">📦</div><div><div class="lab">의류보관함</div></div><div class="arr">›</div></div>
+        <div class="my-row"><div class="ico" style="background:#eef0f3">🎟️</div><div><div class="lab">쿠폰 · 바우처</div></div><div class="arr">›</div></div>
+      </div>
+    </div>
+    ${gnb('my')}`;
+  }
+
+  function webnav(title, target){
+    return `<div class="lg-webnav">
+      <button class="x" data-go="${target}">✕</button>
+      <span class="ttl">${title}</span>
+      <span class="lock">🔒 business.laundrygo.com</span>
+    </div>`;
+  }
+
+  function wvLanding(){
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('런드리고 비즈니스','app_my')}
+      <div class="hero">
+        <span class="tag">FOR BUSINESS</span>
+        <h2>한 번 쓰는 앱에서,<br>매일 쓰는 사업 파트너로</h2>
+        <p>소규모 숙박·F&B·웰니스 사업장을 위한<br>린넨·타월·유니폼 렌탈 & 세탁 서비스</p>
+      </div>
+
+      <div class="biz-section">
+        <div class="eyebrow">WHY LAUNDRYGO BUSINESS</div>
+        <div class="h3">사는 대신 빌리고,<br>관리 대신 맡기세요</div>
+        <div class="lead">구매·재고·폐기 부담 없이 항상 깨끗한 제품을 받고, 규격화 어려운 세탁물까지 한 번에 처리합니다.</div>
+
+        <div class="val-grid">
+          <div class="val"><div class="vi">🧺</div><div class="vt">구매 비용 Zero</div><div class="vd">런드리고 소유 제품을 임대해 초기 구매비가 없어요</div></div>
+          <div class="val"><div class="vi">♻️</div><div class="vt">재고 부담 Zero</div><div class="vd">마모·폐기 걱정 없이 항상 클린 제품 수령</div></div>
+          <div class="val"><div class="vi">🚚</div><div class="vt">당일 배송</div><div class="vd">수거 즉시 재고에서 클린 제품을 출고</div></div>
+          <div class="val"><div class="vi">📱</div><div class="vt">앱으로 관리</div><div class="vd">수거·세탁현황·결제를 앱에서 한 번에</div></div>
+        </div>
+      </div>
+
+      <div class="biz-section" style="padding-top:0">
+        <div class="eyebrow">WHO IT'S FOR</div>
+        <div class="h3">우리 사업장에 딱 맞게</div>
+        <div class="seg-cards">
+          <div class="seg"><div class="se">🏨</div><div><div class="st">숙박형</div><div class="sd">50객실 이하 호텔·펜션 · 매일 높은 회전율, 균일한 품질</div></div></div>
+          <div class="seg"><div class="se">🍽️</div><div><div class="st">F&B형</div><div class="sd">카페·다이닝 · 위생 기준 충족, 브랜드 일관성</div></div></div>
+          <div class="seg"><div class="se">💪</div><div><div class="st">웰니스형</div><div class="sd">피트니스·에스테틱 · 높은 위생 기대, 반복 방문</div></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn blue" data-go="wv_plans">요금제 보고 시작하기</button>
+    </div>`;
+  }
+
+  function wvPlans(){
+    const sP = (k)=> S.plan===k ? 'sel' : '';
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('요금제 선택','wv_landing')}
+      <div class="biz-section" style="padding-bottom:8px">
+        <div class="eyebrow">PRICING</div>
+        <div class="h3">두 가지 요금제,<br>사업 규모에 맞게</div>
+        <div class="lead">언제든 변경 가능하며, 고정 구독이 아니라 신청할 때마다 수량을 직접 선택합니다.</div>
+        <div class="plans">
+          <div class="plan ${sP('standard')}" data-plan="standard">
+            <div class="pn">Standard <div class="check">${S.plan==='standard'?'✓':''}</div></div>
+            <div class="feat">
+              <div class="frow"><span class="k">배송 주기</span><span class="v">주 3회</span></div>
+              <div class="frow"><span class="k">긴급 배송</span><span class="v">유료</span></div>
+              <div class="frow"><span class="k">세탁 바우처</span><span class="v">월 10만원</span></div>
+              <div class="frow"><span class="k">품목 교체</span><span class="v">마모 기준</span></div>
+            </div>
+          </div>
+          <div class="plan rec ${sP('premium')}" data-plan="premium">
+            <div class="reco">추천</div>
+            <div class="pn">Premium <div class="check">${S.plan==='premium'?'✓':''}</div></div>
+            <div class="feat">
+              <div class="frow"><span class="k">배송 주기</span><span class="v hot">주 6회</span></div>
+              <div class="frow"><span class="k">긴급 배송</span><span class="v hot">월 3회 무료</span></div>
+              <div class="frow"><span class="k">세탁 바우처</span><span class="v hot">월 20만원</span></div>
+              <div class="frow"><span class="k">품목 교체</span><span class="v hot">주기 보장 (RFID)</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="note">📌 모든 렌탈 품목에 RFID가 부착되어 세탁 횟수를 추적합니다. Premium은 신제품을 우선 공급받고, 일정 횟수 초과 시 Standard로 전환되어 재고가 효율적으로 회전합니다.</div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="ob1">이 요금제로 가입하기</button>
+    </div>`;
+  }
+
+  function progress(n){
+    let s='';
+    for(let i=1;i<=6;i++) s+=`<i class="${i<=n?'on':''}"></i>`;
+    return `<div class="ob-prog">${s}</div>`;
+  }
+
+  function ob1(){ // 비즈니스 회원 전환 + 사업자 정보
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('비즈니스 가입','wv_plans')}
+      <div class="ob-head">
+        ${progress(1)}
+        <div class="ob-step">STEP 1 · 비즈니스 회원 전환</div>
+        <div class="ob-title">사업자 정보를<br>입력해 주세요</div>
+        <div class="ob-sub">기존 런드리고 계정(김다예)을 비즈니스 회원으로 전환합니다. 일반 회원 정보는 그대로 유지돼요.</div>
+      </div>
+      <div class="ob-body">
+        <div class="field"><label>대표자명</label><input value="김다예" /></div>
+        <div class="field"><label>대표자 연락처</label><input value="010-1234-5678" /></div>
+        <div class="field"><label>사업장 주소</label><input placeholder="주소를 검색하세요" /></div>
+        <div class="field"><label>사업자등록증</label>
+          <div class="up" id="upload"><span style="font-size:22px">📄</span><span>탭하여 업로드</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="ob2">다음</button>
+    </div>`;
+  }
+
+  function ob2(){ // 사업장 기본정보 + 업종
+    const sc = (k)=> S.seg===k?'on':'';
+    const extra = S.seg==='stay'
+      ? `<div class="field"><label>객실 수</label><input placeholder="예: 32" /></div>
+         <div class="field"><label>일 평균 고객 수</label><input placeholder="예: 50" /></div>`
+      : S.seg==='fnb'
+      ? `<div class="field"><label>좌석 수</label><input placeholder="예: 40" /></div>
+         <div class="field"><label>일 평균 고객 수</label><input placeholder="예: 120" /></div>`
+      : `<div class="field"><label>회원 수</label><input placeholder="예: 300" /></div>
+         <div class="field"><label>일 평균 방문 고객 수</label><input placeholder="예: 60" /></div>`;
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('비즈니스 가입','ob1')}
+      <div class="ob-head">
+        ${progress(2)}
+        <div class="ob-step">STEP 2 · 기본 정보</div>
+        <div class="ob-title">사업장 유형을<br>선택해 주세요</div>
+        <div class="ob-sub">유형과 규모를 입력하면 품목별 권장 수량을 자동으로 제안해 드려요.</div>
+      </div>
+      <div class="ob-body">
+        <div class="field"><label>업종</label>
+          <div class="seg-choice">
+            <button class="${sc('stay')}" data-seg="stay"><span class="e">🏨</span>숙박형</button>
+            <button class="${sc('fnb')}" data-seg="fnb"><span class="e">🍽️</span>F&B형</button>
+            <button class="${sc('wellness')}" data-seg="wellness"><span class="e">💪</span>웰니스형</button>
+          </div>
+        </div>
+        ${extra}
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="ob3">권장 수량 보기</button>
+    </div>`;
+  }
+
+  function ob3(){ // 수량 선택
+    let cur='', rows='';
+    ITEMS[S.seg].forEach((it,i)=>{
+      if(it.cat!==cur){ cur=it.cat; rows+=`<div class="qty-cat">${cur}</div>`; }
+      const tag = it.type==='rent'?'<span class="qtag rent">렌탈</span>':'<span class="qtag wash">세탁</span>';
+      rows+=`<div class="qty-row">
+        <div>
+          <div class="qn">${it.name}${tag}</div>
+          <div class="qp">개당 ${won(it.price)}원${it.type==='wash'?' · 건당':' · 회전당'}</div>
+        </div>
+        <div class="stepper">
+          <button data-step="${i}|-1">−</button>
+          <span class="qv">${S.qty[i]}</span>
+          <button data-step="${i}|1">+</button>
+        </div>
+      </div>`;
+    });
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('수량 선택','ob2')}
+      <div class="ob-head">
+        ${progress(3)}
+        <div class="ob-step">STEP 3 · 수량 선택</div>
+        <div class="ob-title">${SEG[S.seg].label} 권장 수량이에요</div>
+        <div class="ob-sub">자유롭게 수정할 수 있어요. 고정 구독이 아니라 이후 수거 신청마다 다시 선택합니다.</div>
+      </div>
+      <div class="ob-body">${rows}</div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="ob4">예상 요금 확인</button>
+    </div>`;
+  }
+
+  function ob4(){ // 예상 요금
+    const c = calcMonthly();
+    const total = c.rent + c.wash;
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('예상 요금','ob3')}
+      <div class="ob-head">
+        ${progress(4)}
+        <div class="ob-step">STEP 4 · 예상 요금</div>
+        <div class="ob-title">${S.plan==='premium'?'Premium':'Standard'} 기준<br>월 예상 금액이에요</div>
+        <div class="ob-sub">실제 청구액은 매월 신청한 수량·횟수에 따라 정산됩니다.</div>
+      </div>
+      <div class="ob-body">
+        <div class="price-card">
+          <div class="price-row"><span>렌탈 품목 (월 환산)</span><span class="pv">${won(c.rent)}원</span></div>
+          <div class="price-row"><span>세탁 품목 (월 2회 기준)</span><span class="pv">${won(c.wash)}원</span></div>
+          <div class="price-row"><span>세탁 바우처 제공</span><span class="pv" style="color:var(--lg-success)">+${won(c.voucher)}원</span></div>
+          <div class="price-total">
+            <span class="pl">월 예상 합계</span>
+            <span class="pt">${won(total)}<small>원/월</small></span>
+          </div>
+        </div>
+        <div class="note">🎟️ 세탁 바우처는 SME 세탁·SME 렌탈·런드리고·런드리24에서 모두 사용할 수 있어요. RFID 기반으로 품목 사용 횟수를 추적해 항상 좋은 상태의 제품을 공급합니다.</div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="ob5">동의하고 결제 등록</button>
+    </div>`;
+  }
+
+  function ob5(){ // 약관 + 결제수단 + 첫 배송
+    const ck = S.agreeAll?'on':'';
+    const pm = (k)=> S.payMethod===k?'on':'';
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      ${webnav('서비스 시작','ob4')}
+      <div class="ob-head">
+        ${progress(5)}
+        <div class="ob-step">STEP 5 · 약관 · 결제</div>
+        <div class="ob-title">마지막 단계예요</div>
+        <div class="ob-sub">약관 동의 후 결제 수단을 등록하면 첫 배송 일정이 확정됩니다.</div>
+      </div>
+      <div class="ob-body">
+        <div class="agree-row all" id="agreeAll">
+          <div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>전체 동의</span>
+        </div>
+        <div class="agree-row"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>비즈니스 이용약관 (필수)</span></div>
+        <div class="agree-row"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>렌탈 자산 분실·파손 정책 (필수)</span></div>
+        <div class="agree-row"><div class="cb ${ck}">${S.agreeAll?'✓':''}</div><span>자동 결제·청구 동의 (필수)</span></div>
+
+        <div style="margin-top:22px; font-size:13px; font-weight:800;">결제 수단</div>
+        <div class="pay-opt ${pm('card')}" data-pay="card"><span class="pe">💳</span><span class="pt2">신용/체크카드</span></div>
+        <div class="pay-opt ${pm('account')}" data-pay="account"><span class="pe">🏦</span><span class="pt2">계좌 자동이체</span></div>
+
+        <div class="note" style="margin-top:18px">⚠️ 렌탈 품목은 런드리고 자산입니다. 분실 시 별도 과금될 수 있으며, RFID로 입·출고가 자동 기록됩니다.</div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn blue" data-go="done" ${S.agreeAll?'':'disabled'}>가입 완료하고 시작하기</button>
+    </div>`;
+  }
+
+  function done(){
+    const c = calcMonthly();
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      <div class="done-wrap">
+        <div class="done-check">✓</div>
+        <h2>비즈니스 회원이 되었어요!</h2>
+        <p>이제 런드리고 앱에서 일반 고객처럼<br>수거 신청·세탁 현황·결제를 이용하세요.</p>
+        <div class="done-sum">
+          <div class="dr"><span class="dk">사업장 유형</span><span class="dv">${SEG[S.seg].label}</span></div>
+          <div class="dr"><span class="dk">요금제</span><span class="dv">${S.plan==='premium'?'Premium':'Standard'}</span></div>
+          <div class="dr"><span class="dk">월 예상 금액</span><span class="dv">${won(c.rent+c.wash)}원</span></div>
+          <div class="dr"><span class="dk">첫 배송 예정</span><span class="dv">모레 (6/10) 오전</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="home" data-finish="1">홈으로 돌아가기</button>
+    </div>`;
+  }
+
+  // ---------- 사업장 수거신청 데이터 ----------
+  const ORDER_SVC = {
+    stay: [
+      {ic:'🛏️', name:'객실 린넨 렌탈', type:'rent', desc:'시트·커버·베개피', tags:['시트','커버','베개피'], emoji:'🛏️',
+        items:[{n:'시트 (싱글)',p:'82×210cm',price:1200,q:20},{n:'시트 (더블)',p:'152×210cm',price:1400,q:14},{n:'베개피',p:'50×70cm',price:600,q:30}]},
+      {ic:'🧻', name:'타월 렌탈', type:'rent', desc:'대·중·소 타월, 발매트', tags:['대타월','중타월','발매트'], emoji:'🧺',
+        items:[{n:'대 타월',p:'70×140cm',price:900,q:30},{n:'중 타월',p:'40×80cm',price:700,q:40},{n:'발매트',p:'45×65cm',price:700,q:12}]},
+      {ic:'👔', name:'직원 유니폼 렌탈', type:'rent', desc:'와이셔츠 S~2XL', tags:['와이셔츠','S~2XL'], emoji:'👔',
+        items:[{n:'와이셔츠 (S~L)',p:'사이즈 선택',price:1500,q:6},{n:'와이셔츠 (XL~2XL)',p:'사이즈 선택',price:1500,q:2}]},
+      {ic:'🪟', name:'커튼·이불 세탁', type:'wash', desc:'커튼, 이불, 패드 (2~3일)', tags:['커튼','이불','패드'], emoji:'🪟',
+        items:[{n:'암막 커튼',p:'장 단위',price:12000,q:4},{n:'이불·패드',p:'점 단위',price:9000,q:6}]},
+    ],
+    fnb: [
+      {ic:'🍽️', name:'테이블 린넨 렌탈', type:'rent', desc:'테이블보·냅킨·핸드타월', tags:['테이블보','냅킨','핸드타월'], emoji:'🍽️',
+        items:[{n:'테이블보 (2인)',p:'90×90cm',price:1300,q:12},{n:'테이블보 (4인)',p:'140×140cm',price:1600,q:8},{n:'냅킨',p:'45×45cm',price:400,q:60}]},
+      {ic:'👨‍🍳', name:'유니폼 렌탈', type:'rent', desc:'앞치마·조리복', tags:['앞치마','조리복','S~2XL'], emoji:'👨‍🍳',
+        items:[{n:'앞치마 (홀)',p:'사이즈 선택',price:1200,q:8},{n:'조리복 (S~2XL)',p:'사이즈 선택',price:1800,q:6}]},
+      {ic:'🪟', name:'커튼·유니폼 세탁', type:'wash', desc:'커튼, 자켓·바지 (2~3일)', tags:['커튼','자켓','바지'], emoji:'🪟',
+        items:[{n:'암막 커튼',p:'장 단위',price:12000,q:3},{n:'유니폼 자켓·바지',p:'점 단위',price:6000,q:8}]},
+    ],
+    wellness: [
+      {ic:'🧖', name:'타월 렌탈', type:'rent', desc:'대·중·소·오일 타월', tags:['대타월','중타월','오일타월'], emoji:'🧖',
+        items:[{n:'대 타월',p:'70×140cm',price:800,q:50},{n:'오일 타월',p:'40×80cm',price:700,q:40},{n:'베딩타월',p:'90×180cm',price:900,q:20}]},
+      {ic:'🩳', name:'운동복·가운 렌탈', type:'rent', desc:'운동복 상·하의, 가운', tags:['운동복','가운','S~3XL'], emoji:'🩳',
+        items:[{n:'운동복 상의 (S~3XL)',p:'사이즈 선택',price:1600,q:24},{n:'운동복 하의 (S~3XL)',p:'사이즈 선택',price:1600,q:24},{n:'가운',p:'프리',price:1500,q:14}]},
+      {ic:'🪟', name:'유니폼·가운 세탁', type:'wash', desc:'유니폼, 가운·베딩타월 (2~3일)', tags:['유니폼','가운'], emoji:'🪟',
+        items:[{n:'유니폼 티셔츠·스커트',p:'점 단위',price:5000,q:10},{n:'가운·베딩타월',p:'점 단위',price:4500,q:8}]},
+    ],
+  };
+
+  function svcList(){ return ORDER_SVC[S.seg]; }
+
+  // 장바구니 헬퍼
+  function cartQty(svc, item){ return (S.cart[svc] && S.cart[svc][item]) || 0; }
+  function setCartQty(svc, item, q){
+    if(!S.cart[svc]) S.cart[svc] = {};
+    if(q<=0){ delete S.cart[svc][item]; if(Object.keys(S.cart[svc]).length===0) delete S.cart[svc]; }
+    else S.cart[svc][item] = q;
+  }
+  function cartCount(){
+    let n=0; Object.values(S.cart).forEach(o=>Object.values(o).forEach(q=>n+=q)); return n;
+  }
+  function cartSvcCount(){ return Object.keys(S.cart).length; }
+  function cartTotal(){
+    let sum=0;
+    Object.entries(S.cart).forEach(([si,obj])=>{
+      const svc = svcList()[si];
+      Object.entries(obj).forEach(([ii,q])=>{ sum += svc.items[ii].price * q; });
+    });
+    return sum;
+  }
+  function cartHasWash(){
+    return Object.keys(S.cart).some(si=>svcList()[si].type==='wash');
+  }
+
+  // STEP A — 서비스 선택 (여러 개 누적 담기)
+  function orderSelect(){
+    const list = svcList();
+    let cards='';
+    list.forEach((s,i)=>{
+      const badge = s.type==='rent'?'<span class="sc-badge rent">렌탈</span>':'<span class="sc-badge wash">세탁</span>';
+      const inCart = S.cart[i] ? Object.values(S.cart[i]).reduce((a,b)=>a+b,0) : 0;
+      const plus = inCart>0
+        ? `<div class="sc-plus added">${inCart}</div>`
+        : `<div class="sc-plus">＋</div>`;
+      cards += `<div class="svc-card ${inCart>0?'in-cart':''}" data-order-svc="${i}">
+        <div class="sc-top">
+          <div class="sc-ic">${s.ic}</div>
+          <div>
+            <div class="sc-t">${s.name} ${badge}</div>
+            <div class="sc-d">${inCart>0?`담은 수량 ${inCart}개 · 탭하여 수정`:s.desc}</div>
+          </div>
+          ${plus}
+        </div>
+        <div class="sc-tags">${s.tags.map(t=>`<span class="sc-tag">${t}</span>`).join('')}</div>
+      </div>`;
+    });
+    const cnt = cartCount();
+    const bar = cnt>0 ? `
+      <div class="cta-bar">
+        <button class="btn blue" data-go="order_request">
+          <span style="display:flex;align-items:center;justify-content:center;gap:8px">
+            <span style="background:rgba(255,255,255,.25);border-radius:20px;padding:2px 10px;font-size:13px">${cartSvcCount()}종 ${cnt}개</span>
+            ${won(cartTotal())}원 수거신청
+          </span>
+        </button>
+      </div>` : '';
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen" style="background:var(--lg-bg-2)">
+      <div class="ord-head">
+        <button class="bk" data-go="home">‹</button>
+        <span class="ot">사업장 수거신청</span>
+      </div>
+      <div class="ord-wrap">
+        <div class="ord-q">${SEG[S.seg].label} 사업장<br>어떤 품목을 신청하세요?</div>
+        <div class="ord-tabs"><span class="on">가이드</span><span>가격표</span></div>
+        ${cards}
+        <div class="hint-flow" style="padding:16px 8px 8px">여러 서비스를 담아 한 번에 신청할 수 있어요</div>
+      </div>
+      ${bar}
+    </div>`;
+  }
+
+  // STEP B — 상품 상세 (호텔타월 홈서비스 구조 차용)
+  function orderDetail(){
+    const s = svcList()[S.orderItem];
+    let rows='';
+    s.items.forEach((it,i)=>{
+      const q = cartQty(S.orderItem, i);
+      rows += `<div class="pd-item">
+        <div style="flex:1">
+          <div class="pin">${it.n}</div>
+          <div class="pip">${it.p}</div>
+          <div class="pprice">${won(it.price)}원${s.type==='wash'?' / 점':' / 회전'}</div>
+        </div>
+        <div class="stepper">
+          <button data-oqty="${i}|-1">−</button>
+          <span class="qv">${q}</span>
+          <button data-oqty="${i}|1">＋</button>
+        </div>
+      </div>`;
+    });
+    const svcQ = S.cart[S.orderItem] ? Object.values(S.cart[S.orderItem]).reduce((a,b)=>a+b,0) : 0;
+    const notice = s.type==='wash'
+      ? ['수거 후 South/East 팩토리에서 세탁 공정을 거칩니다 (2~3일 소요).','세탁 완료 품목은 다음 렌탈 배송 시 합포장으로 출고됩니다.','운영 연속성에 영향이 없도록 렌탈 품목과 분리해 처리합니다.']
+      : ['사용한 렌탈 품목은 다음 수거신청 시 반납해 주세요.','모든 렌탈 품목에 RFID가 부착되어 입·출고가 자동 기록됩니다.','분실·심한 손상 시 품목별 보증금이 별도 과금될 수 있습니다.'];
+    const cnt = cartCount();
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen" style="background:var(--lg-card)">
+      <div class="ord-head">
+        <button class="bk" data-go="order_select">‹</button>
+        <span class="ot">${s.name}</span>
+      </div>
+      <div class="pd-hero">${s.emoji}</div>
+      <div class="pd-body">
+        <div class="pd-t">${s.name}</div>
+        <div class="pd-sub">${SEG[S.seg].label} 사업장 권장 구성입니다. 필요한 수량만큼 담아주세요.${s.type==='wash'?' 세탁 품목은 2~3일 리드타임이 있어요.':''}</div>
+        ${rows}
+        <div class="pd-notice">
+          <div class="pnt">안내사항</div>
+          <ul>${notice.map(n=>`<li>${n}</li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar" style="display:flex;gap:10px">
+      <button class="btn ghost" data-go="order_select" style="flex:1">${cnt>0?`목록 (${cnt}개 담김)`:'서비스 목록'}</button>
+      <button class="btn" data-go="order_select" style="flex:1.3" ${svcQ>0?'':'disabled'}>${svcQ>0?'담기 완료':'수량을 선택하세요'}</button>
+    </div>`;
+  }
+
+  // STEP C — 수거신청 상세 (수거지/날짜/바우처/결제)
+  function orderRequest(){
+    const itemSum = cartTotal();
+    const totalQ = cartCount();
+    const voucherBal = S.plan==='premium'?180000:90000;
+    // 세탁 품목 합계에만 바우처 자동 적용
+    let washSum=0;
+    Object.entries(S.cart).forEach(([si,obj])=>{
+      const svc=svcList()[si];
+      if(svc.type==='wash') Object.entries(obj).forEach(([ii,q])=>{ washSum += svc.items[ii].price*q; });
+    });
+    const useVoucher = Math.min(washSum, voucherBal);
+    const finalPay = Math.max(0, itemSum - useVoucher);
+    const dates = [{dd:'내일',dn:'6/9 (화)'},{dd:'모레',dn:'6/10 (수)'},{dd:'목요일',dn:'6/11 (목)'}];
+
+    // 장바구니 품목 라인 (서비스별 그룹)
+    let lines='';
+    Object.entries(S.cart).forEach(([si,obj])=>{
+      const svc = svcList()[si];
+      const tag = svc.type==='wash'?'<span class="sc-badge wash" style="margin-left:6px">세탁</span>':'<span class="sc-badge rent" style="margin-left:6px">렌탈</span>';
+      lines += `<div class="or-grp">${svc.name}${tag}</div>`;
+      Object.entries(obj).forEach(([ii,q])=>{
+        const it = svc.items[ii];
+        lines += `<div class="or-line"><span class="olk">${it.n}</span><span class="olv">${q}개 · ${won(it.price*q)}원</span></div>`;
+      });
+    });
+
+    const hasWash = cartHasWash();
+    const hasRent = Object.keys(S.cart).some(si=>svcList()[si].type==='rent');
+    const typeLabel = hasWash && hasRent ? '렌탈(당일) + 세탁(2~3일)' : (hasWash ? '세탁 (2~3일)' : '렌탈 (당일 출고)');
+
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen" style="background:var(--lg-bg-2)">
+      <div class="ord-head">
+        <button class="bk" data-go="order_select">‹</button>
+        <span class="ot">수거신청</span>
+      </div>
+
+      <div class="or-sec">
+        <div class="ost">신청 품목 · ${cartSvcCount()}종 ${totalQ}개</div>
+        ${lines || '<div class="or-line"><span class="olk">담은 품목이 없습니다</span></div>'}
+        <div class="or-line"><span class="olk">처리 방식</span><span class="olv">${typeLabel}</span></div>
+      </div>
+
+      <div class="or-sec">
+        <div class="ost">수거 · 배송 정보</div>
+        <div class="or-line"><span class="olk">사업장 주소</span><span class="olv">서울 강남구 …<span class="edit">변경</span></span></div>
+        <div class="or-line"><span class="olk">수거 방법</span><span class="olv">문 앞 수거<span class="edit">변경</span></span></div>
+        <div class="ost" style="margin-top:16px">수거 날짜</div>
+        <div class="or-date">
+          ${dates.map((d,i)=>`<button class="${S.orderDate===i?'on':''}" data-odate="${i}"><span class="dd">${d.dd}</span><span class="dn">${d.dn}</span></button>`).join('')}
+        </div>
+        ${hasWash?`<div class="hint-flow" style="text-align:left;padding:10px 0 0;color:var(--lg-warn)">※ 세탁 품목은 완료 후 다음 렌탈 배송 시 합포장 출고됩니다.</div>`:''}
+      </div>
+
+      <div class="or-sec">
+        <div class="ost">할인 · 바우처</div>
+        ${hasWash ? `<div class="or-voucher">🎟️ 세탁 바우처 자동 적용 · ${won(useVoucher)}원 (잔액 ${won(voucherBal-useVoucher)}원)</div>`
+          : `<div class="or-pay-row"><span class="olk">렌탈 품목은 바우처 미적용</span><span class="olv" style="color:var(--lg-gray-2)">—</span></div>`}
+      </div>
+
+      <div class="or-sec">
+        <div class="ost">결제 수단</div>
+        <div class="or-line"><span class="olk">${S.payMethod==='card'?'💳 신용/체크카드':'🏦 계좌 자동이체'}</span><span class="olv"><span class="edit">변경</span></span></div>
+      </div>
+
+      <div class="or-total">
+        <div class="ot-row"><span>품목 합계 (${totalQ}개)</span><span class="v">${won(itemSum)}원</span></div>
+        ${useVoucher>0?`<div class="ot-row"><span>세탁 바우처</span><span class="v" style="color:var(--lg-success)">−${won(useVoucher)}원</span></div>`:''}
+        <div class="ot-final"><span class="l">결제 예정 금액</span><span class="v">${won(finalPay)}원</span></div>
+      </div>
+      <div style="height:8px;background:var(--lg-bg-2)"></div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn blue" data-go="order_done">${won(finalPay)}원 신청하기</button>
+    </div>`;
+  }
+
+  function orderDone(){
+    const dates = ['6/9 (화)','6/10 (수)','6/11 (목)'];
+    const hasWash = cartHasWash();
+    const hasRent = Object.keys(S.cart).some(si=>svcList()[si].type==='rent');
+    let svcNames = Object.keys(S.cart).map(si=>svcList()[si].name).join(', ');
+    return `
+    ${statusBar(false)}
+    <div class="lg-screen">
+      <div class="done-wrap">
+        <div class="done-check">✓</div>
+        <h2>수거신청이 완료됐어요!</h2>
+        <p>${dates[S.orderDate]} 문 앞에서 수거합니다.<br>${hasWash&&hasRent?'렌탈은 당일 출고, 세탁은 완료 후 합포장돼요.':(hasWash?'세탁 완료 후 다음 렌탈 배송에 합포장돼요.':'클린 제품은 당일 출고됩니다.')}</p>
+        <div class="done-sum">
+          <div class="dr"><span class="dk">신청 서비스</span><span class="dv" style="text-align:right;max-width:200px">${cartSvcCount()}종 ${cartCount()}개</span></div>
+          <div class="dr"><span class="dk">수거 예정</span><span class="dv">${dates[S.orderDate]}</span></div>
+          <div class="dr"><span class="dk">결제 금액</span><span class="dv">${won(orderDoneFinal())}원</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="cta-bar">
+      <button class="btn" data-go="home" data-commit-order="1">홈으로 돌아가기</button>
+    </div>`;
+  }
+
+  function orderDoneFinal(){
+    const itemSum = cartTotal();
+    const voucherBal = S.plan==='premium'?180000:90000;
+    let washSum=0;
+    Object.entries(S.cart).forEach(([si,obj])=>{
+      const svc=svcList()[si];
+      if(svc.type==='wash') Object.entries(obj).forEach(([ii,q])=>{ washSum += svc.items[ii].price*q; });
+    });
+    return Math.max(0, itemSum - Math.min(washSum, voucherBal));
+  }
+
+  // ---------- render ----------
+  // 수거신청 확정 → 진행현황 등록
+  function commitOrder(){
+    const dates = ['6/9 (화)','6/10 (수)','6/11 (목)'];
+    const hasWash = cartHasWash();
+    const hasRent = Object.keys(S.cart).some(si=>svcList()[si].type==='rent');
+    const svcNames = Object.keys(S.cart).map(si=>svcList()[si].name);
+    S.activeOrders.unshift({
+      date: dates[S.orderDate],
+      qty: cartCount(),
+      svcCount: cartSvcCount(),
+      names: svcNames,
+      hasWash, hasRent,
+      step: 1, // 0신청 1수거예약 2수거 3세탁 4배송
+    });
+    S.cart = {};
+    S.orderDate = 0;
+  }
+
+  // 목업 초기화
+  function resetDemo(){
+    S.view='home'; S.isBizMember=false;
+    S.seg='stay'; S.plan='premium'; S.qty={}; S.agreeAll=false; S.payMethod='card';
+    S.orderItem=0; S.cart={}; S.orderDate=0; S.activeOrders=[];
+    initQty();
+    render();
+    const sc = root.querySelector('.lg-screen'); if(sc) sc.scrollTop=0;
+  }
+
+  function render(){
+    let html='';
+    switch(S.view){
+      case 'home': html=home(); break;
+      case 'app_my': html=appMy(); break;
+      case 'wv_landing': html=wvLanding(); break;
+      case 'wv_plans': html=wvPlans(); break;
+      case 'ob1': html=ob1(); break;
+      case 'ob2': html=ob2(); break;
+      case 'ob3': html=ob3(); break;
+      case 'ob4': html=ob4(); break;
+      case 'ob5': html=ob5(); break;
+      case 'done': html=done(); break;
+      case 'order_select': html=orderSelect(); break;
+      case 'order_detail': html=orderDetail(); break;
+      case 'order_request': html=orderRequest(); break;
+      case 'order_done': html=orderDone(); break;
+    }
+    root.innerHTML = `<div class="lg-phone"><div class="lg-notch"></div>${html}</div>`;
+    bind();
+  }
+
+  function bind(){
+    root.querySelectorAll('[data-go]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const t = el.getAttribute('data-go');
+        if(el.disabled) return;
+        // 가입 완료 처리
+        if(el.getAttribute('data-finish')){
+          S.isBizMember = true;
+        }
+        // 수거신청 완료 → 진행현황에 등록 후 장바구니 비우기
+        if(el.getAttribute('data-commit-order')){
+          commitOrder();
+        }
+        S.view = t;
+        render();
+        const sc = root.querySelector('.lg-screen'); if(sc) sc.scrollTop=0;
+      });
+    });
+    // GNB 탭 이동 (홈/MY만 화면 존재, 나머지는 홈 유지)
+    root.querySelectorAll('[data-tab]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const k = el.getAttribute('data-tab');
+        if(k==='my') S.view='app_my';
+        else S.view='home';
+        render();
+        const sc = root.querySelector('.lg-screen'); if(sc) sc.scrollTop=0;
+      });
+    });
+    root.querySelectorAll('[data-plan]').forEach(el=>{
+      el.addEventListener('click', ()=>{ S.plan=el.getAttribute('data-plan'); render(); });
+    });
+    root.querySelectorAll('[data-seg]').forEach(el=>{
+      el.addEventListener('click', ()=>{ S.seg=el.getAttribute('data-seg'); initQty(); render(); });
+    });
+    root.querySelectorAll('[data-step]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const [i,d] = el.getAttribute('data-step').split('|').map(Number);
+        S.qty[i] = Math.max(0, (S.qty[i]??0) + d);
+        render();
+      });
+    });
+    // 수거신청: 서비스 선택 → 상세로 (cart 유지)
+    root.querySelectorAll('[data-order-svc]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        S.orderItem = Number(el.getAttribute('data-order-svc'));
+        S.view='order_detail';
+        render();
+        const sc = root.querySelector('.lg-screen'); if(sc) sc.scrollTop=0;
+      });
+    });
+    // 수거신청: 상품 수량 (cart에 누적)
+    root.querySelectorAll('[data-oqty]').forEach(el=>{
+      el.addEventListener('click', ()=>{
+        const [i,d] = el.getAttribute('data-oqty').split('|').map(Number);
+        setCartQty(S.orderItem, i, cartQty(S.orderItem,i) + d);
+        render();
+      });
+    });
+    // 수거신청: 날짜 선택
+    root.querySelectorAll('[data-odate]').forEach(el=>{
+      el.addEventListener('click', ()=>{ S.orderDate = Number(el.getAttribute('data-odate')); render(); });
+    });
+    // 목업 리셋
+    root.querySelectorAll('[data-reset]').forEach(el=>{
+      el.addEventListener('click', ()=>{ resetDemo(); });
+    });
+    // 히어로 캐러셀 점 인디케이터
+    const car = root.querySelector('#heroCarousel');
+    const dots = root.querySelector('#heroDots');
+    if(car && dots){
+      car.addEventListener('scroll', ()=>{
+        const idx = Math.round(car.scrollLeft / car.clientWidth);
+        dots.querySelectorAll('i').forEach((d,i)=> d.classList.toggle('on', i===idx));
+      }, {passive:true});
+    }
+    const up = root.querySelector('#upload');
+    if(up) up.addEventListener('click', ()=>{ up.classList.add('done'); up.innerHTML='<span style="font-size:22px">✅</span><span>사업자등록증.jpg</span>'; });
+    const aa = root.querySelector('#agreeAll');
+    if(aa) aa.addEventListener('click', ()=>{ S.agreeAll=!S.agreeAll; render(); });
+  }
+
+  render();
+})();
+</script>
+</body>
+</html>
