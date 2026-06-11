@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>런드리고 스마트 옷장 — 브랜드 고객 맞춤 리포트</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'Noto Sans KR',sans-serif;background:#EAEEF0;display:flex;justify-content:center;padding:32px 16px 48px}
+
+.device-wrap{display:flex;flex-direction:column;align-items:center;gap:16px}
+.device{width:375px;background:#fff;border-radius:48px;border:8px solid #1a1a1a;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.22),0 0 0 1px #333}
+.notch{width:126px;height:32px;background:#1a1a1a;border-radius:0 0 22px 22px;margin:0 auto}
+.screen{height:740px;overflow:hidden;position:relative;background:#F2F4F3}
+.nav-hint{font-size:12px;color:#888;text-align:center;letter-spacing:.02em}
+
+.slide{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;background:#F2F4F3;transition:transform .38s cubic-bezier(.4,0,.2,1),opacity .3s}
+.slide::-webkit-scrollbar{display:none}
+.slide.hidden{transform:translateX(100%);opacity:0;pointer-events:none}
+.slide.back{transform:translateX(-26%);opacity:0;pointer-events:none}
+
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 20px 10px;background:#fff;border-bottom:0.5px solid rgba(0,0,0,.07);position:sticky;top:0;z-index:5}
+.nav-title{font-size:15px;font-weight:500;color:#1a1a1a}
+.nav-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;color:#1a1a1a;font-size:20px;transition:background .12s}
+.nav-btn:hover{background:rgba(0,0,0,.06)}
+
+/* Hero */
+.hero{background:linear-gradient(155deg,#1d9e75 0%,#0d7358 100%);padding:22px 20px 24px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;right:-50px;top:-50px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.05)}
+.hero-eye{font-size:11px;color:rgba(255,255,255,.72);letter-spacing:.06em;margin-bottom:6px}
+.hero-h{font-size:22px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:3px}
+.hero-s{font-size:12px;color:rgba(255,255,255,.75)}
+.hero-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:5px 12px;font-size:11px;color:#fff;margin-top:13px}
+
+.kpi-g{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:16px 16px 0}
+.kpi{background:#fff;border-radius:13px;padding:13px 10px;text-align:center;border:0.5px solid rgba(0,0,0,.07)}
+.kpi-n{font-size:22px;font-weight:700;color:#1d9e75}
+.kpi-l{font-size:10px;color:#888;margin-top:3px;line-height:1.4}
+
+.sec{padding:18px 16px 0}
+.sec-hd{font-size:11px;font-weight:500;color:#909090;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+
+.card{background:#fff;border-radius:15px;padding:15px;border:0.5px solid rgba(0,0,0,.07);margin-bottom:10px}
+.card-t{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:2px}
+.card-s{font-size:11px;color:#999;margin-bottom:13px}
+
+.bar-r{display:flex;align-items:center;gap:7px;margin-bottom:7px}
+.bar-r:last-child{margin-bottom:0}
+.bar-l{font-size:11px;color:#999;width:72px;flex-shrink:0;text-align:right}
+.bar-tr{flex:1;height:7px;background:#EAECEB;border-radius:4px;overflow:hidden}
+.bar-fi{height:100%;border-radius:4px}
+.bar-v{font-size:11px;color:#999;width:28px;text-align:right;flex-shrink:0}
+
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{font-size:11px;padding:5px 11px;border-radius:20px;background:#E5F4EE;color:#085041;font-weight:500}
+.chip.hi{background:#1d9e75;color:#fff}
+.chip.mid{background:#5DCAA5;color:#085041}
+
+.col-row{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+.col-row:last-child{margin-bottom:0}
+.col-dot{width:34px;height:34px;border-radius:50%;border:1.5px solid rgba(0,0,0,.1);flex-shrink:0}
+.col-nm{font-size:12px;font-weight:500;color:#1a1a1a}
+.col-hx{font-size:10px;color:#999}
+.col-pt{font-size:11px;color:#1d9e75;font-weight:700}
+
+.insight{background:#E5F4EE;border-radius:11px;padding:12px 13px;border-left:3px solid #1d9e75;margin-bottom:10px}
+.ins-t{font-size:12px;color:#085041;line-height:1.65}
+.ins-t b{color:#1d9e75}
+
+/* 월별 비교 차트 */
+.month-chart{display:flex;align-items:flex-end;gap:7px;height:64px;margin-top:8px}
+.mcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
+.mbar{width:100%;border-radius:3px 3px 0 0;min-height:4px}
+.mlbl{font-size:10px;color:#aaa}
+
+/* 브랜드 아이템 */
+.brand-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:0.5px solid rgba(0,0,0,.06);cursor:pointer;transition:background .1s}
+.brand-item:last-child{border-bottom:none;padding-bottom:0}
+.brand-rk{width:24px;height:24px;border-radius:50%;background:#E5F4EE;color:#1d9e75;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-rk.r1{background:#1d9e75;color:#fff}
+.brand-nm{font-size:13px;font-weight:500;color:#1a1a1a}
+.brand-ds{font-size:10px;color:#999;margin-top:1px}
+.brand-tg{font-size:10px;background:#E5F4EE;color:#0f6e56;padding:3px 8px;border-radius:8px;white-space:nowrap}
+.brand-arr{font-size:15px;color:#ddd;margin-left:4px}
+
+/* Peer 배너 */
+.peer-banner{background:#fff;border-radius:15px;border:0.5px solid rgba(0,0,0,.07);overflow:hidden;margin-bottom:10px;cursor:pointer}
+.peer-banner-head{background:linear-gradient(135deg,#1d9e75,#0d7358);padding:13px 15px;display:flex;align-items:center;gap:9px}
+.pbh-icon{font-size:20px;color:#fff}
+.pbh-title{font-size:13px;font-weight:500;color:#fff}
+.pbh-sub{font-size:10px;color:rgba(255,255,255,.75);margin-top:2px}
+.peer-body{padding:14px 15px}
+
+.peer-stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:13px}
+.peer-stat{background:#F5F7F5;border-radius:11px;padding:11px 13px}
+.peer-stat-label{font-size:10px;color:#999;margin-bottom:3px}
+.peer-stat-me{font-size:17px;font-weight:700;color:#1d9e75}
+.peer-stat-them{font-size:11px;color:#bbb;margin-top:2px}
+.peer-stat-diff{font-size:10px;margin-top:3px}
+.diff-up{color:#1d9e75}
+.diff-dn{color:#c47a1a}
+
+/* 그룹 브랜드 */
+.brand-discover{background:#fff;border-radius:15px;border:0.5px solid rgba(0,0,0,.07);margin-bottom:10px;overflow:hidden}
+.brand-discover-head{padding:13px 15px 9px;border-bottom:0.5px solid rgba(0,0,0,.06)}
+.brand-discover-t{font-size:13px;font-weight:500;color:#1a1a1a}
+.brand-discover-s{font-size:11px;color:#999;margin-top:2px}
+.brand-row{display:flex;align-items:center;gap:10px;padding:11px 15px;border-bottom:0.5px solid rgba(0,0,0,.05);cursor:pointer;transition:background .12s}
+.brand-row:hover{background:#F7F8F7}
+.brand-row:last-child{border-bottom:none}
+.brand-cnt{font-size:10px;color:#1d9e75;font-weight:500;white-space:nowrap}
+
+/* 습관 비교 */
+.habit-row{display:flex;align-items:flex-start;gap:10px;padding:11px 0;border-bottom:0.5px solid rgba(0,0,0,.05)}
+.habit-row:last-child{border-bottom:none;padding-bottom:0}
+.habit-ic{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.habit-ic.up{background:#E5F4EE;color:#1d9e75}
+.habit-ic.same{background:#F4F4F4;color:#888}
+.habit-ic.down{background:#FFF4E5;color:#c47a1a}
+.habit-body{flex:1}
+.habit-t{font-size:12px;font-weight:500;color:#1a1a1a;margin-bottom:2px}
+.habit-s{font-size:11px;color:#888;line-height:1.45}
+.habit-badge{font-size:10px;padding:3px 8px;border-radius:8px;white-space:nowrap;margin-left:auto;align-self:flex-start;margin-top:2px}
+.badge-up{background:#E5F4EE;color:#0f6e56;font-weight:500}
+.badge-same{background:#F0F0F0;color:#888}
+.badge-down{background:#FFF0DC;color:#c47a1a;font-weight:500}
+
+/* 비교 바 */
+.compare-row{display:flex;align-items:center;gap:0;margin-bottom:13px}
+.compare-row:last-child{margin-bottom:0}
+.compare-label{font-size:11px;color:#999;width:58px;flex-shrink:0}
+.compare-bars{flex:1;display:flex;flex-direction:column;gap:4px}
+.cbar-wrap{display:flex;align-items:center;gap:5px}
+.cbar-me{height:8px;border-radius:4px;background:#1d9e75}
+.cbar-them{height:8px;border-radius:4px;background:#D5D7D5}
+.cbar-lbl{font-size:10px;white-space:nowrap}
+.cbar-lbl.me{color:#1d9e75;font-weight:700}
+.cbar-lbl.them{color:#aaa}
+
+/* 추천 카드 */
+.rec-card{background:#fff;border-radius:15px;overflow:hidden;border:0.5px solid rgba(0,0,0,.07);margin-bottom:10px;cursor:pointer}
+.rec-head{padding:12px 15px;display:flex;justify-content:space-between;align-items:center}
+.rec-brand-nm{font-size:13px;font-weight:500;color:#fff}
+.rec-badge{font-size:10px;background:rgba(255,255,255,.2);color:#fff;padding:3px 9px;border-radius:9px;border:1px solid rgba(255,255,255,.3)}
+.rec-body{padding:14px 15px}
+.rec-item{font-size:14px;font-weight:500;color:#1a1a1a;margin-bottom:3px}
+.rec-why{font-size:11px;color:#888;line-height:1.55;margin-bottom:10px}
+.rec-why span{color:#1d9e75;font-weight:500}
+.rec-price{font-size:18px;font-weight:700;color:#1a1a1a}
+.rec-price-sub{font-size:10px;color:#bbb;margin-left:4px}
+.actions{display:flex;gap:7px;margin-top:11px}
+.btn-pri{flex:1;background:#1d9e75;color:#fff;border:none;border-radius:11px;padding:11px;font-size:12px;font-weight:500;cursor:pointer;transition:opacity .15s}
+.btn-pri:hover{opacity:.88}
+.btn-sec{width:40px;background:#F2F4F3;border:0.5px solid rgba(0,0,0,.08);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#1d9e75;font-size:18px}
+.big-btn{display:block;width:100%;background:#1d9e75;color:#fff;border:none;border-radius:13px;padding:15px;font-size:14px;font-weight:500;cursor:pointer;text-align:center;transition:opacity .15s;margin-bottom:10px}
+.big-btn:hover{opacity:.88}
+.big-btn.outline{background:#fff;color:#1d9e75;border:1.5px solid #1d9e75}
+
+/* 상세 */
+.detail-hero{background:linear-gradient(155deg,#1d9e75 0%,#0d7358 100%);padding:20px 20px 22px}
+.dh-eye{font-size:11px;color:rgba(255,255,255,.75);margin-bottom:4px;letter-spacing:.04em}
+.dh-h{font-size:20px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:3px}
+.dh-s{font-size:12px;color:rgba(255,255,255,.75);margin-bottom:12px}
+.dh-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:20px;padding:4px 12px;font-size:11px;color:#fff}
+
+.reason-row{display:flex;align-items:flex-start;gap:10px;padding:12px 0;border-bottom:0.5px solid rgba(0,0,0,.06)}
+.reason-row:last-child{border-bottom:none}
+.reason-ic{width:30px;height:30px;border-radius:9px;background:#E5F4EE;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:15px;color:#1d9e75}
+.reason-t{font-size:12px;color:#444;line-height:1.55}
+.reason-t b{color:#1a1a1a;font-weight:500}
+
+.tabbar{display:flex;background:#fff;border-top:0.5px solid rgba(0,0,0,.08);padding:9px 0 12px;position:sticky;bottom:0;z-index:5}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:#ccc;font-size:10px;transition:color .15s}
+.tab.active{color:#1d9e75}
+.tab i{font-size:23px}
+.pb{padding-bottom:82px}
+</style>
+</head>
+<body>
+
+<div class="device-wrap">
+<div class="device">
+  <div class="notch"></div>
+  <div class="screen">
+
+    <!-- ════ S0 메인 리포트 ════ -->
+    <div class="slide" id="s0">
+      <div class="hero">
+        <div class="hero-eye">스마트 옷장 · 2026 리포트</div>
+        <div class="hero-h">나는 얼마나 빨래에서<br>해방됐을까?</div>
+        <div class="hero-s">지금까지 절약한 나의 세탁 기록</div>
+        <div class="hero-pill"><i class="ti ti-sparkles"></i> 38건 분석 완료</div>
+      </div>
+
+      <div class="kpi-g">
+        <div class="kpi"><div class="kpi-n">38</div><div class="kpi-l">총 세탁<br>아이템</div></div>
+        <div class="kpi"><div class="kpi-n">7</div><div class="kpi-l">보유<br>브랜드</div></div>
+        <div class="kpi"><div class="kpi-n">2.9h</div><div class="kpi-l">절약한<br>시간</div></div>
+      </div>
+
+      <!-- 품목 구성 -->
+      <div class="sec">
+        <div class="sec-hd">품목 구성</div>
+        <div class="card">
+          <div class="card-t">내 옷장 비중</div>
+          <div class="card-s">맡긴 세탁물 기준</div>
+          <div class="bar-r"><div class="bar-l">가디건</div><div class="bar-tr"><div class="bar-fi" style="width:100%;background:#1d9e75"></div></div><div class="bar-v">18%</div></div>
+          <div class="bar-r"><div class="bar-l">재킷</div><div class="bar-tr"><div class="bar-fi" style="width:89%;background:#5DCAA5"></div></div><div class="bar-v">16%</div></div>
+          <div class="bar-r"><div class="bar-l">코트·트렌치</div><div class="bar-tr"><div class="bar-fi" style="width:89%;background:#9FE1CB"></div></div><div class="bar-v">16%</div></div>
+          <div class="bar-r"><div class="bar-l">니트·스웨터</div><div class="bar-tr"><div class="bar-fi" style="width:72%;background:#B5D4F4"></div></div><div class="bar-v">13%</div></div>
+          <div class="bar-r"><div class="bar-l">원피스·점프</div><div class="bar-tr"><div class="bar-fi" style="width:55%;background:#F4B8D4"></div></div><div class="bar-v">8%</div></div>
+          <div class="bar-r"><div class="bar-l">기타</div><div class="bar-tr"><div class="bar-fi" style="width:50%;background:#D5D7D5"></div></div><div class="bar-v">29%</div></div>
+        </div>
+      </div>
+
+      <!-- 스타일 DNA -->
+      <div class="sec">
+        <div class="sec-hd">스타일 DNA</div>
+        <div class="card">
+          <div class="card-t">나의 패션 정체성</div>
+          <div class="card-s">스타일 태그 빈도 분석</div>
+          <div class="chips">
+            <div class="chip hi">캐주얼룩 19</div>
+            <div class="chip mid">클래식 15</div>
+            <div class="chip">프레피룩 9</div>
+            <div class="chip">페미닌 6</div>
+            <div class="chip">미니멀룩 5</div>
+          </div>
+          <div class="insight" style="margin-top:12px;margin-bottom:0">
+            <div class="ins-t"><b>캐주얼 + 클래식 + 페미닌</b>이 혼합된 감각적인 취향이에요. 아우터 구성이 특히 다채로워요.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 컬러 팔레트 -->
+      <div class="sec">
+        <div class="sec-hd">컬러 팔레트</div>
+        <div class="card">
+          <div class="card-t">내 옷장 색감</div>
+          <div class="card-s">color_hex Top 5</div>
+          <div class="col-row"><div class="col-dot" style="background:#F5F5DC"></div><div style="flex:1"><div class="col-nm">베이지·아이보리</div><div class="col-hx">#F5F5DC · 6건</div></div><div class="col-pt">16%</div></div>
+          <div class="col-row"><div class="col-dot" style="background:#1A1A1A;border-color:#555"></div><div style="flex:1"><div class="col-nm">블랙</div><div class="col-hx">#1A1A1A · 4건</div></div><div class="col-pt">11%</div></div>
+          <div class="col-row"><div class="col-dot" style="background:#D2B48C"></div><div style="flex:1"><div class="col-nm">탄·황토</div><div class="col-hx">#D2B48C · 2건</div></div><div class="col-pt">5%</div></div>
+          <div class="col-row"><div class="col-dot" style="background:#F5A9B8"></div><div style="flex:1"><div class="col-nm">핑크·로즈</div><div class="col-hx">#F5A9B8 · 1건</div></div><div class="col-pt">3%</div></div>
+          <div class="col-row"><div class="col-dot" style="background:#004D40"></div><div style="flex:1"><div class="col-nm">딥 그린</div><div class="col-hx">#004D40 · 1건</div></div><div class="col-pt">3%</div></div>
+        </div>
+        <div class="insight">
+          <div class="ins-t">베이지·블랙 중심의 <b>뉴트럴 팔레트</b>에 핑크·그린 포인트가 더해진 감각적인 조합이에요.</div>
+        </div>
+      </div>
+
+      <!-- 보유 브랜드 -->
+      <div class="sec">
+        <div class="sec-hd">보유 브랜드</div>
+        <div class="card" style="padding:12px 15px">
+          <div class="brand-item" onclick="go(3)">
+            <div class="brand-rk r1">1</div>
+            <div style="flex:1"><div class="brand-nm">폴로 랄프로렌</div><div class="brand-ds">가디건·니트·스웨터 · 4건</div></div>
+            <div class="brand-tg">프레피</div>
+            <i class="ti ti-chevron-right brand-arr"></i>
+          </div>
+          <div class="brand-item" onclick="go(3)">
+            <div class="brand-rk">2</div>
+            <div style="flex:1"><div class="brand-nm">Vivienne Westwood</div><div class="brand-ds">가디건 · 2건</div></div>
+            <div class="brand-tg">아방가르드</div>
+            <i class="ti ti-chevron-right brand-arr"></i>
+          </div>
+          <div class="brand-item" onclick="go(3)">
+            <div class="brand-rk">3</div>
+            <div style="flex:1"><div class="brand-nm">막스마라</div><div class="brand-ds">코트·트렌치코트 · 1건</div></div>
+            <div class="brand-tg">럭셔리</div>
+            <i class="ti ti-chevron-right brand-arr"></i>
+          </div>
+          <div class="brand-item" onclick="go(3)">
+            <div class="brand-rk">4</div>
+            <div style="flex:1"><div class="brand-nm">The North Face</div><div class="brand-ds">패딩·롱패딩 · 2건</div></div>
+            <div class="brand-tg">아웃도어</div>
+            <i class="ti ti-chevron-right brand-arr"></i>
+          </div>
+          <div class="brand-item" style="border-bottom:none;padding-bottom:0" onclick="go(3)">
+            <div class="brand-rk">5</div>
+            <div style="flex:1"><div class="brand-nm">LIST</div><div class="brand-ds">코트 · 1건</div></div>
+            <div class="brand-tg">미니멀</div>
+            <i class="ti ti-chevron-right brand-arr"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 나와 비슷한 취향 -->
+      <div class="sec">
+        <div class="sec-hd">나와 비슷한 취향</div>
+        <div class="peer-banner" onclick="go(1)">
+          <div class="peer-banner-head">
+            <i class="ti ti-users pbh-icon"></i>
+            <div style="flex:1">
+              <div class="pbh-title">16,826명이 같은 스타일이에요</div>
+              <div class="pbh-sub">캐주얼·클래식 + 아우터 중심 취향 그룹</div>
+            </div>
+            <i class="ti ti-chevron-right" style="font-size:16px;color:rgba(255,255,255,.55);margin-left:auto"></i>
+          </div>
+          <div class="peer-body">
+            <div class="peer-stat-grid">
+              <div class="peer-stat">
+                <div class="peer-stat-label">나의 세탁 건수</div>
+                <div class="peer-stat-me">38건</div>
+                <div class="peer-stat-them">그룹 평균 22건</div>
+                <div class="peer-stat-diff diff-up"><i class="ti ti-arrow-up" style="font-size:10px"></i> 상위 16%</div>
+              </div>
+              <div class="peer-stat">
+                <div class="peer-stat-label">보유 브랜드 수</div>
+                <div class="peer-stat-me">7종</div>
+                <div class="peer-stat-them">그룹 평균 3.2종</div>
+                <div class="peer-stat-diff diff-up"><i class="ti ti-arrow-up" style="font-size:10px"></i> 상위 12%</div>
+              </div>
+            </div>
+            <div class="insight" style="margin-bottom:0">
+              <div class="ins-t">비슷한 취향 그룹에서 <b>브랜드 다양성과 세탁 관리 모두 상위권</b>이에요.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="brand-discover" onclick="go(2)" style="cursor:pointer">
+          <div class="brand-discover-head">
+            <div class="brand-discover-t">비슷한 취향의 사람들이 즐겨 입는 브랜드</div>
+            <div class="brand-discover-s">캐주얼·클래식 취향 고객 9,504명의 브랜드 데이터</div>
+          </div>
+          <div class="brand-row">
+            <div class="brand-rk r1">1</div>
+            <div style="flex:1"><div class="brand-nm">폴로 랄프로렌</div><div class="brand-ds">가디건·니트 · 비즈니스캐주얼</div></div>
+            <div class="brand-cnt">746명</div>
+            <i class="ti ti-chevron-right" style="font-size:15px;color:#ddd;margin-left:4px"></i>
+          </div>
+          <div class="brand-row">
+            <div class="brand-rk">2</div>
+            <div style="flex:1"><div class="brand-nm">COS</div><div class="brand-ds">코트·재킷 · 미니멀 클래식</div></div>
+            <div class="brand-cnt">411명</div>
+            <i class="ti ti-chevron-right" style="font-size:15px;color:#ddd;margin-left:4px"></i>
+          </div>
+          <div class="brand-row">
+            <div class="brand-rk">3</div>
+            <div style="flex:1"><div class="brand-nm">스톤 아일랜드</div><div class="brand-ds">아우터 · 스트릿 클래식</div></div>
+            <div class="brand-cnt">378명</div>
+            <i class="ti ti-chevron-right" style="font-size:15px;color:#ddd;margin-left:4px"></i>
+          </div>
+          <div style="padding:10px 15px;border-top:0.5px solid rgba(0,0,0,.05);display:flex;align-items:center;justify-content:center;gap:4px">
+            <span style="font-size:11px;color:#1d9e75;font-weight:500">브랜드 전체 보기</span>
+            <i class="ti ti-arrow-right" style="font-size:13px;color:#1d9e75"></i>
+          </div>
+        </div>
+      </div>
+
+      <!-- 세탁 패턴 -->
+      <div class="sec">
+        <div class="sec-hd">세탁 패턴</div>
+        <div class="card">
+          <div class="card-t">월별 의뢰 건수</div>
+          <div class="card-s">나 vs 비슷한 취향 그룹 평균</div>
+          <div style="display:flex;gap:12px;margin-bottom:10px">
+            <div style="display:flex;align-items:center;gap:4px"><div style="width:9px;height:9px;border-radius:2px;background:#1d9e75"></div><span style="font-size:10px;color:#888">나</span></div>
+            <div style="display:flex;align-items:center;gap:4px"><div style="width:9px;height:9px;border-radius:2px;background:#D5D7D5"></div><span style="font-size:10px;color:#888">그룹 평균</span></div>
+          </div>
+          <div class="month-chart">
+            <!-- 2월 없음 -->
+            <div class="mcol">
+              <div style="display:flex;gap:2px;align-items:flex-end;height:52px">
+                <div class="mbar" style="height:0px;background:#1d9e75;width:calc(50% - 1px)"></div>
+                <div class="mbar" style="height:8px;background:#D5D7D5;width:calc(50% - 1px)"></div>
+              </div>
+              <div class="mlbl">2월</div>
+              <div style="display:flex;gap:4px;justify-content:center">
+                <div style="font-size:9px;color:#ccc;font-weight:700">-</div>
+                <div style="font-size:9px;color:#aaa">5.1</div>
+              </div>
+            </div>
+            <div class="mcol">
+              <div style="display:flex;gap:2px;align-items:flex-end;height:52px">
+                <div class="mbar" style="height:20px;background:#1d9e75;width:calc(50% - 1px)"></div>
+                <div class="mbar" style="height:14px;background:#D5D7D5;width:calc(50% - 1px)"></div>
+              </div>
+              <div class="mlbl">3월</div>
+              <div style="display:flex;gap:4px;justify-content:center">
+                <div style="font-size:9px;color:#1d9e75;font-weight:700">13</div>
+                <div style="font-size:9px;color:#aaa">9.2</div>
+              </div>
+            </div>
+            <!-- 4월 없음 -->
+            <div class="mcol">
+              <div style="display:flex;gap:2px;align-items:flex-end;height:52px">
+                <div class="mbar" style="height:0px;background:#1d9e75;width:calc(50% - 1px)"></div>
+                <div class="mbar" style="height:14px;background:#D5D7D5;width:calc(50% - 1px)"></div>
+              </div>
+              <div class="mlbl">4월</div>
+              <div style="display:flex;gap:4px;justify-content:center">
+                <div style="font-size:9px;color:#ccc;font-weight:700">-</div>
+                <div style="font-size:9px;color:#aaa">8.8</div>
+              </div>
+            </div>
+            <div class="mcol">
+              <div style="display:flex;gap:2px;align-items:flex-end;height:52px">
+                <div class="mbar" style="height:52px;background:#1d9e75;width:calc(50% - 1px)"></div>
+                <div class="mbar" style="height:12px;background:#D5D7D5;width:calc(50% - 1px)"></div>
+              </div>
+              <div class="mlbl">5월</div>
+              <div style="display:flex;gap:4px;justify-content:center">
+                <div style="font-size:9px;color:#1d9e75;font-weight:700">25</div>
+                <div style="font-size:9px;color:#aaa">8.0</div>
+              </div>
+            </div>
+          </div>
+          <div class="insight" style="margin-top:12px;margin-bottom:0">
+            <div class="ins-t">5월 세탁량이 그룹 평균의 <b>3.1배</b>예요. 봄 시즌 아우터 집중 관리 패턴이 뚜렷해요.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 명품 추천 -->
+      <div class="sec pb">
+        <div class="sec-hd">맞춤 명품 추천</div>
+        <div class="insight">
+          <div class="ins-t">보유 브랜드 + 세탁 스타일·컬러 데이터로 <b>취향에 가장 맞는 명품</b>을 추천해 드려요.</div>
+        </div>
+
+        <div class="rec-card" onclick="go(4)">
+          <div class="rec-head" style="background:#1d9e75">
+            <div class="rec-brand-nm">막스마라</div>
+            <div class="rec-badge">취향 일치 97%</div>
+          </div>
+          <div class="rec-body">
+            <div class="rec-item">Manuela Camel Hair Coat</div>
+            <div class="rec-why">이미 <span>막스마라 코트 1건 보유</span>. 베이지·탄 컬러 선호 + 코트·트렌치 16% 비중이 완벽 매칭이에요.</div>
+            <div><span class="rec-price">₩2,890,000</span><span class="rec-price-sub">공식 추정가</span></div>
+            <div class="actions">
+              <button class="btn-pri" onclick="event.stopPropagation();go(4)">자세히 보기</button>
+              <div class="btn-sec"><i class="ti ti-heart"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-card" onclick="go(4)">
+          <div class="rec-head" style="background:#0f6e56">
+            <div class="rec-brand-nm">Vivienne Westwood</div>
+            <div class="rec-badge">취향 일치 94%</div>
+          </div>
+          <div class="rec-body">
+            <div class="rec-item">Orb Button Wool Cardigan</div>
+            <div class="rec-why"><span>비비안웨스트우드 가디건 2건 보유</span>. 그룹 내 캐주얼+페미닌 혼합 취향에서 가장 선호되는 아이템이에요.</div>
+            <div><span class="rec-price">₩680,000</span><span class="rec-price-sub">공식 추정가</span></div>
+            <div class="actions">
+              <button class="btn-pri" onclick="event.stopPropagation();go(4)">자세히 보기</button>
+              <div class="btn-sec"><i class="ti ti-heart"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rec-card" onclick="go(4)">
+          <div class="rec-head" style="background:#085041">
+            <div class="rec-brand-nm">COS</div>
+            <div class="rec-badge">취향 일치 91%</div>
+          </div>
+          <div class="rec-body">
+            <div class="rec-item">Relaxed Wool-Blend Blazer</div>
+            <div class="rec-why">그룹 내 <span>미니멀 클래식 취향 고객 411명 선택</span>. 재킷 16% 보유에 블랙·베이지 컬러 매칭이에요.</div>
+            <div><span class="rec-price">₩195,000</span><span class="rec-price-sub">공식 추정가</span></div>
+            <div class="actions">
+              <button class="btn-pri" onclick="event.stopPropagation();go(4)">자세히 보기</button>
+              <div class="btn-sec"><i class="ti ti-heart"></i></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tabbar">
+        <div class="tab active"><i class="ti ti-shirt"></i>옷장</div>
+        <div class="tab" onclick="go(1)"><i class="ti ti-users"></i>취향그룹</div>
+        <div class="tab" onclick="go(4)"><i class="ti ti-star"></i>추천</div>
+        <div class="tab"><i class="ti ti-user"></i>MY</div>
+      </div>
+    </div>
+
+    <!-- ════ S1 취향 그룹 비교 ════ -->
+    <div class="slide hidden" id="s1">
+      <div class="nav">
+        <div class="nav-btn" onclick="back()"><i class="ti ti-arrow-left"></i></div>
+        <div class="nav-title">나와 비슷한 취향</div>
+        <div class="nav-btn"></div>
+      </div>
+      <div class="detail-hero">
+        <div class="dh-eye">캐주얼·클래식·아우터 중심 취향 그룹</div>
+        <div class="dh-h">16,826명과<br>나를 비교해봤어요</div>
+        <div class="dh-s">같은 스타일 태그 · 아우터 품목 보유 고객</div>
+        <div class="dh-pill"><i class="ti ti-chart-dots" style="font-size:12px"></i> 실제 세탁 데이터 기반</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">핵심 지표 비교</div>
+        <div class="card">
+          <div class="compare-row">
+            <div class="compare-label">세탁 건수</div>
+            <div class="compare-bars">
+              <div class="cbar-wrap"><div class="cbar-me" style="width:100%"></div><span class="cbar-lbl me">나 38건</span></div>
+              <div class="cbar-wrap"><div class="cbar-them" style="width:58%"></div><span class="cbar-lbl them">평균 22건</span></div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-label">브랜드 수</div>
+            <div class="compare-bars">
+              <div class="cbar-wrap"><div class="cbar-me" style="width:100%"></div><span class="cbar-lbl me">나 7종</span></div>
+              <div class="cbar-wrap"><div class="cbar-them" style="width:46%"></div><span class="cbar-lbl them">평균 3.2종</span></div>
+            </div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-label">품목 종류</div>
+            <div class="compare-bars">
+              <div class="cbar-wrap"><div class="cbar-me" style="width:100%"></div><span class="cbar-lbl me">나 12종</span></div>
+              <div class="cbar-wrap"><div class="cbar-them" style="width:50%"></div><span class="cbar-lbl them">평균 6종</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">습관 비교</div>
+        <div class="card" style="padding:12px 15px">
+          <div class="habit-row">
+            <div class="habit-ic up"><i class="ti ti-trending-up"></i></div>
+            <div class="habit-body">
+              <div class="habit-t">세탁 빈도</div>
+              <div class="habit-s">그룹 평균보다 <b>72% 더</b> 자주 맡겨요. 옷 관리 의식이 매우 높아요.</div>
+            </div>
+            <div class="habit-badge badge-up">상위 16%</div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-ic up"><i class="ti ti-tag"></i></div>
+            <div class="habit-body">
+              <div class="habit-t">브랜드 다양성</div>
+              <div class="habit-s">그룹 대비 <b>2.2배</b> 다양한 브랜드를 보유해요. 명품·하이엔드 비중이 높아요.</div>
+            </div>
+            <div class="habit-badge badge-up">상위 12%</div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-ic up"><i class="ti ti-layers"></i></div>
+            <div class="habit-body">
+              <div class="habit-t">품목 다양성</div>
+              <div class="habit-s">12종의 품목을 관리 중이에요. 가디건·코트·원피스 등 <b>아우터 구성이 특히 풍부</b>해요.</div>
+            </div>
+            <div class="habit-badge badge-up">2배 이상</div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-ic same"><i class="ti ti-palette"></i></div>
+            <div class="habit-body">
+              <div class="habit-t">컬러 다양성</div>
+              <div class="habit-s">뉴트럴 베이스에 포인트 컬러 조합. 그룹의 화이트 중심과 비교해 <b>더 감각적인 팔레트</b>예요.</div>
+            </div>
+            <div class="habit-badge badge-same">평균+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">그룹 스타일 분포 · 일치율</div>
+        <div class="card">
+          <div class="chips" style="margin-bottom:12px">
+            <div class="chip hi">캐주얼룩</div>
+            <div class="chip mid">클래식룩</div>
+            <div class="chip">데일리룩</div>
+            <div class="chip">페미닌룩</div>
+            <div class="chip">프레피룩</div>
+          </div>
+          <div class="bar-r"><div class="bar-l">캐주얼룩</div><div class="bar-tr"><div class="bar-fi" style="width:100%;background:#1d9e75"></div></div><div class="bar-v">100%</div></div>
+          <div class="bar-r"><div class="bar-l">클래식</div><div class="bar-tr"><div class="bar-fi" style="width:93%;background:#5DCAA5"></div></div><div class="bar-v">93%</div></div>
+          <div class="bar-r"><div class="bar-l">프레피룩</div><div class="bar-tr"><div class="bar-fi" style="width:75%;background:#9FE1CB"></div></div><div class="bar-v">75%</div></div>
+        </div>
+      </div>
+
+      <div class="sec pb">
+        <button class="big-btn" onclick="go(2)">그룹이 즐겨 입는 브랜드 보기 ↗</button>
+        <button class="big-btn outline" onclick="go(4)">나의 맞춤 추천 보기</button>
+      </div>
+    </div>
+
+    <!-- ════ S2 그룹 인기 브랜드 ════ -->
+    <div class="slide hidden" id="s2">
+      <div class="nav">
+        <div class="nav-btn" onclick="back()"><i class="ti ti-arrow-left"></i></div>
+        <div class="nav-title">그룹 인기 브랜드</div>
+        <div class="nav-btn"></div>
+      </div>
+      <div class="detail-hero">
+        <div class="dh-eye">비슷한 취향 고객 9,504명 브랜드 데이터</div>
+        <div class="dh-h">이런 브랜드를<br>같이 입어요</div>
+        <div class="dh-s">캐주얼·클래식 취향 + 아우터 보유 고객 기준</div>
+        <div class="dh-pill"><i class="ti ti-users" style="font-size:12px"></i> 16,826명 기준</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">그룹 인기 브랜드 Top 8</div>
+        <div class="brand-discover">
+          <div class="brand-row"><div class="brand-rk r1">1</div><div style="flex:1"><div class="brand-nm">폴로 랄프로렌</div><div class="brand-ds">가디건·니트 · 비즈니스캐주얼</div></div><div class="brand-cnt">746명 <span style="font-size:9px;background:#E5F4EE;color:#0f6e56;padding:2px 5px;border-radius:5px;margin-left:3px">보유 중</span></div></div>
+          <div class="brand-row"><div class="brand-rk">2</div><div style="flex:1"><div class="brand-nm">COS</div><div class="brand-ds">코트·재킷 · 미니멀 클래식</div></div><div class="brand-cnt">411명</div></div>
+          <div class="brand-row"><div class="brand-rk">3</div><div style="flex:1"><div class="brand-nm">스톤 아일랜드</div><div class="brand-ds">아우터 · 스트릿 클래식</div></div><div class="brand-cnt">378명</div></div>
+          <div class="brand-row"><div class="brand-rk">4</div><div style="flex:1"><div class="brand-nm">ZARA</div><div class="brand-ds">코트·재킷 · 패스트패션 클래식</div></div><div class="brand-cnt">479명</div></div>
+          <div class="brand-row"><div class="brand-rk">5</div><div style="flex:1"><div class="brand-nm">Theory</div><div class="brand-ds">재킷 · 모던 클래식</div></div><div class="brand-cnt">491명</div></div>
+          <div class="brand-row"><div class="brand-rk">6</div><div style="flex:1"><div class="brand-nm">THE NORTH FACE</div><div class="brand-ds">패딩·아우터 · 아웃도어</div></div><div class="brand-cnt">433명 <span style="font-size:9px;background:#E5F4EE;color:#0f6e56;padding:2px 5px;border-radius:5px;margin-left:3px">보유 중</span></div></div>
+          <div class="brand-row"><div class="brand-rk">7</div><div style="flex:1"><div class="brand-nm">나이키</div><div class="brand-ds">스포츠·캐주얼 아우터</div></div><div class="brand-cnt">400명</div></div>
+          <div class="brand-row" style="border-bottom:none"><div class="brand-rk">8</div><div style="flex:1"><div class="brand-nm">DAKS</div><div class="brand-ds">코트·재킷 · 클래식 포멀</div></div><div class="brand-cnt">500명</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">고객님께 미발견 브랜드</div>
+        <div class="insight">
+          <div class="ins-t">같은 취향 그룹이 즐겨 입지만, 고객님 옷장엔 없는 브랜드예요.</div>
+        </div>
+        <div class="card" style="padding:12px 15px">
+          <div class="habit-row">
+            <div class="habit-ic up"><i class="ti ti-sparkles"></i></div>
+            <div class="habit-body">
+              <div class="habit-t">COS · 미니멀 클래식 재킷</div>
+              <div class="habit-s">그룹 내 코트·재킷 카테고리 2위. 블랙·베이지 컬러 취향과 딱 맞는 브랜드예요.</div>
+            </div>
+            <div class="habit-badge badge-up">추천</div>
+          </div>
+          <div class="habit-row">
+            <div class="habit-ic up"><i class="ti ti-sparkles"></i></div>
+            <div class="habit-body">
+              <div class="habit-t">스톤 아일랜드 · 아우터</div>
+              <div class="habit-s">캐주얼·클래식 혼합 취향의 그룹 내 아우터 3위. 감각적인 아이덴티티가 뚜렷해요.</div>
+            </div>
+            <div class="habit-badge badge-up">추천</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec pb">
+        <button class="big-btn" onclick="go(4)">나의 맞춤 명품 추천 보기 ↗</button>
+      </div>
+    </div>
+
+    <!-- ════ S3 브랜드 상세 ════ -->
+    <div class="slide hidden" id="s3">
+      <div class="nav">
+        <div class="nav-btn" onclick="back()"><i class="ti ti-arrow-left"></i></div>
+        <div class="nav-title">브랜드 상세</div>
+        <div class="nav-btn"></div>
+      </div>
+      <div class="detail-hero">
+        <div class="dh-eye">보유 브랜드 · 세탁 이력</div>
+        <div class="dh-h">폴로 랄프로렌</div>
+        <div class="dh-s">가디건·니트·스웨터 · 4건 세탁</div>
+        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:8px">
+          <div style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 11px;font-size:11px;color:#fff">프레피</div>
+          <div style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 11px;font-size:11px;color:#fff">비즈니스캐주얼</div>
+          <div style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 11px;font-size:11px;color:#fff">클래식</div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">세탁 품목 이력</div>
+        <div class="card">
+          <div class="bar-r"><div class="bar-l" style="width:76px">가디건</div><div class="bar-tr"><div class="bar-fi" style="width:100%;background:#1d9e75"></div></div><div class="bar-v">3건</div></div>
+          <div class="bar-r"><div class="bar-l" style="width:76px">니트·스웨터</div><div class="bar-tr"><div class="bar-fi" style="width:33%;background:#5DCAA5"></div></div><div class="bar-v">1건</div></div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">세탁 컬러 이력</div>
+        <div class="card">
+          <div class="col-row"><div class="col-dot" style="background:#F5A9B8"></div><div style="flex:1"><div class="col-nm">핑크·로즈</div><div class="col-hx">#F5A9B8</div></div></div>
+          <div class="col-row"><div class="col-dot" style="background:#F5F5DC"></div><div style="flex:1"><div class="col-nm">아이보리·베이지</div><div class="col-hx">#F5F5DC</div></div></div>
+          <div class="col-row"><div class="col-dot" style="background:#004D40"></div><div style="flex:1"><div class="col-nm">딥 그린</div><div class="col-hx">#004D40</div></div></div>
+          <div class="col-row"><div class="col-dot" style="background:#BDB79B"></div><div style="flex:1"><div class="col-nm">카키·탄</div><div class="col-hx">#BDB79B</div></div></div>
+        </div>
+      </div>
+
+      <div class="sec pb">
+        <div class="sec-hd">폴로 랄프로렌 추천 상품</div>
+        <div class="rec-card" onclick="go(4)">
+          <div class="rec-head" style="background:#1d9e75">
+            <div class="rec-brand-nm">폴로 랄프로렌</div>
+            <div class="rec-badge">보유 브랜드</div>
+          </div>
+          <div class="rec-body">
+            <div class="rec-item">Cable-Knit Cotton Cardigan</div>
+            <div class="rec-why">가디건 <span>3건 세탁 이력</span> + 프레피·클래식 스타일 매칭. 다음 시즌 핑크·베이지 컬러를 추천해요.</div>
+            <div><span class="rec-price">₩285,000</span><span class="rec-price-sub">공식 추정가</span></div>
+            <div class="actions"><button class="btn-pri" onclick="event.stopPropagation();go(4)">상품 상세 보기</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════ S4 추천 상품 상세 ════ -->
+    <div class="slide hidden" id="s4">
+      <div class="nav">
+        <div class="nav-btn" onclick="back()"><i class="ti ti-arrow-left"></i></div>
+        <div class="nav-title">추천 상품</div>
+        <div class="nav-btn"><i class="ti ti-heart" style="color:#1d9e75"></i></div>
+      </div>
+      <div class="detail-hero">
+        <div class="dh-eye">막스마라 · 추천 상품</div>
+        <div class="dh-h">Manuela<br>Camel Hair Coat</div>
+        <div class="dh-s">₩2,890,000 · 공식 추정가</div>
+        <div class="dh-pill"><i class="ti ti-sparkles" style="font-size:12px"></i> 취향 일치 97%</div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">추천 근거</div>
+        <div class="card" style="padding:12px 15px">
+          <div class="reason-row">
+            <div class="reason-ic"><i class="ti ti-shirt"></i></div>
+            <div class="reason-t"><b>막스마라 코트 이미 보유</b><br>같은 브랜드 코트를 맡긴 이력이 있어요. 취향이 검증된 브랜드예요.</div>
+          </div>
+          <div class="reason-row">
+            <div class="reason-ic"><i class="ti ti-palette"></i></div>
+            <div class="reason-t"><b>베이지·탄 컬러 최다 보유</b><br>카멜 컬러 코트는 #F5F5DC·#D2B48C 옷장 컬러와 완벽히 어울려요.</div>
+          </div>
+          <div class="reason-row">
+            <div class="reason-ic"><i class="ti ti-chart-bar"></i></div>
+            <div class="reason-t"><b>코트·트렌치 전체 품목의 16%</b><br>아우터 카테고리를 집중 관리하는 취향에 최적화된 상품이에요.</div>
+          </div>
+          <div class="reason-row">
+            <div class="reason-ic"><i class="ti ti-users"></i></div>
+            <div class="reason-t"><b>그룹 내 코트 보유 고객 선택 1위</b><br>16,826명 취향 그룹 중 코트 보유 고객의 최다 선택 브랜드예요.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec">
+        <div class="sec-hd">세탁 관리 안내</div>
+        <div class="card">
+          <div class="ins-t" style="font-size:12px;color:#444;line-height:1.65">카멜 헤어 소재는 <b>드라이클리닝 전용</b>이에요. 런드리고에 맡기면 소재별 최적 세탁법이 자동 적용돼요.</div>
+        </div>
+      </div>
+
+      <div class="sec pb">
+        <button class="big-btn">구매 & 세탁 가이드 ↗</button>
+        <button class="big-btn outline" onclick="back()">다른 추천 보기</button>
+      </div>
+    </div>
+
+  </div><!-- /screen -->
+</div><!-- /device -->
+<div class="nav-hint">브랜드·추천 카드를 탭해서 화면을 이동해보세요</div>
+</div><!-- /device-wrap -->
+
+<script>
+let stack = [];
+function go(n) {
+  const cur = document.querySelector('.slide:not(.hidden):not(.back)');
+  const nxt = document.getElementById('s' + n);
+  if (!nxt || nxt === cur) return;
+  stack.push(cur.id);
+  cur.classList.add('back');
+  nxt.classList.remove('hidden', 'back');
+  nxt.scrollTop = 0;
+}
+function back() {
+  if (!stack.length) return;
+  const prev = document.getElementById(stack.pop());
+  const cur = document.querySelector('.slide:not(.hidden):not(.back)');
+  if (!cur || !prev) return;
+  cur.classList.add('hidden');
+  prev.classList.remove('back');
+}
+</script>
+</body>
+</html>
