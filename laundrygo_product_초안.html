@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>런드리고 서비스 방향성</title>
+<style>
+  :root{
+    --ink:#14161a; --sub:#5b616b; --line:#e7e9ee;
+    --bg:#ffffff; --soft:#f6f7f9; --brand:#1b5e3f; --brand2:#2a8a5f;
+    --gold:#7a5c1a; --gold2:#c9a84c; --chip:#eef4f0;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--soft); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Pretendard","Malgun Gothic",sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased;
+  }
+  .page{max-width:940px; margin:0 auto; padding:0 20px;}
+  section{background:var(--bg); margin:26px 0; border:1px solid var(--line); border-radius:16px; padding:44px 48px;}
+  .eyebrow{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--brand2); font-weight:700; margin-bottom:10px;}
+  .eyebrow.gold{color:var(--gold);}
+  .eyebrow.base{color:var(--sub);}
+  h1{font-size:36px; line-height:1.22; margin:8px 0 8px; letter-spacing:-.025em;}
+  h2{font-size:26px; margin:4px 0 6px; letter-spacing:-.025em;}
+  h3{font-size:18px; margin:26px 0 8px; letter-spacing:-.01em;}
+  p{margin:8px 0; color:#2b2f36;}
+  .muted{color:var(--sub);}
+  .lead{font-size:17px; color:#33383f;}
+  .quote{font-size:21px; font-weight:700; color:var(--brand); letter-spacing:-.02em; margin:6px 0 10px;}
+  .tag{display:inline-block; font-size:12px; font-weight:700; color:var(--brand); background:var(--chip); padding:4px 10px; border-radius:999px; margin-right:6px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:14px;}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:14px;}
+  .card{border:1px solid var(--line); border-radius:12px; padding:18px; background:#fff;}
+  .card.soft{background:var(--soft);}
+  .card h4{margin:0 0 6px; font-size:15px; letter-spacing:-.01em;}
+  .card p{font-size:14px; margin:4px 0; color:#3a3f46;}
+  .num{font-size:13px; font-weight:700; color:var(--brand2);}
+  .num.gold{color:var(--gold);}
+  table{width:100%; border-collapse:collapse; margin-top:16px; font-size:14px;}
+  th,td{text-align:left; padding:13px 14px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{background:var(--soft); font-weight:700; color:#2b2f36; font-size:13px;}
+  td .s{color:var(--sub); font-size:13px;}
+  .pill-row{display:flex; gap:8px; flex-wrap:wrap; margin:14px 0;}
+  .flow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:16px 0; font-size:13px; font-weight:600; color:var(--brand);}
+  .flow span{background:var(--chip); padding:8px 12px; border-radius:8px;}
+  .flow .arr{background:none; color:var(--sub); font-weight:400;}
+  .cover{background:linear-gradient(160deg,#143a2b 0%, #1b5e3f 55%, #2a8a5f 100%); color:#fff; border:none; padding:64px 48px;}
+  .cover .eyebrow{color:#bfe6d3;}
+  .cover h1{color:#fff; font-size:42px;}
+  .cover p{color:#dcefe2;}
+  .toc{margin-top:26px; display:flex; flex-direction:column; gap:7px;}
+  .toc div{font-size:13px; color:#cfe9da;}
+  .toc .n{color:#8fd3b4; font-weight:700; margin-right:10px;}
+  .kpi{display:flex; gap:18px; flex-wrap:wrap; margin-top:14px;}
+  .kpi .box{flex:1; min-width:150px; border:1px solid var(--line); border-radius:12px; padding:16px; background:#fff;}
+  .kpi .v{font-size:24px; font-weight:800; color:var(--brand); letter-spacing:-.02em;}
+  .kpi .v.gold{color:var(--gold);}
+  .kpi .l{font-size:13px; color:var(--sub); margin-top:2px;}
+  .callout{border-left:3px solid var(--brand2); background:var(--soft); padding:13px 17px; border-radius:0 10px 10px 0; margin:16px 0; font-size:14px;}
+  .callout.gold{border-left-color:var(--gold2);}
+  a.link{color:var(--brand2); font-weight:600; text-decoration:none; border-bottom:1px solid #bfe0cf;}
+  .note{font-size:12px; color:#9aa0a8; margin-top:16px;}
+  .subtag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--brand2); background:var(--chip); padding:4px 11px; border-radius:999px; margin-bottom:6px;}
+  .concept-ph{border:2px dashed #d6dae1; background:var(--soft); border-radius:14px; padding:54px 30px; text-align:center; margin-top:16px;}
+  .concept-ph .ic{font-size:30px; opacity:.45;}
+  .concept-ph .t{font-size:14px; font-weight:700; color:#7b818a; margin-top:10px;}
+  .concept-ph .d{font-size:12px; color:#9aa0a8; margin-top:3px;}
+
+  /* 2축 + 기반 */
+  .axis2{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:16px;}
+  .axiscard{border-radius:14px; padding:24px 26px; color:#fff;}
+  .axiscard.clo{background:linear-gradient(135deg,#0f6e56,#1d9e75);}
+  .axiscard.sme{background:linear-gradient(135deg,#7a5c1a,#c9a84c);}
+  .axiscard .n{font-size:11px; font-weight:700; opacity:.75; letter-spacing:.12em;}
+  .axiscard h4{color:#fff; font-size:20px; margin:6px 0 1px;}
+  .axiscard .en{font-size:11px; color:rgba(255,255,255,.62);}
+  .axiscard p{color:rgba(255,255,255,.85); font-size:13px; margin-top:8px; line-height:1.6;}
+  .basecard{margin-top:14px; border:1px solid var(--line); background:var(--soft); border-radius:14px; padding:18px 22px; display:flex; gap:16px; align-items:flex-start;}
+  .basetag{background:#e1e4ea; color:#5b616b; font-size:11px; font-weight:700; padding:5px 11px; border-radius:999px; white-space:nowrap; margin-top:2px;}
+  .basecard .t{font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--sub);}
+  .basecard h4{margin:2px 0 3px; font-size:15px;}
+  .basecard p{margin:0; font-size:13px; color:#3a3f46;}
+
+  /* phone mockups */
+  .phones{display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:22px; justify-items:center; align-items:start;}
+  .phone-wrap{display:flex; flex-direction:column; align-items:center;}
+  .phone{width:248px; background:#0e1013; border-radius:34px; padding:10px; box-shadow:0 18px 40px rgba(20,30,24,.18);}
+  .phone .scr{background:#f4f6f5; border-radius:26px; overflow:hidden; height:512px; position:relative;}
+  .phone .nub{position:absolute; top:9px; left:50%; transform:translateX(-50%); width:78px; height:6px; background:#0e1013; border-radius:99px; z-index:5;}
+  .ph-top{padding:26px 16px 10px; background:#fff;}
+  .ph-title{font-size:16px; font-weight:800; letter-spacing:-.02em; color:#16181c;}
+  .ph-sub{font-size:11px; color:#8a9099; margin-top:1px;}
+  .ph-body{padding:12px 14px; overflow:hidden;}
+  .mk-cap{font-size:12px; font-weight:700; color:var(--brand2); text-align:center; margin-top:12px;}
+  .item{display:flex; gap:10px; align-items:center; background:#fff; border:1px solid #e9ecef; border-radius:14px; padding:10px 11px; margin-bottom:9px;}
+  .thumb{width:46px; height:46px; border-radius:10px; background:#eef1f0; display:flex; align-items:center; justify-content:center; font-size:22px; flex-shrink:0;}
+  .item .nm{font-size:12.5px; font-weight:700; color:#1a1c20; line-height:1.3;}
+  .item .meta{font-size:10.5px; color:#9197a0; margin-top:2px;}
+  .price{font-size:12.5px; font-weight:800; color:var(--brand); margin-top:3px;}
+  .price small{font-weight:600; color:#8a9099; font-size:10px;}
+  .sellbtn{margin-left:auto; align-self:center; font-size:10.5px; font-weight:800; color:#fff; background:var(--brand2); padding:7px 10px; border-radius:9px; white-space:nowrap;}
+  .badge50{display:inline-block; font-size:10px; font-weight:800; color:#0e6b4f; background:#e3f3ea; border:1px solid #bfe0cf; padding:3px 8px; border-radius:7px; margin-top:6px;}
+  .hero{background:linear-gradient(135deg,#1b5e3f,#2a8a5f); color:#fff; border-radius:16px; padding:14px; margin-bottom:11px;}
+  .hero .big{font-size:13px; font-weight:800;}
+  .hero .pr{font-size:22px; font-weight:900; margin:6px 0 2px; letter-spacing:-.02em;}
+  .hero .ss{font-size:10.5px; color:#d6efe1;}
+  .cta{background:#16181c; color:#fff; text-align:center; font-size:12.5px; font-weight:800; padding:12px; border-radius:12px; margin-top:4px;}
+  .feedhead{font-size:12px; font-weight:800; color:#1a1c20; margin:2px 0 9px;}
+  .cleanchip{display:inline-block; font-size:9.5px; font-weight:700; color:#0e6b4f; background:#e3f3ea; padding:2px 6px; border-radius:6px; margin-top:4px;}
+  .matchchip{display:inline-block; font-size:9.5px; font-weight:700; color:#7a5c1a; background:#faf3e0; padding:2px 6px; border-radius:6px; margin-top:4px;}
+
+  @media (max-width:760px){
+    .grid2,.grid3,.kpi,.axis2{grid-template-columns:1fr; display:block;} .kpi .box,.axiscard{margin-bottom:10px;}
+    .phones{grid-template-columns:1fr;}
+    section{padding:30px 22px;} .cover{padding:46px 24px;} h1{font-size:28px;} .cover h1{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- COVER -->
+  <section class="cover">
+    <div class="eyebrow">런드리고 · Product &amp; Business</div>
+    <h1>런드리고 서비스 방향성</h1>
+    <p class="lead" style="color:#eafff3;">한 번 쓰는 세탁 앱에서 매일 쓰는 런드리 라이프스타일 플랫폼으로,</p>
+    <p>세탁 데이터를 기반으로 의류 자산 관리와 B2B 렌탈까지 확장합니다.</p>
+  </section>
+
+  <!-- OVERVIEW: 2축 + 기반 -->
+  <section>
+    <div class="eyebrow">Overview</div>
+    <h2>개요</h2>
+    <p class="lead">런드리고는 <strong>세탁 데이터</strong>라는 독보적 자산을 보유한 유일한 사업자입니다. 이 자산을 의류 자산 관리·중고거래·B2B 렌탈로 연결해, 두 개의 성장 축과 이를 담는 앱 기반을 구축합니다.</p>
+
+    <div class="callout"><strong>세탁 데이터가 특별한 이유.</strong> 세탁을 맡기는 옷은 고객이 <strong>지금 입고 있는 옷</strong>이자, 자주 빨아 입을 만큼 <strong>아끼는 옷</strong>입니다. 한 번의 구매 시점에 머무는 구매 데이터와 달리, 세탁 데이터는 실제 착용과 함께 시간에 따라 쌓이며 <strong>고객의 진짜 취향</strong>을 보여줍니다. 구매 데이터가 담을 수 없는 이 가치를, 런드리고만이 확보할 수 있습니다.</div>
+
+    <div class="axis2">
+      <div class="axiscard clo">
+        <div class="n">01 · 성장 축</div>
+        <h4>런드리고 디지털 클로젯</h4>
+        <div class="en">서비스명 · 클로렛 (Clorette)</div>
+        <p>의류 자산 관리부터 헌옷수거·중고거래·보관까지. 세탁 데이터로 구현하는 차별화된 의류 플랫폼이자, 리커머스 시장으로의 진입점.</p>
+      </div>
+      <div class="axiscard sme">
+        <div class="n">02 · 성장 축</div>
+        <h4>SME</h4>
+        <div class="en">B2B Rental &amp; Laundry</div>
+        <p>숙박·F&amp;B·웰니스 소규모 사업장 대상 린넨·유니폼 렌탈 &amp; 세탁. 기존 인프라를 그대로 활용한 고LTV 매출원.</p>
+      </div>
+    </div>
+    <div class="basecard">
+      <span class="basetag">기반</span>
+      <div>
+        <div class="t">선행 작업</div>
+        <h4>홈 개편 — 두 축을 담는 앱 구조 전환</h4>
+        <p>클로렛과 SME가 자연스럽게 안착할 수 있는 앱 구조를 선행 구축합니다. 세탁이 없는 날에도 방문하게 되는 앱으로의 전환이 두 축의 성장을 뒷받침합니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 성장 축 ① : 리커머스 시장 기회 ===== -->
+  <section>
+    <div class="eyebrow">성장 축 ① · 런드리고 디지털 클로젯</div>
+    <span class="subtag">1-1. 리커머스 시장 기회</span>
+    <h2>런드리고가 가장 잘할 수 있는 시장</h2>
+    <p class="lead">중고거래는 불황형 소비를 동력으로 빠르게 성장하는 시장이며, 그 중심에는 패션이 있습니다. 그러나 의류 중고거래의 성장은 단순한 거래 플랫폼만으로는 한계가 있습니다. 구매자는 상품 상태를 직접 확인하기 어렵고, 판매자는 신뢰를 증명하기 어렵기 때문입니다.</p>
+    <p>중고 의류 거래의 핵심 경쟁력은 단순 중개가 아닌 <strong>상품 상태에 대한 신뢰 확보</strong>에 있으며, 세탁 인프라와 의류 데이터를 보유한 런드리고는 이를 가장 효과적으로 해결할 수 있는 사업자입니다.</p>
+
+    <div class="kpi">
+      <div class="box"><div class="v">약 43조 원</div><div class="l">국내 중고거래 시장 (2025 전망)</div></div>
+      <div class="box"><div class="v">5조 원+</div><div class="l">국내 중고 패션 시장</div></div>
+      <div class="box"><div class="v">24.3%</div><div class="l">2027년 국내 의류시장 내 중고 비중 전망</div></div>
+      <div class="box"><div class="v">$393B</div><div class="l">2030년 글로벌 중고의류 시장 전망</div></div>
+    </div>
+
+    <h3>시장은 크지만, 의류 중고거래의 병목은 '상태 검증'입니다</h3>
+    <p>패션은 중고거래의 핵심 카테고리로 자리 잡았습니다. 그러나 의류 거래는 상품 상태와 정품 여부를 구매 전에 확인하기 어렵다는 구조적 한계를 가지고 있습니다.</p>
+    <p>실제로 중고거래 이용자의 <strong>23.8%가 거래 피해를 경험</strong>한 것으로 조사되었으며(한국소비자원, 2022), 의류 거래에서는 오염·냄새·손상 여부와 같은 상태 정보를 판매자의 설명과 사진에 의존해야 하는 문제가 존재합니다.</p>
+    <p>이러한 이유로 글로벌 및 국내 주요 리세일 플랫폼들은 거래 중개보다 <strong>검수와 인증 체계 구축</strong>에 집중하고 있습니다.</p>
+    <div class="grid3">
+      <div class="card soft"><h4>KREAM</h4><p>검수센터를 통한 상품 검수 후 거래.</p></div>
+      <div class="card soft"><h4>eBay</h4><p>Authenticity Guarantee 정품 인증 프로그램 운영.</p></div>
+      <div class="card soft"><h4>The RealReal</h4><p>전문가 검수 조직을 핵심 경쟁력으로 운영.</p></div>
+    </div>
+    <p>리세일 시장의 선도 기업들이 공통적으로 선택한 해법은 단순 거래 연결이 아닌 <strong>검수 기반 신뢰 확보</strong>입니다.</p>
+
+    <h3>왜 런드리고가 가장 잘할 수 있는가</h3>
+    <div class="grid2">
+      <div class="card soft"><div class="num">세탁·검수</div><h4>판매 전 세탁·검수 표준화</h4><p>런드리고는 이미 전국 단위 수거망과 세탁 공정, 검품 프로세스를 운영하고 있습니다. 판매 전 세탁과 검수를 표준 프로세스로 제공해 상품 상태에 대한 신뢰를 확보합니다.</p></div>
+      <div class="card soft"><div class="num">압도적 편의성</div><h4>문 앞에 내놓으면 끝</h4><p>판매자는 옷을 문 앞에 내놓기만 하면 됩니다. 런드리고가 수거 → 세탁 → 검수 → 판매 등록까지 처리해, 사진 촬영·세탁·포장·택배 등 기존 중고거래의 번거로움을 모두 제거합니다.</p></div>
+      <div class="card soft"><div class="num">데이터 기반 매칭</div><h4>구매 가능성 높은 고객에 노출</h4><p>세탁 데이터로 고객이 실제 보유한 브랜드·스타일·컬러·착용 패턴을 파악하고, 이를 기반으로 구매 가능성이 높은 고객에게 상품을 노출해 거래 성사율을 높입니다.</p></div>
+      <div class="card soft"><div class="num">낮은 실행 비용</div><h4>기존 인프라로 빠른 검증</h4><p>별도의 검수센터·물류 인프라를 구축하지 않고도 기존 운영 인프라를 활용해 빠르게 시장을 검증할 수 있습니다.</p></div>
+    </div>
+
+    <h3>구매자 매칭의 근거 — 런드리고가 보유한 의류 데이터 자산</h3>
+    <p>세탁 데이터에서 축적되는 정보는 일반 중고거래 플랫폼이 보유하기 어려운 자산이며, 세탁 이력이 축적될수록 개인화 정확도가 높아져 거래 성사율 향상으로 이어집니다.</p>
+    <div class="pill-row">
+      <span class="tag">브랜드 정보</span>
+      <span class="tag">품목 정보</span>
+      <span class="tag">컬러 · 스타일</span>
+      <span class="tag">세탁 주기</span>
+      <span class="tag">보관 이용 이력</span>
+      <span class="tag">프리미엄 의류 보유 여부</span>
+    </div>
+
+    <h3>예상 시장 규모 및 매출 기회</h3>
+    <p>해외 조사에 따르면 소비자는 평균 20~30벌 수준의 미착용 의류를 보유하고 있습니다. 고객 10만 명, 판매자당 15벌 등록, 평균 거래가 5만 원을 기준으로 한 추정입니다.</p>
+    <table>
+      <thead><tr><th>항목</th><th style="text-align:right;">현재 가정</th><th style="text-align:right;">중기 시나리오</th></tr></thead>
+      <tbody>
+        <tr><td>판매 참여율 · 거래 성공률</td><td style="text-align:right;">30% · 30%</td><td style="text-align:right;">40% · 50%</td></tr>
+        <tr><td>거래 성사 의류 수</td><td style="text-align:right;">135,000벌</td><td style="text-align:right;">300,000벌</td></tr>
+        <tr><td><strong>예상 거래액 (GMV)</strong></td><td style="text-align:right;"><strong>연간 67.5억 원</strong></td><td style="text-align:right;"><strong>연간 150억 원</strong></td></tr>
+        <tr><td><strong>예상 매출</strong></td><td style="text-align:right;"><strong>21.6억 원</strong></td><td style="text-align:right;"><strong>48억 원</strong></td></tr>
+      </tbody>
+    </table>
+    <p class="note">예상 매출 = 거래 수수료(10%) + 세탁 + 검수 매출 합산(벌당 16,000원). 가정 기반 추정치로, 실제 데이터로 검증·보정이 필요합니다.</p>
+
+    <h3>왜 지금 해야 하는가, 런드리고의 기회</h3>
+    <div class="grid2">
+      <div class="card"><h4>런드리고만이 보유한 의류 데이터 자산</h4><p>수년간 축적된 세탁 데이터를 통해 브랜드 선호도·스타일·착용 빈도 등 의류 데이터를 확보했습니다.</p></div>
+      <div class="card"><h4>AI 기술 발전</h4><p>AI를 활용해 상품 정보 추출·상태 분류·상품 등록 자동화가 가능해졌습니다.</p></div>
+      <div class="card"><h4>기존 인프라 활용</h4><p>수거·세탁·검수 인프라를 그대로 활용할 수 있어 초기 투자 부담이 낮습니다.</p></div>
+      <div class="card"><h4>세탁 서비스와의 시너지</h4><p>세탁 → 보관 → 거래 → 재구매로 이어지는 의류 라이프사이클을 구축할 수 있습니다.</p></div>
+    </div>
+
+    <p>리커머스는 새로운 사업이 아닙니다. 런드리고가 이미 보유한 세탁 인프라와 의류 데이터를 활용해 확장할 수 있는 가장 인접한 시장입니다.</p>
+    <p>전국 수거망, 세탁 공정, 검품 프로세스, 의류 데이터를 결합하여 <strong>'세탁·검수 기반 리커머스 플랫폼'</strong>을 구축할 수 있습니다. 이는 기존 C2C 플랫폼이 해결하지 못한 신뢰 문제를 해결하면서, 런드리고의 핵심 자산을 새로운 성장 동력으로 전환할 수 있는 기회입니다.</p>
+
+    <p class="note">출처: 국내 중고거래 43조 전망(아시아경제·세계비즈, 2024) · 중고 패션 5조·연 30%(어패럴뉴스) · 국내 중고 비중 24.3%(Statista) · 글로벌 중고의류 $393B(ThredUp 2026 Resale Report) · 중고거래 피해 경험 23.8%(한국소비자원 「중고거래 플랫폼 소비자문제 실태조사」, 2022) · 검수·인증 사례(KREAM, eBay Authenticity Guarantee, The RealReal). 시장 규모·매출 시나리오는 가정 기반 추정치로, IR 본자료 작성 시 재확인이 필요합니다.</p>
+  </section>
+
+
+  <!-- ===== 성장 축 ① : 클로렛 ===== -->
+  <section>
+    <div class="eyebrow">성장 축 ① · 런드리고 디지털 클로젯</div>
+    <span class="subtag">1-2. 클로렛 (Clorette)</span>
+    <h2>런드리고 디지털 클로젯</h2>
+    <p class="quote">세탁 이력이 쌓일수록, 내 옷장이 똑똑해집니다</p>
+    <p class="lead">클로렛은 세탁으로 쌓인 의류 데이터를 고객 자산으로 돌려주는 <strong>런드리고만의 옷장</strong>입니다. 세탁이 없는 날에도 앱을 여는 이유이자, 헌옷수거·C2C 거래·보관은 물론 <strong>데이터 기반의 다양한 오퍼링</strong>이 일어나는 창구입니다.</p>
+
+    <div class="callout"><strong>핵심 비즈니스 포인트.</strong> 클로렛에 쌓인 의류 데이터가 모든 오퍼링의 기반입니다. 세탁 데이터를 고객 자산으로 돌려주고, 그 위에서 재세탁·보관·중고거래·추천이 자연스럽게 발생해 고객당 LTV를 끌어올립니다.</div>
+
+    <h3>클로렛 TO-BE — 세탁 이력이 쌓일수록 똑똑해지는 옷장</h3>
+    <div class="grid2">
+      <div class="card soft"><div class="num">히스토리</div><h4>의류별 세탁 히스토리</h4><p>옷별 세탁 횟수·마지막 세탁일·소재별 케어 이력을 한눈에. “이 옷을 얼마나 아꼈는지”가 데이터로 보입니다.</p></div>
+      <div class="card soft"><div class="num">인사이트</div><h4>세탁 패턴 리포트</h4><p>월별 세탁량·자주 맡기는 품목·계절 패턴 등 나만의 세탁 리포트. 축적된 데이터가 고객 경험으로 직접 연결됩니다.</p></div>
+      <div class="card soft"><div class="num">제안</div><h4>케어 알림 · 맞춤 추천</h4><p>세탁 주기가 지난 옷 알림, 계절 전환 시 보관·꺼내기 추천. 수동 확인에서 능동적 제안으로 진화합니다.</p></div>
+      <div class="card soft"><div class="num">거래</div><h4>C2C 중고 거래</h4><p>오래 입지 않은 옷을 클로렛에서 바로 중고로 판매·구매. 세탁·검수를 거친 신뢰 거래로, 앞선 리커머스 시장 기회와 직접 연결됩니다.</p></div>
+    </div>
+
+    <h3>데이터로 이어지는 오퍼링 — 클로렛이 만드는 업셀링</h3>
+    <p>클로렛에 쌓인 의류 데이터를 시그널로, 적절한 순간에 적절한 제안을 연결합니다.</p>
+    <table>
+      <thead><tr><th style="width:32%;">데이터 시그널</th><th>오퍼링</th><th style="width:24%;">연결 매출</th></tr></thead>
+      <tbody>
+        <tr><td>세탁 주기 도래</td><td>세탁 시점 알림으로 재신청 유도</td><td>세탁 (재이용)</td></tr>
+        <tr><td>계절 전환</td><td>적기 보관 서비스 오퍼링</td><td>보관</td></tr>
+        <tr><td>장기 미세탁(미착용) 의류</td><td>원클릭 중고 판매 제안</td><td>C2C 수수료 + 세탁</td></tr>
+        <tr><td>취향·스타일 데이터</td><td>어울리는 중고·신상품 추천</td><td>커머스 (구매)</td></tr>
+        <tr><td>오래된 의류·헌옷</td><td>헌옷 수거 연계</td><td>수거·리세일</td></tr>
+        <tr><td>구독 고객</td><td>우선 노출·프리미엄 매칭·추가 할인</td><td>구독 강화</td></tr>
+      </tbody>
+    </table>
+
+    <h3>C2C 거래의 차별점</h3>
+    <div class="grid3">
+      <div class="card"><h4>중고 가치 표시 (Price Range)</h4><p>브랜드·상태·세탁 이력 기반으로 현재 중고 가치를 가격 범위로 제시해 보유 의류의 가치를 가시화합니다.</p></div>
+      <div class="card"><h4>데이터 기반 구매자 매칭</h4><p>세탁 데이터로 취향을 파악해 등록 즉시 최적 구매자에게 자동 추천. “런드리고에 팔면 잘 팔린다.”</p></div>
+      <div class="card"><h4>거래–세탁 연계</h4><p>판매 시 세탁비 할인으로 검증된 중고 경험을 만들고, 거래를 다시 세탁 수요로 연결합니다.</p></div>
+    </div>
+
+    <h3>컨셉 시안</h3>
+    <div class="concept-ph">
+      <div class="ic">🖼️</div>
+      <div class="t">런드리고 디지털 클로젯(클로렛) 컨셉 시안 추가 예정</div>
+      <div class="d">옷장 메인 · 세탁 리포트 · 중고 판매 · 추천 화면 시안은 추가 디벨롭 후 반영</div>
+    </div>
+
+  </section>
+
+  <!-- ===== 성장 축 ② : SME ===== -->
+  <section>
+    <div class="eyebrow gold">성장 축 ②</div>
+    <h2>SME — B2B 렌탈 &amp; 세탁 확장</h2>
+    <p class="lead">소규모 사업장이 직면하는 세탁·재고관리의 어려움을 런드리고의 인프라로 해결합니다. <strong>세탁 서비스에서 재고(자산) 기반 렌탈</strong>로 비즈니스 모델을 확장합니다.</p>
+
+    <div class="callout gold"><strong>핵심 비즈니스 포인트.</strong> 기존 물류·팩토리·앱 인프라를 그대로 활용해, 추가 인프라·인력 투자 없이 B2B 수익을 창출합니다.</div>
+
+    <h3>타겟 시장 — 직접 세탁 또는 영세 세탁업소를 이용하는 사업장</h3>
+    <div class="grid3">
+      <div class="card soft"><div class="num gold">숙박형</div><h4>호텔 · 펜션 · 풀빌라</h4><p>50객실 이하 소규모. 린넨·타월·유니폼 렌탈. 높은 회전율과 균일한 품질 요구.</p></div>
+      <div class="card soft"><div class="num gold">F&amp;B형</div><h4>카페 · 비스트로 · 파인다이닝</h4><p>테이블보·냅킨·유니폼 렌탈. 위생 기준 충족과 브랜드 일관성이 중요.</p></div>
+      <div class="card soft"><div class="num gold">웰니스형</div><h4>피트니스 · 에스테틱 · 미용실</h4><p>타월·운동복·가운 렌탈. 높은 위생 기대와 반복 방문 고객 관리.</p></div>
+    </div>
+
+    <div class="callout gold"><strong>실제 사례 — 현재 런드리고 이용 사업장.</strong> 중앙감속기(최현석 셰프) 파인다이닝은 현재 런드리고 B2C 세탁을 이용 중인 약 40석 규모 매장으로, 조리복·유니폼 세탁 수요가 명확하고 플로어매트 등 렌탈 전환 가능 품목을 다수 보유합니다. 타겟인 <strong>소규모 사업장의 세탁·렌탈 Needs</strong>를 보여주는 사례입니다.</div>
+
+    <h3>런드리고 앱으로, B2C와 동일한 — 그 이상의 세탁 경험</h3>
+    <p>SME 고객은 별도 시스템이 아니라 <strong>런드리고 앱을 그대로 사용</strong>합니다. B2C에서 검증된 경험을 사업장에서도 동일하게 누리며, 영세 세탁업소나 자체 세탁으로는 불가능했던 수준의 경험으로 기존 세탁의 기준을 넘어섭니다.</p>
+    <div class="grid3">
+      <div class="card"><h4>실시간 처리 현황</h4><p>수거부터 완료까지 처리 단계를 앱에서 실시간 확인. 사업장 운영에 맞춰 세탁 일정을 예측·관리.</p></div>
+      <div class="card"><h4>균일한 품질·위생</h4><p>런드리고 팩토리의 표준화된 공정으로 매번 동일한 품질. 위생이 중요한 F&amp;B·웰니스에 특히 강점.</p></div>
+      <div class="card"><h4>간편한 신청·결제</h4><p>셀프 온보딩·표준 요금제·자동 결제·RFID 재고 추적. 별도 영업 없이 앱만으로 운영.</p></div>
+    </div>
+
+    <h3>런드리고의 차별적 역량 — 인프라가 곧 경쟁력</h3>
+    <div class="grid3">
+      <div class="card"><h4>물류망</h4><p>기존 B2C 수거·배송 루트를 그대로 활용해, 한 번의 이동에서 B2C와 B2B 수거·배송을 동시에 처리.</p></div>
+      <div class="card"><h4>팩토리</h4><p>파주 팩토리(대형 린넨)와 South/East 팩토리(유니폼·가운)로 품목 특성에 맞춘 이원화 처리.</p></div>
+      <div class="card"><h4>앱 기반 운영</h4><p>셀프 온보딩·표준 요금제·자동 결제로 기존 B2B의 영업·협상 비효율을 앱으로 해소.</p></div>
+    </div>
+
+    <h3>타겟 시장 규모</h3>
+    <div class="kpi">
+      <div class="box"><div class="v gold">약 6만</div><div class="l">국내 숙박시설 사업체 (50객실 이하 포함, 2024)</div></div>
+      <div class="box"><div class="v gold">약 80만</div><div class="l">국내 음식점·카페 사업체 (체류형·파인다이닝 등, 2024)</div></div>
+      <div class="box"><div class="v gold">약 27만</div><div class="l">국내 미용·피부·웰니스 사업체 (통계청 기준)</div></div>
+    </div>
+    <div class="callout gold">B2C 인프라를 레버리지하는 B2B 확장으로, 신규 투자 없이 단위당 수익성이 개선되는 구조입니다. 팩토리 고정비는 B2C로 이미 충당되므로, B2B 물량은 마진이 높은 추가 수익으로 연결됩니다.</div>
+    <p class="note">※ 타겟 시장 규모는 업종 통계 기반 추정치입니다.</p>
+
+    <h3>컨셉 시안</h3>
+    <div class="concept-ph">
+      <div class="ic">🖼️</div>
+      <div class="t">SME 컨셉 시안 추가 예정</div>
+      <div class="d">사업장용 렌탈·세탁 신청 및 관리 화면 시안은 추후 디벨롭</div>
+    </div>
+  </section>
+
+  <!-- ===== 기반 : 홈 개편 ===== -->
+  <section>
+    <div class="eyebrow base">기반 · App Redesign</div>
+    <h2>홈 개편 — 두 축을 위한 앱 기반</h2>
+    <p class="lead">클로렛과 SME가 안착할 수 있는 앱 구조이자, <strong>"한 번 쓰는 앱에서 매일 쓰는 앱으로"</strong>의 전환입니다. 단순 UI 변경이 아니라, 두 성장 축을 수용하기 위한 선행 구축입니다.</p>
+
+    <h3>핵심 방향</h3>
+    <div class="grid2">
+      <div class="card"><h4>홈 &amp; 수거신청 화면 통합 → Action Hub</h4><p>기존에 이원화되어 있던 홈 화면과 수거신청 화면을 홈으로 통합하고, 홈을 Action Hub로 일원화합니다. 지금 무엇을 할 수 있는지가 한 화면에서 보이도록 합니다.</p></div>
+      <div class="card"><h4>클로렛 Beta</h4><p>클로렛 탭의 기본 골격을 구성하고, 의류·브랜드 데이터를 활용해 고객에게 의미 있는 정보를 전달하기 시작합니다. 성장 축 ①의 진입 단계입니다.</p></div>
+      <div class="card"><h4>세그먼트 기반 개인화</h4><p>신규 / 자유이용 / 구독 세그먼트에 따라 히어로 메시지·CTA·혜택을 차별화해, 수거신청과 구독 전환을 맥락에 맞게 유도합니다.</p></div>
+      <div class="card"><h4>처리 과정 투명화</h4><p>수거신청 진행 중에는 처리 단계를 세분화해 실시간으로 제공하고, 각 단계의 정보와 처리 방식을 투명하게 전달해 품질에 대한 신뢰를 형성합니다.</p></div>
+    </div>
+
+    <h3>컨셉 시안</h3>
+    <div class="concept-ph">
+      <div class="ic">🖼️</div>
+      <div class="t">홈 개편 컨셉 시안 추가 예정</div>
+      <div class="d">통합 홈(Action Hub) · 클로렛 Beta 화면 시안은 추후 디벨롭</div>
+    </div>
+  </section>
+
+
+</div>
+</body>
+</html>
