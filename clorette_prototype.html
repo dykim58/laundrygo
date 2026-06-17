@@ -234,10 +234,10 @@
   <div class="head">
     <div class="eyebrow">Clorette Prototype · LDS</div>
     <h1>클로렛 — 인터랙티브 프로토타입</h1>
-    <p>세탁 데이터로 채워진 클로렛 위에서 <b>취향 분석·케어·추천·의류 순환</b>이 자연스럽게 이어지는 경험.<br>화면을 자유롭게 눌러보며 둘러보세요.</p>
+    <p>세탁 데이터로 채워진 클로렛 위에서 <b>취향 분석·케어·추천·옷장 정리</b>이 자연스럽게 이어지는 경험.<br>화면을 자유롭게 눌러보며 둘러보세요.</p>
     <div class="feat-row">
       <span>나의 취향 분석</span><span>세탁 히스토리</span><span>옷 등록 · 세탁</span>
-      <span>세탁 리포트</span><span>케어 알림</span><span>코디 추천</span><span>의류 순환</span>
+      <span>세탁 리포트</span><span>케어 알림</span><span>코디 추천</span><span>옷장 정리</span>
     </div>
   </div>
 
@@ -276,7 +276,7 @@
               <div class="tiles">
                 <div class="tile" onclick="go('channel')"><div class="ti">🛍️</div><div class="tn">취향 둘러보기</div><div class="td">취향에 맞는 옷 발견</div></div>
                 <div class="tile" onclick="go('recommend')"><div class="ti">✦</div><div class="tn">코디 추천</div><div class="td">날씨·보유 의류 기반 코디</div></div>
-                <div class="tile" onclick="go('circulate')"><div class="ti">♻️</div><div class="tn">의류 순환</div><div class="td">판매·헌옷수거</div></div>
+                <div class="tile" onclick="go('circulate')"><div class="ti">♻️</div><div class="tn">옷장 정리</div><div class="td">안 입는 옷 판매·헌옷수거</div></div>
                 <div class="tile" onclick="go('report')"><div class="ti">📊</div><div class="tn">세탁 리포트</div><div class="td">월별 패턴·자주입는 브랜드</div></div>
               </div>
 
@@ -338,7 +338,7 @@
                 <div class="lbl" id="d-carettl">THOM BROWNE 울 소재</div>
                 <div class="desc" id="d-care">드라이클리닝을 권장해요. 보풀은 전용 브러시로 결대로 정리하고, 통풍이 잘 되는 곳에 보관하세요.</div>
               </div>
-              <div class="sec-h">의류 순환</div>
+              <div class="sec-h">옷장 정리</div>
               <div class="card">
                 <div class="lbl">지금 의류 가치</div>
                 <div class="price" style="font-size:18px; margin-top:6px;" id="d-price">28~36만원</div>
@@ -534,11 +534,11 @@
             </div>
           </section>
 
-          <!-- 7. 의류 순환 -->
+          <!-- 7. 옷장 정리 -->
           <section class="screen" data-screen="circulate">
             <div class="topbar">
-              <div class="tt"><div class="back" onclick="go('closet')">‹</div><div class="h-title">의류 순환</div></div>
-              <div class="h-sub">오래 입지 않은 옷, 어떻게 할까요?</div>
+              <div class="tt"><div class="back" onclick="go('closet')">‹</div><div class="h-title">옷장 정리</div></div>
+              <div class="h-sub">안 입는 옷을 정리해보세요</div>
             </div>
             <div class="body">
               <div class="sec-h">순환 방법 선택</div>
@@ -865,14 +865,14 @@
     recommend: "<b>코디 추천</b> — 보유 의류 코디. 아래에서 <b>나의 취향 분석</b>으로 이어집니다.",
     taste:     "<b>나의 취향</b> — 취향 키워드 정의 + 비슷한 취향의 사람들이 좋아하는 브랜드 랭킹(일치율) + 취향 매치율 기반 아이템 추천. 아이템을 눌러 구매로 이어집니다.",
     register:  "<b>옷 등록</b> — 업로드 → AI 분석 → 결과 확인 플로우. 브랜드·소재·카테고리 자동 인식 후 ‘등록하고 세탁 맡기기’로 연결됩니다.",
-    circulate: "<b>의류 순환</b> — 오래 입지 않은 옷을 판매·기부·헌옷수거로. ‘원클릭으로 팔기’를 눌러보세요.",
+    circulate: "<b>옷장 정리</b> — 오래 입지 않은 옷을 판매·헌옷수거로. ‘원클릭으로 팔기’를 눌러보세요.",
     sellpick:  "<b>판매할 옷 선택</b> — 예상 정산액이 높은 순. 옷을 골라보세요.",
     sell:      "<b>원클릭으로 팔기</b> — 예상 정산액과 <b>판매자 혜택</b>(세탁·검수·발송 대행, 수수료 10%) 중심. ‘판매 등록’을 눌러보세요.",
     registered:"<b>판매 등록 완료</b> — 취향 둘러보기에 자동 전시. ‘마켓에서 보기’로 구매 흐름을 이어가세요.",
     channel:   "<b>취향 둘러보기</b> — 취향이 닮은 사람들이 입는 옷을 발견하고, 원하면 바로 구매할 수 있어요. 옷을 눌러보세요.",
     buy:       "<b>구매하기</b> — 세탁비 50% 할인 + 첫 이용 배송비 무료 쿠폰. ‘결제하고 구매하기’를 눌러보세요.",
     bought:    "<b>구매 완료</b> — 거래가 다시 세탁 수요로 이어집니다.",
-    donate:    "<b>기부 · 헌옷 수거</b> — 세탁 수거 동선에 의류 순환을 함께 얹습니다.",
+    donate:    "<b>기부 · 헌옷 수거</b> — 세탁 수거 동선에 옷장 정리을 함께 얹습니다.",
     wash:      "<b>세탁 수거 신청</b> — 케어 알림·옷 등록에서 바로 연결되는 세탁 수거. 맞춤 세탁 + 함께 맡길 옷 추천. 세탁 이력이 클로렛에 쌓입니다.",
     washdone:  "<b>세탁 맡기기 완료</b> — 수거 예약 완료. 세탁이 끝나면 이력이 자동 기록됩니다."
   };
