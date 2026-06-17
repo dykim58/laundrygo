@@ -274,10 +274,10 @@
               </div>
 
               <div class="tiles">
-                <div class="tile" onclick="go('report')"><div class="ti">📊</div><div class="tn">세탁 리포트</div><div class="td">월별 패턴·자주 맡기는 옷</div></div>
-                <div class="tile" onclick="go('recommend')"><div class="ti">✦</div><div class="tn">코디 추천</div><div class="td">날씨·보유 의류 기반 코디</div></div>
-                <div class="tile" onclick="go('circulate')"><div class="ti">♻️</div><div class="tn">의류 순환</div><div class="td">판매·기부·헌옷수거</div></div>
                 <div class="tile" onclick="go('channel')"><div class="ti">🛍️</div><div class="tn">취향 둘러보기</div><div class="td">취향에 맞는 옷 발견</div></div>
+                <div class="tile" onclick="go('recommend')"><div class="ti">✦</div><div class="tn">코디 추천</div><div class="td">날씨·보유 의류 기반 코디</div></div>
+                <div class="tile" onclick="go('circulate')"><div class="ti">♻️</div><div class="tn">의류 순환</div><div class="td">판매·헌옷수거</div></div>
+                <div class="tile" onclick="go('report')"><div class="ti">📊</div><div class="tn">세탁 리포트</div><div class="td">월별 패턴·자주 맡기는 브랜드</div></div>
               </div>
 
               <div class="sec-h">내 옷 <small>· 탭하면 세탁 히스토리</small><button class="addbtn tap pulse" onclick="openRegister()">+ 옷 등록</button></div>
@@ -382,6 +382,13 @@
                 <div class="rank"><div class="rn">팬츠</div><div class="rbarwrap"><div class="rbar" style="width:63%"></div></div><div class="rv">24회</div></div>
                 <div class="rank"><div class="rn">아우터</div><div class="rbarwrap"><div class="rbar" style="width:37%"></div></div><div class="rv">14회</div></div>
                 <div class="rank"><div class="rn">기타</div><div class="rbarwrap"><div class="rbar" style="width:18%"></div></div><div class="rv">7회</div></div>
+              </div>
+              <div class="sec-h">자주 맡기는 브랜드</div>
+              <div class="card">
+                <div class="rank"><div class="rn">톰브라운</div><div class="rbarwrap"><div class="rbar" style="width:100%"></div></div><div class="rv">24회</div></div>
+                <div class="rank"><div class="rn">유니클로</div><div class="rbarwrap"><div class="rbar" style="width:79%"></div></div><div class="rv">19회</div></div>
+                <div class="rank"><div class="rn">키톤</div><div class="rbarwrap"><div class="rbar" style="width:46%"></div></div><div class="rv">11회</div></div>
+                <div class="rank"><div class="rn">COS</div><div class="rbarwrap"><div class="rbar" style="width:29%"></div></div><div class="rv">7회</div></div>
               </div>
               <div class="sec-h">계절별 이용 패턴</div>
               <div class="card">
@@ -540,36 +547,41 @@
                 <div class="grow"><div class="on">원클릭으로 팔기</div><div class="od">예상 정산액 확인 · 세탁·발송까지 대행</div></div>
                 <div class="chev">›</div>
               </div>
-              <div class="opt" onclick="donate('기부')">
-                <div class="oi">🎁</div>
-                <div class="grow"><div class="on">기부하기</div><div class="od">수거부터 기부까지 한 번에</div></div>
-                <div class="chev">›</div>
-              </div>
               <div class="opt" onclick="donate('헌옷 수거')">
                 <div class="oi">📦</div>
                 <div class="grow"><div class="on">헌옷 수거 신청</div><div class="od">세탁 수거 동선에 함께</div></div>
                 <div class="chev">›</div>
               </div>
               <div class="sec-h">오래 입지 않은 의류 <small>· 데이터 기반</small></div>
-              <div class="item tapi tap pulse" onclick="buy('THOM BROWNE 26SS 네이비 폴로','navy,polo',370000)">
-                <div class="thumb"><img data-kw="linen,jacket" alt="" loading="lazy"></div>
-                <div class="grow">
-                  <span class="brandtag">KITON</span>
-                  <div class="nm">카키 린넨 블루종</div>
-                  <div class="meta">마지막 착용 추정 · 47일 전</div>
-                  <div class="price">42~58만원<small>예상 정산액</small></div>
-                </div>
-                <button class="btn-s" onclick="sell('키톤 카키 린넨 블루종','🧥','42~58만원')">팔기</button>
+              <div class="item tapi tap pulse" onclick="sell('Theory 네이비 울 코트','','22~30만원')">
+                <div class="thumb"><img data-kw="navy,coat" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">THEORY</span><div class="nm">네이비 울 코트</div><div class="meta">마지막 착용 추정 · 89일 전</div><div class="price">22~30만원<small>예상 정산액</small></div></div>
+                <button class="btn-s" onclick="sell('Theory 네이비 울 코트','','22~30만원')">팔기</button>
               </div>
-              <div class="item">
+              <div class="item tapi" onclick="sell('스톤아일랜드 카키 야상','','18~26만원')">
+                <div class="thumb"><img data-kw="khaki,jacket" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">STONE ISLAND</span><div class="nm">카키 야상</div><div class="meta">마지막 착용 추정 · 71일 전</div><div class="price">18~26만원<small>예상 정산액</small></div></div>
+                <button class="btn-s" onclick="sell('스톤아일랜드 카키 야상','','18~26만원')">팔기</button>
+              </div>
+              <div class="item tapi" onclick="sell('COS 니트 가디건','','2~4만원')">
                 <div class="thumb"><img data-kw="knit,cardigan" alt="" loading="lazy"></div>
-                <div class="grow">
-                  <span class="brandtag">COS</span>
-                  <div class="nm">니트 가디건</div>
-                  <div class="meta">마지막 착용 추정 · 63일 전</div>
-                  <div class="price">2~4만원<small>예상 정산액</small></div>
-                </div>
-                <button class="btn-s" onclick="sell('COS 니트 가디건','🧶','2~4만원')">팔기</button>
+                <div class="grow"><span class="brandtag">COS</span><div class="nm">니트 가디건</div><div class="meta">마지막 착용 추정 · 63일 전</div><div class="price">2~4만원<small>예상 정산액</small></div></div>
+                <button class="btn-s" onclick="sell('COS 니트 가디건','','2~4만원')">팔기</button>
+              </div>
+              <div class="item tapi" onclick="sell('인코텍스 카키 치노','','4~7만원')">
+                <div class="thumb"><img data-kw="chino,trousers" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">INCOTEX</span><div class="nm">카키 치노</div><div class="meta">마지막 착용 추정 · 58일 전</div><div class="price">4~7만원<small>예상 정산액</small></div></div>
+                <button class="btn-s" onclick="sell('인코텍스 카키 치노','','4~7만원')">팔기</button>
+              </div>
+              <div class="item tapi" onclick="sell('오라리 올리브 트윌 셔츠','','12~18만원')">
+                <div class="thumb"><img data-kw="olive,shirt" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">AURALEE</span><div class="nm">올리브 트윌 셔츠</div><div class="meta">마지막 착용 추정 · 52일 전</div><div class="price">12~18만원<small>예상 정산액</small></div></div>
+                <button class="btn-s" onclick="sell('오라리 올리브 트윌 셔츠','','12~18만원')">팔기</button>
+              </div>
+              <div class="item tapi" onclick="sell('키톤 카키 린넨 블루종','','42~58만원')">
+                <div class="thumb"><img data-kw="linen,jacket" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">KITON</span><div class="nm">카키 린넨 블루종</div><div class="meta">마지막 착용 추정 · 47일 전</div><div class="price">42~58만원<small>예상 정산액</small></div></div>
+                <button class="btn-s" onclick="sell('키톤 카키 린넨 블루종','','42~58만원')">팔기</button>
               </div>
             </div>
           </section>
@@ -581,19 +593,39 @@
               <div class="h-sub">예상 정산액이 높은 순</div>
             </div>
             <div class="body">
-              <div class="item tapi tap pulse" onclick="sell('키톤 카키 린넨 블루종','🧥','42~58만원')">
+              <div class="item tapi tap pulse" onclick="sell('키톤 카키 린넨 블루종','','42~58만원')">
                 <div class="thumb"><img data-kw="linen,jacket" alt="" loading="lazy"></div>
                 <div class="grow"><span class="brandtag">KITON</span><div class="nm">카키 린넨 블루종</div><div class="price">42~58만원<small>예상 정산액</small></div></div>
                 <div class="chev">›</div>
               </div>
-              <div class="item tapi" onclick="sell('톰브라운 네이비 블레이저','👔','28~36만원')">
+              <div class="item tapi" onclick="sell('톰브라운 네이비 블레이저','','28~36만원')">
                 <div class="thumb"><img data-kw="navy,blazer" alt="" loading="lazy"></div>
                 <div class="grow"><span class="brandtag">THOM BROWNE</span><div class="nm">네이비 블레이저</div><div class="price">28~36만원<small>예상 정산액</small></div></div>
                 <div class="chev">›</div>
               </div>
-              <div class="item tapi" onclick="sell('인컴 데님 팬츠','👖','5~8만원')">
-                <div class="thumb"><img data-kw="denim,trousers" alt="" loading="lazy"></div>
+              <div class="item tapi" onclick="sell('Theory 네이비 울 코트','','22~30만원')">
+                <div class="thumb"><img data-kw="navy,coat" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">THEORY</span><div class="nm">네이비 울 코트</div><div class="price">22~30만원<small>예상 정산액</small></div></div>
+                <div class="chev">›</div>
+              </div>
+              <div class="item tapi" onclick="sell('스톤아일랜드 카키 야상','','18~26만원')">
+                <div class="thumb"><img data-kw="khaki,jacket" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">STONE ISLAND</span><div class="nm">카키 야상</div><div class="price">18~26만원<small>예상 정산액</small></div></div>
+                <div class="chev">›</div>
+              </div>
+              <div class="item tapi" onclick="sell('오라리 올리브 트윌 셔츠','','12~18만원')">
+                <div class="thumb"><img data-kw="olive,shirt" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">AURALEE</span><div class="nm">올리브 트윌 셔츠</div><div class="price">12~18만원<small>예상 정산액</small></div></div>
+                <div class="chev">›</div>
+              </div>
+              <div class="item tapi" onclick="sell('인컴 데님 팬츠','','5~8만원')">
+                <div class="thumb"><img data-kw="denim,jeans" alt="" loading="lazy"></div>
                 <div class="grow"><span class="brandtag">INCOTEX</span><div class="nm">데님 팬츠</div><div class="price">5~8만원<small>예상 정산액</small></div></div>
+                <div class="chev">›</div>
+              </div>
+              <div class="item tapi" onclick="sell('COS 니트 가디건','','2~4만원')">
+                <div class="thumb"><img data-kw="knit,cardigan" alt="" loading="lazy"></div>
+                <div class="grow"><span class="brandtag">COS</span><div class="nm">니트 가디건</div><div class="price">2~4만원<small>예상 정산액</small></div></div>
                 <div class="chev">›</div>
               </div>
             </div>
@@ -641,7 +673,7 @@
                 <div class="rowline"><span class="k">판매 수수료</span><span class="v">구독 10%</span></div>
               </div>
             </div>
-            <div class="footer"><div class="cta tap pulse" onclick="go('channel')">취향 둘러보기에서 보기</div></div>
+            <div class="footer"><div class="cta tap pulse" onclick="reset()">확인</div></div>
           </section>
 
           <!-- 10. 취향 둘러보기 -->
