@@ -69,7 +69,7 @@
   .tile:active{transform:scale(.98);}
   .tile .ti{font-size:21px;}
   .tile .tn{font-size:13.5px; font-weight:700; color:var(--ink); margin-top:8px;}
-  .tile .td{font-size:11px; color:var(--mute); margin-top:3px; line-height:1.4;}
+  .tile .td{font-size:10.5px; color:var(--mute); margin-top:3px; line-height:1.35; letter-spacing:-.02em;}
 
   .item{display:flex; gap:12px; align-items:center; background:#fff; border:1px solid var(--line); border-radius:var(--r-card); padding:12px 13px; margin-bottom:10px;}
   .item.tapi{cursor:pointer;}
@@ -205,7 +205,7 @@
   .gnb .ic{width:25px; height:25px; display:block;}
 
   .tap{position:relative; cursor:pointer;}
-  .pulse::after{content:""; position:absolute; top:-3px; right:-3px; width:11px; height:11px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 0 rgba(10,194,144,.55); animation:pl 1.6s infinite; z-index:5;}
+  .pulse::after{content:none; position:absolute; top:-3px; right:-3px; width:11px; height:11px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 0 rgba(10,194,144,.55); animation:pl 1.6s infinite; z-index:5;}
   @keyframes pl{0%{box-shadow:0 0 0 0 rgba(10,194,144,.5);} 70%{box-shadow:0 0 0 9px rgba(10,194,144,0);} 100%{box-shadow:0 0 0 0 rgba(10,194,144,0);}}
 
   .caption{max-width:400px; text-align:center; font-size:13px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:10px 14px; line-height:1.45;}
@@ -234,7 +234,7 @@
   <div class="head">
     <div class="eyebrow">Clorette Prototype · LDS</div>
     <h1>클로렛 — 인터랙티브 프로토타입</h1>
-    <p>세탁 데이터로 채워진 클로렛 위에서 <b>취향 분석·케어·추천·의류 순환</b>이 자연스럽게 이어지는 경험.<br>강조 표시(●)된 곳을 눌러 직접 따라가 보세요.</p>
+    <p>세탁 데이터로 채워진 클로렛 위에서 <b>취향 분석·케어·추천·의류 순환</b>이 자연스럽게 이어지는 경험.<br>화면을 자유롭게 눌러보며 둘러보세요.</p>
     <div class="feat-row">
       <span>나의 취향 분석</span><span>세탁 히스토리</span><span>옷 등록 · 세탁</span>
       <span>세탁 리포트</span><span>케어 알림</span><span>코디 추천</span><span>의류 순환</span>
@@ -277,7 +277,7 @@
                 <div class="tile" onclick="go('channel')"><div class="ti">🛍️</div><div class="tn">취향 둘러보기</div><div class="td">취향에 맞는 옷 발견</div></div>
                 <div class="tile" onclick="go('recommend')"><div class="ti">✦</div><div class="tn">코디 추천</div><div class="td">날씨·보유 의류 기반 코디</div></div>
                 <div class="tile" onclick="go('circulate')"><div class="ti">♻️</div><div class="tn">의류 순환</div><div class="td">판매·헌옷수거</div></div>
-                <div class="tile" onclick="go('report')"><div class="ti">📊</div><div class="tn">세탁 리포트</div><div class="td">월별 패턴·자주 맡기는 브랜드</div></div>
+                <div class="tile" onclick="go('report')"><div class="ti">📊</div><div class="tn">세탁 리포트</div><div class="td">월별 패턴·자주입는 브랜드</div></div>
               </div>
 
               <div class="sec-h">내 옷 <small>· 탭하면 세탁 히스토리</small><button class="addbtn tap pulse" onclick="openRegister()">+ 옷 등록</button></div>
@@ -861,7 +861,7 @@
   var captions = {
     closet:    "<b>나의 클로렛</b> — 세탁 데이터로 채워진 클로렛. 상단 케어 알림(세탁 맡기기), <b>나의 취향</b> 카드, 빠른 메뉴, ‘+ 옷 등록’, 옷별 브랜드·세탁 이력. 눌러 둘러보세요.",
     detail:    "<b>의류 상세</b> — 의류별 <b>세탁 히스토리</b>와 <b>브랜드별 케어 기준</b>. 하단에서 세탁 맡기기 또는 원클릭 판매로 이어집니다.",
-    report:    "<b>세탁 리포트</b> — 월별 세탁량, 자주 맡기는 품목, 계절별 패턴. 축적된 데이터가 인사이트로 돌아옵니다.",
+    report:    "<b>세탁 리포트</b> — 월별 세탁량·품목·브랜드·계절 패턴.",
     recommend: "<b>코디 추천</b> — 보유 의류 코디. 아래에서 <b>나의 취향 분석</b>으로 이어집니다.",
     taste:     "<b>나의 취향</b> — 취향 키워드 정의 + 비슷한 취향의 사람들이 좋아하는 브랜드 랭킹(일치율) + 취향 매치율 기반 아이템 추천. 아이템을 눌러 구매로 이어집니다.",
     register:  "<b>옷 등록</b> — 업로드 → AI 분석 → 결과 확인 플로우. 브랜드·소재·카테고리 자동 인식 후 ‘등록하고 세탁 맡기기’로 연결됩니다.",
