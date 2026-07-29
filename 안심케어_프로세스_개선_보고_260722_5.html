@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>안심케어 프로세스 개선 보고</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    color-scheme: light;
+    --surface-1:#fcfcfb; --page:#f9f9f7;
+    --ink-1:#0b0b0b; --ink-2:#52514e; --ink-3:#898781;
+    --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,.10);
+    --s1:#2a78d6; --s2:#eb6834;
+    --crit:#d03b3b; --good:#006300;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{font-family:system-ui,-apple-system,"Segoe UI","Apple SD Gothic Neo","Pretendard",sans-serif; background:var(--page); color:var(--ink-1); line-height:1.65; font-size:15px;}
+  .wrap{max-width:860px; margin:0 auto; padding:48px 28px 80px;}
+  header{border-bottom:2px solid var(--ink-1); padding-bottom:20px; margin-bottom:36px;}
+  .doc-tag{font-size:12px; letter-spacing:.12em; color:var(--ink-3); margin-bottom:8px;}
+  h1{font-size:27px; font-weight:800; letter-spacing:-.02em;}
+  .meta{margin-top:10px; font-size:13px; color:var(--ink-2);}
+  h2{font-size:19px; font-weight:800; letter-spacing:-.01em; margin:52px 0 16px; padding-top:20px; border-top:1px solid var(--grid);}
+  h2 .num{color:var(--s1); margin-right:8px;}
+  h3{font-size:15.5px; font-weight:700; margin:26px 0 10px;}
+  p{margin-bottom:12px; color:var(--ink-1);}
+  .muted{color:var(--ink-2);}
+  .small{font-size:13px; color:var(--ink-3);}
+  strong{font-weight:700;}
+
+  .summary{background:var(--surface-1); border:1px solid var(--border); border-left:4px solid var(--s1); border-radius:10px; padding:22px 24px; margin-bottom:8px;}
+  .summary p{margin-bottom:10px;}
+  .summary p:last-child{margin-bottom:0;}
+
+  .tiles{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0;}
+  .tile{background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:16px 18px;}
+  .tile .label{font-size:12.5px; color:var(--ink-2); margin-bottom:6px;}
+  .tile .value{font-size:26px; font-weight:800; letter-spacing:-.02em;}
+  .tile .sub{font-size:12.5px; color:var(--ink-3); margin-top:4px;}
+  .tile .value .down{color:var(--good);}
+  .tile .value .flat{color:var(--crit);}
+
+  .chart-card{background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:20px 22px 14px; margin:20px 0;}
+  .chart-title{font-size:14.5px; font-weight:700;}
+  .chart-sub{font-size:12.5px; color:var(--ink-3); margin-bottom:12px;}
+  .legend{display:flex; gap:18px; font-size:12.5px; color:var(--ink-2); margin-bottom:6px;}
+  .legend .key{display:inline-flex; align-items:center; gap:6px;}
+  .legend .swatch{width:14px; height:3px; border-radius:2px; display:inline-block;}
+  #chart{width:100%; height:auto; display:block;}
+  .tooltip{position:fixed; pointer-events:none; background:var(--ink-1); color:#fff; font-size:12px; padding:7px 10px; border-radius:6px; opacity:0; transition:opacity .1s; z-index:10; line-height:1.5;}
+
+  .quotes{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:18px 0;}
+  .quote{background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:16px 18px; font-size:13.5px;}
+  .quote .q{color:var(--ink-1); margin-bottom:8px;}
+  .quote .src{font-size:12px; color:var(--ink-3);}
+  .quote.hero{grid-column:1 / -1; border-left:4px solid var(--crit); font-size:14.5px;}
+
+  .blocks{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0;}
+  .block{background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:16px 18px;}
+  .block .bt{font-weight:700; margin-bottom:6px; font-size:14.5px;}
+  .block .bd{font-size:13.5px; color:var(--ink-2);}
+  .block .bt .idx{display:inline-block; width:20px; height:20px; border-radius:50%; background:var(--ink-1); color:#fff; font-size:11.5px; text-align:center; line-height:20px; margin-right:8px; vertical-align:1px;}
+
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:14px 0; background:var(--surface-1); border:1px solid var(--border); border-radius:10px; overflow:hidden;}
+  th,td{padding:11px 14px; text-align:left; border-bottom:1px solid var(--grid); vertical-align:top;}
+  th{font-size:12.5px; color:var(--ink-2); font-weight:700; background:rgba(0,0,0,.02);}
+  tr:last-child td{border-bottom:none;}
+  td.opt{font-weight:700; white-space:nowrap;}
+  .badge{display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px; background:rgba(42,120,214,.1); color:var(--s1); margin-left:6px; vertical-align:1px;}
+
+  .principle{background:var(--ink-1); color:#fff; border-radius:10px; padding:20px 24px; margin:20px 0;}
+  .principle .pt{font-size:16px; font-weight:800; margin-bottom:6px;}
+  .principle .pd{font-size:13.5px; color:#c3c2b7;}
+
+  .asis-tobe{display:grid; grid-template-columns:1fr 28px 1fr; gap:10px; align-items:stretch; margin:14px 0;}
+  .asis-tobe .col{background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:14px 16px; font-size:13.5px;}
+  .asis-tobe .col .ct{font-size:12px; font-weight:800; letter-spacing:.08em; margin-bottom:8px; color:var(--ink-3);}
+  .asis-tobe .col.tobe .ct{color:var(--s1);}
+  .asis-tobe .col.tobe{border-left:3px solid var(--s1);}
+  .asis-tobe .arrow{display:flex; align-items:center; justify-content:center; color:var(--ink-3); font-size:18px;}
+
+  .ovlist{background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:6px 18px; margin:14px 0 20px;}
+  .ovitem{display:flex; gap:14px; padding:11px 0; border-bottom:1px solid var(--grid); font-size:14px; align-items:baseline;}
+  .ovitem:last-child{border-bottom:none;}
+  .ovitem .ovnum{flex:0 0 34px; font-weight:800; color:var(--s1);}
+  .ovitem .ovd{color:var(--ink-2); font-size:13.5px;}
+
+  .timeline{margin:16px 0;}
+  .titem{display:flex; gap:16px; padding:10px 0; border-bottom:1px solid var(--grid); font-size:14px;}
+  .titem:last-child{border-bottom:none;}
+  .titem .when{flex:0 0 120px; font-weight:700; color:var(--s1);}
+  .titem .done{color:var(--good);}
+
+  ul.clean{list-style:none; margin:10px 0 14px;}
+  ul.clean li{padding-left:18px; position:relative; margin-bottom:8px; color:var(--ink-1);}
+  ul.clean li::before{content:""; position:absolute; left:2px; top:.62em; width:6px; height:6px; border-radius:50%; background:var(--s1);}
+
+  footer{margin-top:56px; padding-top:16px; border-top:1px solid var(--grid); font-size:12px; color:var(--ink-3);}
+  @media (max-width:640px){ .tiles,.quotes,.blocks{grid-template-columns:1fr;} .asis-tobe{grid-template-columns:1fr;} .asis-tobe .arrow{transform:rotate(90deg);} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>안심케어 프로세스 개선 보고</h1>
+  <div class="meta">2026. 07. 22 · LDPC · 근거자료: VOC 반토막내기(South Factory) 데이터, CS 현황 및 개선안(LDPC), 고객·투자자 피드백</div>
+</header>
+
+<!-- 요약 -->
+<div class="summary">
+  <p>고객이 돌아서는 결정적 순간은 품질 사고 그 자체가 아니라, <strong>사고 이후 처리 과정이 복잡하고 불투명할 때</strong>입니다. 이번 개선은 접수 플로우·UX 재설계와 함께 <strong>포인트 즉시 보상(세탁비+1만P) 중심의 즉시 해결 경험</strong>으로 실패 이후의 경험을 바꾸는 데 집중합니다.</p>
+  <p>개선은 네 가지 축으로 진행합니다. ① '안심케어'를 <strong>'재케어'로 워딩 변경</strong> ② <strong>접수 프로세스 간소화</strong>(해결책 선제시 UX) ③ 승인 후 신청을 <strong>수거신청에서 독립</strong>(커머스 반품형 별도 회수/배송) ④ <strong>기본 알림톡 기반의 단계별 선제 안내</strong>(전화 상담은 원하는 고객만 선택). 이를 통해 <strong>"화났을 때 가장 빠르게 해결해 주는 서비스"</strong>라는 신뢰를 프로덕트로 구현합니다.</p>
+</div>
+
+<!-- 1. 현황 -->
+<h2><span class="num">1</span>현황 — 안심케어 VOC 데이터</h2>
+
+<div class="chart-card">
+  <div class="chart-title">세탁 품질 VOC vs 안심케어 VOC 월별 추이</div>
+  <div class="chart-sub">2026년 1~6월, East+South 합산 · 단위: 건</div>
+  <div class="legend">
+    <span class="key"><span class="swatch" style="background:var(--s1)"></span>1차 세탁 품질</span>
+    <span class="key"><span class="swatch" style="background:var(--s2)"></span>안심케어 접수·과정</span>
+  </div>
+  <svg id="chart" viewBox="0 0 780 300" role="img" aria-label="1차 세탁 품질 VOC는 1월 1,774건에서 6월 919건으로 감소, 안심케어 VOC는 675건에서 543건으로 정체"></svg>
+  <div class="small" style="margin-top:6px;">1차 세탁 품질 = 다림질·보풀/이물질·변형/변색/손상·오염 미제거·수선·건조/냄새 합산. 7월은 집계 진행 중으로 제외.</div>
+</div>
+<div class="tooltip" id="tt"></div>
+
+<p>위 그래프의 6월 안심케어 VOC <strong>543건</strong>을 분해하면, <strong>접수·과정 관련 문의가 409건(75%)</strong>으로 대부분을 차지하고, <strong>재케어 후 품질 불만 107건(20%)</strong>, <strong>오과금 27건(5%)</strong>이 뒤를 잇습니다. 품질 불만 건은 "안심케어로 처리됐으나 미흡한 상태로 사전 안내 없이 출고"되는 케이스로, CS 난이도·고객 강성도가 가장 높은 유형입니다. 여기에 별도 집계되는 <strong>중복인입</strong>(6월 991건) 중 상당수가 재케어/안심케어 관련 재문의로, 진행 안내 부재가 VOC를 재생산하는 구조입니다.</p>
+
+<div class="chart-card">
+  <div class="chart-title">접수·과정 관련 문의 유형 분해 (6월)</div>
+  <div class="chart-sub">티켓 제목·본문 텍스트 기반 분류 · 원시 집계 439건 기준 (요약 집계 409건과는 집계 기준 차이로 소폭 상이)</div>
+  <style>
+    .brow{display:flex; align-items:center; gap:10px; margin-bottom:7px; font-size:13px;}
+    .brow .bl{flex:0 0 168px; color:var(--ink-2); text-align:right;}
+    .brow .btrack{flex:1; height:16px; display:flex; align-items:center;}
+    .brow .bfill{height:16px; border-radius:0 4px 4px 0; background:var(--s1); min-width:2px;}
+    .brow .bfill.gray{background:#c3c2b7;}
+    .brow .bv{flex:0 0 96px; font-weight:700; font-variant-numeric:tabular-nums;}
+    .bex{font-size:11.5px; color:var(--ink-3); margin:-3px 0 9px 178px;}
+    .brow .bv .pct{font-weight:400; color:var(--ink-3); font-size:12px;}
+  </style>
+  <div class="brow"><div class="bl">재세탁 소요·배송 지연</div><div class="btrack"><div class="bfill" style="width:60%"></div></div><div class="bv">96건 <span class="pct">22%</span></div></div>
+  <div class="bex">예) "배송이 계속 지연되는데, 언제 도착하나요?" — 재케어로 보낸 의류의 완료·배송 시점 문의</div>
+  <div class="brow"><div class="bl">보상·환불 연계 문의</div><div class="btrack"><div class="bfill" style="width:46%"></div></div><div class="bv">73건 <span class="pct">17%</span></div></div>
+  <div class="bex">예) "세탁비 환불 가능할까요? 수거 요청으로 된 것 같은데 확인 부탁드려요"</div>
+  <div class="brow"><div class="bl">진행상황·결과 확인</div><div class="btrack"><div class="bfill" style="width:24%"></div></div><div class="bv">38건 <span class="pct">9%</span></div></div>
+  <div class="bex">예) "AS 맡긴 지 한 달이 되어가는데, 진행사항이 궁금합니다"</div>
+  <div class="brow"><div class="bl">응대 지연·전화 요청</div><div class="btrack"><div class="bfill" style="width:19%"></div></div><div class="bv">31건 <span class="pct">7%</span></div></div>
+  <div class="bex">예) "연락 준다고 하시고 답이 없네요. 전화 주세요"</div>
+  <div class="brow"><div class="bl">의류 발송·회수</div><div class="btrack"><div class="bfill" style="width:18%"></div></div><div class="bv">29건 <span class="pct">7%</span></div></div>
+  <div class="bex">예) "재요청드리며 치마랑 같이 보냈습니다. 확인 부탁드려요"</div>
+  <div class="brow"><div class="bl">신청 방법·진입 오류</div><div class="btrack"><div class="bfill" style="width:13%"></div></div><div class="bv">21건 <span class="pct">5%</span></div></div>
+  <div class="bex">예) "안심케어 요청했습니다. 별도로 수거 일자를 지정하는 방법이 있나요?"</div>
+  <div class="brow"><div class="bl">승인/반려·접수 기한</div><div class="btrack"><div class="bfill" style="width:4.4%"></div></div><div class="bv">7건 <span class="pct">2%</span></div></div>
+  <div class="bex">예) "반려해놓고 또 세탁물을 보내라는 건 무슨 말인가요?"</div>
+  <div class="brow"><div class="bl">기타 (복합 문의 등)</div><div class="btrack"><div class="bfill gray" style="width:90%"></div></div><div class="bv">144건 <span class="pct">33%</span></div></div>
+  <div class="bex">예) "재케어로 다시 맡기라고 하셨는데, 청바지가 줄고 물도 빠졌어요" — 복수 이슈가 얽힌 문의</div>
+  <div class="small" style="margin-top:8px;">'재세탁 소요·배송 지연 + 진행상황 확인 + 응대 지연' 합산 시 <strong>165건(38%)</strong> — "언제 되나, 어떻게 되고 있나"류 문의로, 데드라인 안내·앱 내 status·선택 채널 알림으로 흡수 가능한 영역. 의류 발송·회수(7%)와 신청 진입 오류(5%)는 독립 회수 프로세스·접수 UX 개편으로 해소.</div>
+</div>
+
+<!-- 2. 문제 정의 -->
+<h2><span class="num">2</span>고객 관점 문제 정의 — 무엇이 고객을 두 번 화나게 하는가</h2>
+
+<div class="quotes">
+  <div class="quote hero">
+    <div class="q">"드라이 도착도 화가 났지만, 이후 그 처리 과정이 너무 복잡하고 친절하지 않아서 2차로 더 화남. 드라이/빨래 퀄리티도 퀄리티이지만 그보다는 <strong>고객이 화났을 때 우리가 무조건 그걸 가장 빠르게 해결해 줄 거라는 믿음</strong>이 있어야 한다."</div>
+    <div class="src">— 투자사 피드백 (실제 이용 경험, 2026.07)</div>
+  </div>
+  <div class="quote">
+    <div class="q">"드라이 의류 구김이 심해 안심케어 요청했어요. 별도로 수거 일자를 지정하는 방법이 있나요?"</div>
+    <div class="src">— 신청 방법·경로 혼란 VOC</div>
+  </div>
+  <div class="quote">
+    <div class="q">"얼룩이 옅어지지도 않아서 안심케어 요청드렸는데, 그냥 반려된 걸까요?"</div>
+    <div class="src">— 진행 안내 부재 VOC</div>
+  </div>
+  <div class="quote">
+    <div class="q">"안심케어 기간이 지나서요… 한 달이 지나버렸네요."</div>
+    <div class="src">— 접수 기한 인지 실패 VOC</div>
+  </div>
+  <div class="quote">
+    <div class="q">"다림질 요청을 드렸는데 세탁비만큼 포인트가 지급됐습니다. 답변에 모순이 있어 재문의합니다."</div>
+    <div class="src">— 임의 보상 처리에 대한 재인입 VOC</div>
+  </div>
+</div>
+
+<div class="blocks">
+  <div class="block">
+    <div class="bt"><span class="idx">1</span>수비적인 접수 UX</div>
+    <div class="bd">후속 해결책(환불/재세탁)에 대한 사전 안내 없이 사진 촬영부터 강제. 고객은 무엇을 받을 수 있는지 모른 채 입증 부담부터 진다.</div>
+  </div>
+  <div class="block">
+    <div class="bt"><span class="idx">2</span>수거신청에 종속된 신청 구조</div>
+    <div class="bd">재케어 승인 후에도 일반 수거신청에 실어 보내야 한다. 수거 주기에 묶이고, 일반 세탁물과 혼재되며, 신청 경로를 찾지 못하는 문의가 반복된다.</div>
+  </div>
+  <div class="block">
+    <div class="bt"><span class="idx">3</span>고객이 원치 않는 방식의 안내</div>
+    <div class="bd">안내 채널(전화·문자 등)을 회사가 정한다. 전화를 못 받으면 처리가 지연되고, 원하는 채널로 오지 않는 안내는 읽히지 않는다.</div>
+  </div>
+  <div class="block">
+    <div class="bt"><span class="idx">4</span>진행 과정 블랙박스</div>
+    <div class="bd">접수 이후 SOP·트래킹 부재로 CS도 진행 상황을 모른다. 런드리고가 먼저 알려주지 않으니 고객이 물어보고, VOC가 다시 쌓인다.</div>
+  </div>
+</div>
+
+<!-- 3. 개선안 -->
+<h2><span class="num">3</span>개선 방향 — 고객에게 신뢰를 주는 경험으로 다시 설계한다</h2>
+
+<p>개선은 네 가지 축으로 구성됩니다. 부르는 이름부터 접수·회수·안내까지, 실패 이후 고객이 겪는 모든 접점을 신뢰 중심으로 재설계합니다.</p>
+
+<div class="ovlist">
+  <div class="ovitem"><span class="ovnum">3-1</span><div><strong>워딩 변경 — '안심케어' → '재케어'</strong><div class="ovd">행위가 그대로 전달되는 고객 언어로 앱·CS·알림 전면 교체</div></div></div>
+  <div class="ovitem"><span class="ovnum">3-2</span><div><strong>접수 프로세스 간소화</strong><div class="ovd">사과와 해결책(추천·후기 포함)을 먼저 제시하는 접수 플로우 전면 개편 — 즉시 옵션은 앱 내 종결</div></div></div>
+  <div class="ovitem"><span class="ovnum">3-3</span><div><strong>신청 방식 변경 — 수거신청에서 독립</strong><div class="ovd">커머스 반품형 전용 회수/배송 — 승인 즉시 회수 일정 확정, 별도 주문으로 추적</div></div></div>
+  <div class="ovitem"><span class="ovnum">3-4</span><div><strong>고객 케어 방식 변경 — 선제 안내</strong><div class="ovd">기본 알림톡 단계별 안내 + 원하는 고객만 전화 상담, 앱 내 전용 진행 status (TO-BE)</div></div></div>
+</div>
+
+<div class="principle">
+  <div class="pt">묻기 전에 알려주고, 고객의 언어와 방식으로 진행한다</div>
+  <div class="pd">즉시 보상 중심의 전향적 옵션으로 다수의 고객을 빠르게 만족시키고, 접수·회수·안내의 모든 마찰을 프로덕트가 흡수해 판단 비용과 확인 비용을 고객이 지지 않게 한다.</div>
+</div>
+
+<h3>3-1. 워딩 변경 — '안심케어' → '재케어'</h3>
+<p>'안심케어'는 브랜드가 지어준 이름이지 고객의 언어가 아닙니다. 이름만으로는 <strong>무엇을 해주는 기능인지 전달되지 않고</strong>, 세탁이 실패한 상황에서 '안심'이라는 워딩은 오히려 기대와 어긋납니다. 유료 부가서비스로 오인되는 문제도 있습니다(안심케어 오과금 VOC 월 27건, 6월). <strong>'재케어'는 "다시 케어해 드립니다"라는 행위 자체를 담은 직관적 이름</strong>으로, 실제 CS 현장과 VOC에서 이미 통용되는 표현입니다.</p>
+
+<h3>3-2. 접수 프로세스 간소화 — 해결책을 먼저 보여주는 접수 UX <span class="badge">시안 별첨</span></h3>
+<p>일방적으로 접수만 받던 수비적 플로우를 버리고, <strong>해결 방식(포인트로 즉시 보상 / 세탁비 환불 / 한번 더 케어)을 첫 화면에서 먼저 보여주고 고객이 선택</strong>하는 구조로 전환합니다. <strong>추천 옵션(포인트로 즉시 보상 — 세탁비에 1만P 추가)</strong>과 해결 완료 고객 후기를 함께 노출해 선택 부담을 낮추고, 즉시 옵션은 앱 안에서 바로 종결됩니다.</p>
+<table>
+  <tr><th style="width:30%">단계</th><th>내용</th></tr>
+  <tr><td class="opt">① 해결 방식 선택</td><td>첫 화면에서 3가지 옵션 제시 — <strong>추천 배지(포인트로 즉시 보상 — 세탁비+1만P 추가)</strong>와 <strong>해결 완료 고객 후기</strong>를 노출해 선택 부담 최소화, 즉시 옵션은 앱 내 종결</td></tr>
+  <tr><td class="opt">② 품목 선택</td><td>"문제가 있는 세탁물을 먼저 선택해주세요" — 단계 안내 문구로 연결성 확보, 접수 기한(D-n)을 품목 카드에 표기해 기한 경과 인지 실패 방지</td></tr>
+  <tr><td class="opt">③ 이슈 선택</td><td>고객 언어 선택지를 <strong>세탁 상태 / 의류 상태 / 마무리로 그룹핑</strong> — 탐색 속도 개선, 선택 즉시 내부 분류 자동 매핑</td></tr>
+  <tr><td class="opt">④ 사진 첨부</td><td>필수 입력이되 부담을 낮춘 문구로 요청 — 이슈·사진이 티켓에 함께 전달돼 진단 정확도 향상</td></tr>
+  <tr><td class="opt">⑤ 접수 완료</td><td>한번 더 케어 선택 시 회수 일정 → 전화 안내(선택) → <strong>남기실 말씀(자유 입력)</strong> 순으로 접수. <strong>"다음 안내는 진단 후 알림톡으로"를 최상단에 명시</strong>하고 현재 단계를 카드로 강조 — "언제 되나, 어떻게 되고 있나"류 문의(접수·과정 문의의 38%)의 선제 차단 지점</td></tr>
+</table>
+<p class="small">아래 화면 시안: 현행 보상 정책(환불/재세탁) 기준 · 비주얼은 시안 목적의 임시 스타일(LDS 적용 전) · 화면이 넘칠 경우 가로 스크롤 · 현행 접수 화면(AS-IS) 공유 시 대비로 보완 예정</p>
+
+<style>
+  .mock{ --mline:#E5E8ED; --mprm:#0AC290; --mprm-deep:#07926C; --mprm-bg:#E9F9F3; --mdanger:#FF4F17; --mink1:#1A1C1F; --mink2:#646D7A; --mink3:#8F97A3; margin-top:18px; }
+  .mock .flow{display:flex; gap:22px; align-items:flex-start; overflow-x:auto; padding-bottom:16px;}
+  .mock .step{flex:0 0 auto; width:302px;}
+  .mock .step-head{display:flex; align-items:center; gap:8px; margin-bottom:12px;}
+  .mock .step-num{width:22px; height:22px; border-radius:50%; background:var(--mink1); color:#fff; font-size:12px; font-weight:700; text-align:center; line-height:22px;}
+  .mock .step-title{font-size:14.5px; font-weight:800;}
+  .mock .phone{font-family:"Pretendard Variable","Pretendard",-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",sans-serif; width:302px; height:692px; background:#fff; border:1px solid #d8dade; border-radius:28px; box-shadow:0 10px 28px rgba(17,19,24,.08); overflow:hidden; display:flex; flex-direction:column;}
+  .mock .statusbar{height:30px; flex:none; display:flex; align-items:center; justify-content:space-between; padding:0 18px; font-size:10.5px; color:var(--mink2);}
+  .mock .navbar{height:46px; flex:none; display:flex; align-items:center; gap:10px; padding:0 14px; border-bottom:1px solid var(--mline);}
+  .mock .navbar .back{font-size:17px; color:var(--mink1);}
+  .mock .navbar .nt{font-size:15px; font-weight:700;}
+  .mock .screen{flex:1; overflow:hidden; padding:12px 14px; display:flex; flex-direction:column; gap:7px;}
+  .mock .cta{flex:none; margin:0 14px 16px; height:46px; border-radius:12px; background:var(--mprm); color:#fff; font-size:14.5px; font-weight:700; display:flex; align-items:center; justify-content:center;}
+  .mock .sec-label{font-size:12px; font-weight:700; color:var(--mink3); margin:4px 2px 0;}
+  .mock .headline{font-size:16.5px; font-weight:800; line-height:1.4; margin:2px 2px 4px;}
+  .mock .subcopy{font-size:12px; color:var(--mink2); margin:0 2px;}
+  .mock .item-card{border:1px solid var(--mline); border-radius:12px; padding:11px 12px; display:flex; gap:10px; align-items:center;}
+  .mock .item-card.sel{border-color:var(--mprm); background:var(--mprm-bg);}
+  .mock .thumb{width:44px; height:44px; border-radius:8px; background:#eceef1; flex:none; display:flex; align-items:center; justify-content:center; font-size:19px;}
+  .mock .item-card .in{flex:1; min-width:0;}
+  .mock .item-card .t1{font-size:13.5px; font-weight:700;}
+  .mock .item-card .t2{font-size:11.5px; color:var(--mink3); margin-top:1px;}
+  .mock .ddl{font-size:10.5px; font-weight:700; color:var(--mprm-deep); background:var(--mprm-bg); border-radius:16px; padding:2px 8px; flex:none;}
+  .mock .ddl.warn{color:var(--mdanger); background:rgba(208,59,59,.08);}
+  .mock .radio{width:18px; height:18px; border-radius:50%; border:1.5px solid #c9ccd1; flex:none;}
+  .mock .radio.on{border:5.5px solid var(--mprm);}
+  .mock .chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .mock .chip{border:1px solid var(--mline); border-radius:20px; padding:7px 13px; font-size:12.5px; color:var(--mink2); background:#fff;}
+  .mock .chip.sel{border-color:var(--mprm); color:var(--mprm-deep); background:var(--mprm-bg); font-weight:700;}
+  .mock .opt-card{border:1.5px solid var(--mline); border-radius:14px; padding:9px 12px;}
+  .mock .opt-card.sel{border-color:var(--mprm); background:var(--mprm-bg);}
+  .mock .opt-card .ot{font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:space-between;}
+  .mock .opt-card .od{font-size:12px; color:var(--mink2); margin-top:5px;}
+  .mock .opt-card .om{font-size:11px; color:var(--mink3); margin-top:7px; padding-top:7px; border-top:1px dashed var(--mline);}
+  .mock .tagline{font-size:10.5px; font-weight:700; color:var(--mprm-deep); background:#fff; border:1px solid var(--mprm); border-radius:14px; padding:1px 8px;}
+  .mock .field{border:1px solid var(--mline); border-radius:12px; padding:11px 12px; display:flex; align-items:center; justify-content:space-between; font-size:13px;}
+  .mock .field .fl{color:var(--mink2);}
+  .mock .field .fv{font-weight:700;}
+  .mock .photo-row{display:flex; gap:8px;}
+  .mock .photo-add{width:54px; height:54px; border:1.5px dashed #c9ccd1; border-radius:10px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:10px; color:var(--mink3); gap:2px;}
+  .mock .photo-add .pi{font-size:16px;}
+  .mock .photo-thumb{width:54px; height:54px; border-radius:10px; background:#eceef1; display:flex; align-items:center; justify-content:center; font-size:19px;}
+  .mock .ch-grid{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .mock .ch{border:1.5px solid var(--mline); border-radius:12px; padding:7px 6px; text-align:center;}
+  .mock .ch.sel{border-color:var(--mprm); background:var(--mprm-bg);}
+  .mock .ch .ci{font-size:19px;}
+  .mock .ch .cl{font-size:11.5px; font-weight:700; margin-top:3px;}
+  .mock .ch .cd{font-size:9.5px; color:var(--mink3);}
+  .mock .ch.sel .cl{color:var(--mprm);}
+  .mock .stepper{display:flex; flex-direction:column; margin-top:2px;}
+  .mock .stp{display:flex; gap:12px;}
+  .mock .stp .rail{display:flex; flex-direction:column; align-items:center; width:18px;}
+  .mock .stp .dot{width:12px; height:12px; border-radius:50%; background:#d4d7db; flex:none; margin-top:3px;}
+  .mock .stp .dot.done{background:var(--mprm);}
+  .mock .stp .dot.now{background:#fff; border:3.5px solid var(--mprm); width:14px; height:14px;}
+  .mock .stp .bar{width:2px; flex:1; background:#e2e4e8; min-height:22px;}
+  .mock .stp .bar.done{background:var(--mprm);}
+  .mock .stp .sc{padding-bottom:14px;}
+  .mock .stp .st{font-size:13px; font-weight:700;}
+  .mock .stp .st.dim{color:var(--mink3); font-weight:600;}
+  .mock .stp .sd{font-size:11px; color:var(--mink3); margin-top:1px;}
+  .mock .banner{background:var(--mprm-bg); border-radius:12px; padding:11px 12px; font-size:12px; color:var(--mink1);}
+  .mock .banner strong{color:var(--mprm-deep);}
+  .mock .review{background:#fffdf3; border:1px solid #f0e6c0; border-radius:12px; padding:6px 12px;}
+  .mock .review .rv-star{color:#eda100; font-size:12px; letter-spacing:2px;}
+  .mock .review .rv-q{font-size:11.5px; color:var(--mink1); margin-top:3px; line-height:1.5;}
+  .mock .review .rv-src{font-size:10px; color:var(--mink3); margin-top:4px;}
+  .mock .done-ico{width:52px; height:52px; border-radius:50%; background:var(--mprm-bg); color:var(--mprm); font-size:24px; display:flex; align-items:center; justify-content:center; margin:6px auto 0;}
+  .mock .anno{margin-top:14px; background:#fff; border:1px solid var(--mline); border-radius:12px; padding:13px 15px; font-size:12.5px; color:var(--mink2);}
+  .mock .anno b{color:var(--mink1);}
+  .mock .anno ul{margin:4px 0 0 16px;}
+  .mock .anno li{margin-bottom:3px; padding-left:0;}
+  .mock .anno li::before{content:none;}
+  .mock .arrow-col{flex:0 0 auto; align-self:center; color:#b9bdc4; font-size:22px; padding-bottom:120px;}
+  .mock .stepguide{font-size:11px; font-weight:800; color:var(--mprm-deep); letter-spacing:.05em;}
+  .mock .grp{font-size:11.5px; font-weight:700; color:var(--mink3); margin-top:3px;}
+  .mock .rec{display:inline-block; font-size:10px; font-weight:800; color:#fff; background:var(--mprm); border-radius:12px; padding:1.5px 8px; margin-right:6px; vertical-align:2px;}
+  .mock .cur-card{border:1.5px solid var(--mprm); background:var(--mprm-bg); border-radius:12px; padding:11px 12px;}
+  .mock .cur-card .cc-t{font-size:13.5px; font-weight:800; color:var(--mprm-deep);}
+  .mock .cur-card .cc-d{font-size:11.5px; color:var(--mink2); margin-top:3px;}
+  .mock .hstep{display:flex; align-items:flex-start; margin-top:4px; padding:0 2px;}
+  .mock .hstep .hs{display:flex; flex-direction:column; align-items:center; gap:3px; font-size:10px; color:var(--mink3); width:34px;}
+  .mock .hstep .hs .on{color:var(--mprm-deep); font-weight:800;}
+  .mock .hstep .hd{width:10px; height:10px; border-radius:50%; background:#d4d7db;}
+  .mock .hstep .hd.done{background:var(--mprm);}
+  .mock .hstep .hd.now{background:#fff; border:3px solid var(--mprm); width:12px; height:12px;}
+  .mock .hstep .hb{flex:1; height:2px; background:#e2e4e8; margin-top:5px;}
+  .mock .hstep .hb.done{background:var(--mprm);}
+  .mock .memo{border:1px solid var(--mline); border-radius:12px; padding:10px 12px; font-size:12px; color:var(--mink2); min-height:56px; line-height:1.5;}
+</style>
+
+<div class="mock">
+<div class="flow">
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">1</div><div class="step-title">해결 방법 선택 — 추천·후기</div></div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮</span></div>
+      <div class="navbar"><span class="back">‹</span><span class="nt">재케어 신청</span></div>
+      <div class="screen" style="gap:6px;">
+        <div class="stepguide">1/4 · 해결 방법 선택</div>
+        <div class="headline" style="font-size:15.5px;">불편을 드려 죄송합니다.</div>
+        <div class="subcopy" style="margin-top:-3px;">가장 편한 해결 방법을 선택해주세요.</div>
+        <div class="opt-card">
+          <div class="ot"><span><span class="rec">추천</span>포인트로 즉시 보상</span> <span class="tagline">당일 처리</span></div>
+          <div class="od">세탁비를 포인트로 바로 보상해드려요. 의류를 다시 보내지 않아도 됩니다.</div>
+          <div class="om">🎁 다시 맡기시는 번거로움까지 생각해 <b>1만 포인트</b>를 함께 드려요.</div>
+        </div>
+        <div class="opt-card">
+          <div class="ot">세탁비 환불 <span class="tagline">당일 처리</span></div>
+          <div class="od">세탁비를 바로 환불해드려요.</div>
+        </div>
+        <div class="opt-card sel">
+          <div class="ot">한번 더 케어 <span class="tagline">회수 후 케어</span></div>
+          <div class="od">세탁 상태를 다시 진단한 뒤 가장 적합한 방법으로 케어해드려요. 추가 비용 없이 끝까지 함께할게요.</div>
+          <div class="om">✓ 원하는 날짜 회수 &nbsp;✓ 진단 결과 안내 &nbsp;✓ 진행 상황 알림</div>
+          <div class="review" style="margin-top:8px;">
+            <div class="rv-star">★★★★★ <span style="color:#8a8f98; font-size:10px; letter-spacing:0;">한번 더 케어 이용 후기</span></div>
+            <div class="rv-q">"얼룩이 깨끗하게 해결됐고, 진행 상황을 계속 알려줘서 안심됐어요."</div>
+          </div>
+        </div>
+      </div>
+      <div class="cta">한번 더 케어 신청하기</div>
+    </div>
+    <div class="anno"><b>개선 포인트</b>
+      <ul>
+        <li><b>해결책을 첫 화면에서 먼저 제시</b> — 무엇을 받을 수 있는지 진입 즉시 인지, 입증 부담 제거</li>
+        <li><b>추천 배지(포인트로 즉시 보상 — 세탁비+1만P)</b>로 선택 부담 최소화 — 고객은 가장 빠르고, 회사는 회수·재가공 비용 없이 종결</li>
+        <li>해결 완료 <b>고객 후기 노출</b>로 안심하고 맡길 수 있는 신뢰 형성 · 즉시 옵션은 앱 내 종결</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arrow-col">›</div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">2</div><div class="step-title">세탁물 선택</div></div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮</span></div>
+      <div class="navbar"><span class="back">‹</span><span class="nt">재케어 신청</span></div>
+      <div class="screen">
+        <div class="stepguide">2/4 · 세탁물 선택</div>
+        <div class="headline">문제가 있는 세탁물을<br>먼저 선택해주세요</div>
+        <div class="sec-label">7/20 (월) 배송 완료</div>
+        <div class="item-card sel">
+          <div class="thumb">👕</div>
+          <div class="in"><div class="t1">티셔츠</div><div class="t2">드라이클리닝 · 바코드 CFAB0012</div></div>
+          <span class="ddl">신청 가능 D-27</span>
+          <div class="radio on"></div>
+        </div>
+        <div class="item-card">
+          <div class="thumb">👖</div>
+          <div class="in"><div class="t1">바지</div><div class="t2">드라이클리닝 · 바코드 CFAB0013</div></div>
+          <span class="ddl">신청 가능 D-27</span>
+          <div class="radio"></div>
+        </div>
+        <div class="sec-label">6/24 (수) 배송 완료</div>
+        <div class="item-card" style="opacity:.55">
+          <div class="thumb">🧥</div>
+          <div class="in"><div class="t1">재킷</div><div class="t2">드라이클리닝</div></div>
+          <span class="ddl warn">기한 만료</span>
+        </div>
+      </div>
+      <div class="cta">다음</div>
+    </div>
+    <div class="anno"><b>개선 포인트</b>
+      <ul>
+        <li>'안심케어' → <b>'재케어 신청'</b> 워딩 적용</li>
+        <li>"문제가 있는 세탁물을 먼저 선택해주세요" — <b>단계 안내 문구</b>로 다음 단계와의 연결성 확보</li>
+        <li>품목 카드에 <b>신청 가능 기한(D-n)</b> 상시 노출 — "기간이 지나서요" VOC 방지</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arrow-col">›</div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">3</div><div class="step-title">이슈 선택 — 그룹핑</div></div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮</span></div>
+      <div class="navbar"><span class="back">‹</span><span class="nt">재케어 신청</span></div>
+      <div class="screen">
+        <div class="stepguide">3/4 · 문제 선택</div>
+        <div class="headline">어떤 문제가 있었는지<br>선택해주세요</div>
+        <div class="grp">세탁 상태</div>
+        <div class="chips">
+          <span class="chip sel">얼룩이 그대로 있어요</span>
+          <span class="chip">없던 얼룩이 생겼어요</span>
+          <span class="chip">냄새가 나요</span>
+        </div>
+        <div class="grp">의류 상태</div>
+        <div class="chips">
+          <span class="chip">줄었어요</span>
+          <span class="chip sel">변형됐어요</span>
+          <span class="chip">손상됐어요</span>
+          <span class="chip">색이 변했어요</span>
+        </div>
+        <div class="grp">마무리</div>
+        <div class="chips">
+          <span class="chip">다림질이 아쉬워요</span>
+          <span class="chip">수선이 안 됐어요</span>
+          <span class="chip">기타</span>
+        </div>
+        <div class="banner" style="margin-top:auto;">선택 내용은 팩토리에 <strong>그대로 전달</strong>돼 진단에 사용돼요.</div>
+      </div>
+      <div class="cta">다음</div>
+    </div>
+    <div class="anno"><b>개선 포인트</b>
+      <ul>
+        <li>고객 언어 선택지를 <b>세탁 상태 / 의류 상태 / 마무리로 그룹핑</b> — 원하는 항목을 훨씬 빨리 찾음</li>
+        <li>선택 즉시 VOC 중분류 자동 매핑 — 상담사가 티켓을 열기 전 이슈 파악</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arrow-col">›</div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">4</div><div class="step-title">사진 첨부</div></div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮</span></div>
+      <div class="navbar"><span class="back">‹</span><span class="nt">재케어 신청</span></div>
+      <div class="screen">
+        <div class="stepguide">4/4 · 사진 첨부</div>
+        <div class="headline">아쉬운 부분을<br>촬영해주세요</div>
+        <div class="photo-row">
+          <div class="photo-thumb">📷</div>
+          <div class="photo-add"><span class="pi">＋</span>추가</div>
+        </div>
+        <div class="subcopy">아쉬운 부분이 잘 보이도록 촬영해주세요. 빠른 진단에 도움이 됩니다.</div>
+        <div class="banner" style="margin-top:auto;">사진은 <strong>전문가 진단과 케어 과정</strong>에 사용돼요.</div>
+      </div>
+      <div class="cta">다음</div>
+    </div>
+    <div class="anno"><b>개선 포인트</b>
+      <ul>
+        <li>사진은 필수 입력이지만 <b>부담을 낮춘 문구</b>로 요청 ("빠른 진단에 도움이 됩니다")</li>
+        <li>선택한 이슈·사진이 티켓에 함께 전달 — 상담사·팩토리의 진단 정확도 향상</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arrow-col">›</div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">5</div><div class="step-title">한번 더 케어 상세</div></div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮</span></div>
+      <div class="navbar"><span class="back">‹</span><span class="nt">한번 더 케어</span></div>
+      <div class="screen">
+        <div class="sec-label">회수 일정</div>
+        <div class="field"><span class="fl">회수 예정일</span><span class="fv">7/23 (목) · 문 앞 회수 ›</span></div>
+        <div class="subcopy">선택하신 일정에 재케어 의류만 따로 회수해요. 다음 수거신청은 그대로 이용할 수 있어요.</div>
+        <div class="sec-label" style="margin-top:6px;">진행 안내</div>
+        <div class="banner">진행 안내는 <strong>알림톡</strong>으로 빠짐없이 보내드려요.</div>
+        <div class="field" style="white-space:nowrap;"><span class="fl">전화 안내 받기</span><span class="fv" style="color:#07926C;">☐</span></div>
+        <div class="subcopy">필요하면 전화로도 안내받을 수 있어요.</div>
+        <div class="sec-label" style="margin-top:6px;">남기실 말씀 (선택)</div>
+        <div class="memo">담당자에게 전할 내용이 있다면 남겨주세요.<br><span style="color:#c2c6cc;">예) 소매 얼룩 부분 꼭 확인 부탁드려요</span></div>
+      </div>
+      <div class="cta">접수 완료</div>
+    </div>
+    <div class="anno"><b>개선 포인트</b>
+      <ul>
+        <li><b>회수일을 먼저 확정</b> — "언제 가져가는구나"를 먼저 이해시키는 순서 (사진은 앞 단계에서 이미 첨부)</li>
+        <li>진행 안내는 <b>기본 알림톡</b>, 전화 안내는 부드러운 문구의 <b>선택 옵션</b> (선택 시 회수·진단 결과, 동의 사항을 전화로 소통)</li>
+        <li><b>문의·요청을 남길 수 있는 자유 입력</b> — 하고 싶은 말이 티켓에 함께 전달돼 별도 1:1 문의 불필요</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="arrow-col">›</div>
+
+  <div class="step">
+    <div class="step-head"><div class="step-num">6</div><div class="step-title">접수 완료 — 진행 현황</div></div>
+    <div class="phone">
+      <div class="statusbar"><span>9:41</span><span>5G ▮</span></div>
+      <div class="navbar"><span class="back">‹</span><span class="nt">재케어 진행 현황</span></div>
+      <div class="screen">
+        <div class="done-ico">✓</div>
+        <div class="headline" style="text-align:center;">재케어 접수 완료</div>
+        <div class="banner" style="text-align:center; font-size:12.5px;"><strong>다음 안내는 의류 진단 후<br>전화로 드릴게요.</strong><br><span style="font-size:10.5px; color:#555a63;">진행 상황은 전화와 알림톡으로 안내드려요</span></div>
+        <div class="cur-card">
+          <div class="cc-t">🟢 회수 예정 · 7/23 (목)</div>
+          <div class="cc-d">문 앞에 놓아주시면 기사님이 회수해요.</div>
+        </div>
+        <div class="hstep">
+          <div class="hs"><div class="hd done"></div><span>접수</span></div>
+          <div class="hb done"></div>
+          <div class="hs"><div class="hd now"></div><span class="on">회수</span></div>
+          <div class="hb"></div>
+          <div class="hs"><div class="hd"></div><span>진단</span></div>
+          <div class="hb"></div>
+          <div class="hs"><div class="hd"></div><span>케어</span></div>
+          <div class="hb"></div>
+          <div class="hs"><div class="hd"></div><span>배송</span></div>
+        </div>
+        <div class="subcopy" style="text-align:center; margin-top:2px;">케어가 완료될 때까지 런드리고가 책임지고 진행해요.<br>진행 상황이 바뀌면 여기서 바로 확인돼요.</div>
+      </div>
+    </div>
+    <div class="anno"><b>개선 포인트</b>
+      <ul>
+        <li>고객이 가장 궁금한 <b>"다음 안내가 언제·어떻게 오는지"를 최상단에 크게</b> 명시 — 접수 시 선택한 안내 방식 기준 (본 화면은 <b>전화 안내 선택 고객</b> 예시)</li>
+        <li><b>현재 단계를 카드로 강조</b> — 날짜·해야 할 일(문 앞 배출)까지 한눈에</li>
+        <li>일반 주문과 분리된 <b>재케어 전용 status</b> — "언제 되나"류 문의(38%)의 구조적 차단 지점</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<h3>3-3. 신청 방식 변경 — 수거신청에서 독립된 회수/배송 <span class="badge">구조 변경</span></h3>
+<div class="asis-tobe">
+  <div class="col">
+    <div class="ct">AS-IS</div>
+    재케어 승인 후 <strong>다음 수거신청에 실어서</strong> 보내야 함. 수거 주기에 종속되고, 일반 세탁물과 혼재되어 팩토리 입고 시 식별·추적이 어려움. 재케어 접수 중에는 <strong>다음 수거신청이 불가능</strong>해, 불만을 처리하는 동안 서비스 이용 자체가 막히는 또 다른 불만이 발생.
+  </div>
+  <div class="arrow">→</div>
+  <div class="col tobe">
+    <div class="ct">TO-BE</div>
+    <strong>커머스 반품 모델</strong>처럼 재케어 전용 회수/배송 프로세스로 분리. 승인 즉시 회수 일정을 잡고, 일반 주문과 독립된 status로 추적.
+  </div>
+</div>
+<ul class="clean">
+  <li><strong>고객에게 익숙한 멘탈 모델</strong> — 이커머스 반품 UX와 동일한 구조라 학습 비용이 없음</li>
+  <li><strong>리드타임 단축</strong> — 다음 수거일을 기다릴 필요 없이 승인 즉시 회수 일정 확정</li>
+  <li>세탁 구독/이용권과 무관하게 워킹 — 신청 경로를 찾지 못하는 문의 구조적 제거</li>
+</ul>
+
+<h3>3-4. 고객 케어 방식 변경 — 기본 알림톡, 전화를 원하면 전화로 <span class="badge">커뮤니케이션 재설계</span></h3>
+<p>모든 진행 안내는 <strong>기본 알림톡</strong>으로 발송합니다. <strong>전화 상담을 원하는 고객은 접수 시 전화 안내를 선택</strong>할 수 있고, 선택 시 의류 회수·진단 후 안내와 케어 진행 중 동의가 필요한 사항을 전화로 소통합니다. 안내가 필요한 시점을 표준화해, 고객이 묻기 전에 런드리고가 먼저 알립니다.</p>
+<table>
+  <tr><th style="width:22%">시점</th><th style="width:30%">트리거</th><th>안내 내용</th></tr>
+  <tr><td class="opt">1차 안내</td><td>접수 시</td><td>케어 시작 안내 + 접수 시 선택한 일정에 회수 예정임을 안내</td></tr>
+  <tr><td class="opt">2차 안내</td><td>회수·의류 진단 후</td><td>의류 상태 확인 결과 + 처리 방식·소요 일정 안내 (동의 필요 시 이 시점에 확인 · 전화 상담 선택 고객은 전화로 소통)</td></tr>
+  <tr><td class="opt">처리 중</td><td>status 변경 시</td><td>진행 상황을 <strong>앱 내 status</strong>로 상시 확인 — 문의 없이도 현재 단계가 보이는 구조 (TO-BE, 트래킹 시스템 구현 후 적용)</td></tr>
+  <tr><td class="opt">3차 안내</td><td>케어 완료</td><td>케어 완료 안내 + 배송 일정 안내</td></tr>
+</table>
+<p class="small">※ 채팅 채널은 채널톡 검토(7/14~ 미팅 진행 중)와 연계. 도입 시 재케어 진행 안내·문의 채널로 우선 적용.</p>
+
+<!-- 4. 기대효과 -->
+<h2><span class="num">4</span>기대 효과</h2>
+<ul class="clean">
+  <li><strong>중복인입 구조적 감소</strong> — 진행 안내 부재로 발생하는 재문의(월 1,000건 규모의 중복인입 중 재케어 관련 건)를 단계별 선제 안내와 앱 내 status로 차단</li>
+  <li><strong>접수 마찰 제거</strong> — 진입 오류·기한 경과·분류 미입력 등 접수 단계에서 발생하던 VOC를 UX로 흡수, CS는 티켓을 열기 전에 이슈 성격을 파악</li>
+  <li><strong>운영 효율</strong> — 재케어 건의 독립 추적으로 팩토리 혼재·식별 비용 감소, 회수~배송 리드타임 단축</li>
+  <li><strong>신뢰 기반 리텐션</strong> — "실패해도 가장 빠르게 해결해 준다"는 경험이 이탈 방어의 핵심. 좋아하다가도 한 번에 돌아서는 구독 서비스 특성상, 실패 순간의 경험이 곧 리텐션</li>
+</ul>
+
+<footer>
+  본 문서의 수치는 VOC 반토막내기(South Factory) 집계 데이터(2026.1~6월, East+South 합산) 및 런드리고 CS 현황·개선안 자료 기준. 7월 수치는 집계 진행 중으로 추이 분석에서 제외. 포인트 즉시 보상(세탁비+1만P 추가)을 제외한 보상 정책은 현행 유지 전제.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  const q = [1774,1198,1250,1745,1153,919];
+  const a = [675,437,574,846,642,543];
+  const labels = ['1월','2월','3월','4월','5월','6월'];
+  const svg = document.getElementById('chart');
+  const NS = 'http://www.w3.org/2000/svg';
+  const W=780, H=300, m={t:18,r:64,b:34,l:52};
+  const iw = W-m.l-m.r, ih = H-m.t-m.b;
+  const ymax = 2000;
+  const x = i => m.l + iw*(i/(labels.length-1));
+  const y = v => m.t + ih*(1 - v/ymax);
+  function el(n,attrs,parent){ const e=document.createElementNS(NS,n); for(const k in attrs) e.setAttribute(k,attrs[k]); (parent||svg).appendChild(e); return e; }
+  [0,500,1000,1500,2000].forEach(v=>{
+    el('line',{x1:m.l,x2:W-m.r,y1:y(v),y2:y(v),stroke:v===0?'var(--baseline)':'var(--grid)','stroke-width':1});
+    el('text',{x:m.l-8,y:y(v)+4,'text-anchor':'end','font-size':11,fill:'var(--ink-3)','font-variant-numeric':'tabular-nums'}).textContent = v.toLocaleString();
+  });
+  labels.forEach((lb,i)=>{
+    el('text',{x:x(i),y:H-10,'text-anchor':'middle','font-size':11.5,fill:'var(--ink-3)'}).textContent = lb;
+  });
+  const series = [
+    {data:q, color:'var(--s1)', name:'1차 세탁 품질'},
+    {data:a, color:'var(--s2)', name:'안심케어 접수·과정'}
+  ];
+  series.forEach(s=>{
+    const d = s.data.map((v,i)=>(i?'L':'M')+x(i)+','+y(v)).join(' ');
+    el('path',{d, fill:'none', stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'});
+    s.data.forEach((v,i)=>{
+      el('circle',{cx:x(i),cy:y(v),r:3.5,fill:s.color,stroke:'var(--surface-1)','stroke-width':2});
+    });
+    el('text',{x:W-m.r+8,y:y(s.data[s.data.length-1])+4,'font-size':11.5,'font-weight':700,fill:'var(--ink-2)'}).textContent = s.data[s.data.length-1].toLocaleString();
+  });
+  el('text',{x:x(0),y:y(q[0])-10,'text-anchor':'middle','font-size':11.5,'font-weight':700,fill:'var(--ink-2)'}).textContent='1,774';
+  el('text',{x:x(0),y:y(a[0])-10,'text-anchor':'middle','font-size':11.5,'font-weight':700,fill:'var(--ink-2)'}).textContent='675';
+  const tt = document.getElementById('tt');
+  const hover = el('rect',{x:m.l,y:m.t,width:iw,height:ih,fill:'transparent'});
+  const cross = el('line',{y1:m.t,y2:m.t+ih,stroke:'var(--baseline)','stroke-width':1,'stroke-dasharray':'3 3',opacity:0});
+  hover.addEventListener('mousemove',ev=>{
+    const r = svg.getBoundingClientRect();
+    const sx = (ev.clientX - r.left) * (W/r.width);
+    let i = Math.round((sx-m.l)/iw*(labels.length-1));
+    i = Math.max(0,Math.min(labels.length-1,i));
+    cross.setAttribute('x1',x(i)); cross.setAttribute('x2',x(i)); cross.setAttribute('opacity',1);
+    tt.innerHTML = '<strong>'+labels[i]+'</strong><br>1차 세탁 품질: '+q[i].toLocaleString()+'건<br>안심케어: '+a[i].toLocaleString()+'건';
+    tt.style.opacity=1;
+    tt.style.left=(ev.clientX+14)+'px';
+    tt.style.top=(ev.clientY-10)+'px';
+  });
+  hover.addEventListener('mouseleave',()=>{ tt.style.opacity=0; cross.setAttribute('opacity',0); });
+})();
+</script>
+</body>
+</html>
