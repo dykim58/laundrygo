@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"><rect width="120" height="120" rx="24" fill="#0AC290"/><rect x="36" y="26" width="48" height="68" rx="10" fill="#fff"/><path d="M48 62l8 8 16-18" stroke="#0AC290" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></template>
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/colors.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/typography.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/effects.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/brand/fig-tokens.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/styles.css">
+<script src="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/_ds_bundle.js"></script>
+<style>
+  body { margin:0; background:#F4F5F7; font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,sans-serif; color:#212121; }
+  a { color:#067DFD; text-decoration:none; }
+  a:hover { color:#0AC290; }
+  .lg-scroll::-webkit-scrollbar { width:0; height:0; }
+</style>
+</helmet>
+
+<div style="min-height:100vh; padding:40px 32px 64px; display:flex; flex-direction:column; align-items:center; gap:28px;">
+
+  <div style="width:100%; max-width:1000px; display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+    <div>
+      <div style="font-size:12px; font-weight:700; letter-spacing:.1em; color:#8F97A3; margin-bottom:8px;">LAUNDRYGO · PROTOTYPE v2</div>
+      <div style="font-size:28px; font-weight:800; letter-spacing:-0.02em;">재케어 접수 프로세스</div>
+      <div style="font-size:14px; color:#646D7A; margin-top:6px;">접수 5단계 · 해결 방법 먼저 안내 · 포인트 즉시 환불 우선. 클릭해서 직접 흘러가 보세요.</div>
+    </div>
+    <div onClick="{{ reset }}" style="cursor:pointer; font-size:13px; font-weight:700; color:#646D7A; border:1px solid #D3D8DF; background:#FFFFFF; border-radius:20px; padding:9px 16px;">처음부터 다시</div>
+  </div>
+
+  <div style="width:100%; max-width:1000px; display:flex; gap:40px; align-items:flex-start; flex-wrap:wrap; justify-content:center;">
+
+    <div style="width:390px; height:844px; flex:none; background:#FFFFFF; border-radius:44px; box-shadow:0 24px 60px rgba(17,19,24,.14), 0 0 0 10px #1A1C1F; overflow:hidden; display:flex; flex-direction:column; position:relative;">
+
+      <div style="height:54px; flex:none; display:flex; align-items:flex-end; justify-content:space-between; padding:0 28px 6px; font-size:14px; font-weight:600;">
+        <span>9:41</span>
+        <span style="letter-spacing:1px;">5G ▮</span>
+      </div>
+
+      <div style="height:56px; flex:none; display:flex; align-items:center; gap:8px; padding:0 12px;">
+        <div onClick="{{ back }}" style="width:40px; height:40px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#212121; cursor:pointer;">‹</div>
+        <div style="font-size:17px; font-weight:700; letter-spacing:-0.02em;">고객센터</div>
+      </div>
+
+      <sc-if value="{{ isCS }}" hint-placeholder-val="{{ true }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:16px 20px 24px;">
+          <div style="font-size:26px; font-weight:800; line-height:1.35; letter-spacing:-0.03em;">김다예님,<br>어떤 도움이 필요하신가요?</div>
+          <div style="font-size:15px; color:#939393; margin-top:12px;">내용을 접수해주시면 최대한 빠르게 해결해 드릴게요</div>
+
+          <sc-if value="{{ submitted }}">
+            <div onClick="{{ openStatus }}" style="margin-top:24px; background:#CEF3E9; border-radius:16px; padding:16px; display:flex; align-items:center; gap:12px; cursor:pointer;">
+              <div style="flex:1;">
+                <div style="font-size:12px; font-weight:800; color:#07926C;">접수하신 건이 진행 중이에요</div>
+                <div style="font-size:15px; font-weight:700; margin-top:5px;">{{ homeStatusLine }}</div>
+                <div style="font-size:12.5px; color:#4C5059; margin-top:4px;">한번 더 케어 진행 상황 보기</div>
+              </div>
+              <div style="color:#07926C; font-size:20px;">›</div>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:32px; display:flex; flex-direction:column;">
+            <div onClick="{{ startFlow }}" style="display:flex; align-items:center; gap:16px; padding:20px 0; border-bottom:1px solid #EFEFEF; cursor:pointer;">
+              <div style="width:48px; height:48px; flex:none; border-radius:12px; background:#CDEAFE; display:flex; align-items:center; justify-content:center; font-size:22px;">🧺</div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:700;">세탁 결과가 아쉬워요</div>
+                <div style="font-size:13px; color:#939393; margin-top:3px;">얼룩, 손상, 구김</div>
+              </div>
+              <div style="color:#C9C9C9; font-size:20px;">›</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px; padding:20px 0; border-bottom:1px solid #EFEFEF; opacity:.5;">
+              <div style="width:48px; height:48px; flex:none; border-radius:12px; background:#CEF3E9; display:flex; align-items:center; justify-content:center; font-size:22px;">🚚</div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:700;">수거·배송 문의가 있어요</div>
+                <div style="font-size:13px; color:#939393; margin-top:3px;">세탁물 분실, 오배송, 배송 지연, 런드렛</div>
+              </div>
+              <div style="color:#C9C9C9; font-size:20px;">›</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px; padding:20px 0; border-bottom:1px solid #EFEFEF; opacity:.5;">
+              <div style="width:48px; height:48px; flex:none; border-radius:12px; background:#CDEAFE; display:flex; align-items:center; justify-content:center; font-size:22px;">🗓</div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:700;">결제·구독 문의가 있어요</div>
+                <div style="font-size:13px; color:#939393; margin-top:3px;">품목 재분류, 결제, 구독</div>
+              </div>
+              <div style="color:#C9C9C9; font-size:20px;">›</div>
+            </div>
+            <div style="display:flex; align-items:center; gap:16px; padding:20px 0; opacity:.5;">
+              <div style="width:48px; height:48px; flex:none; border-radius:12px; background:#F5F5F5; display:flex; align-items:center; justify-content:center; font-size:22px;">🗂</div>
+              <div style="flex:1;">
+                <div style="font-size:16px; font-weight:700;">그 밖에 궁금한 게 있어요</div>
+                <div style="font-size:13px; color:#939393; margin-top:3px;">앱 오류, 이용방법, 세탁 가능 여부</div>
+              </div>
+              <div style="color:#C9C9C9; font-size:20px;">›</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isIntro }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">1/5 · 해결 방법 안내</div>
+          <div style="font-size:24px; font-weight:800; line-height:1.4; letter-spacing:-0.03em; margin-top:12px;">만족스러운 결과를<br>드리지 못해 죄송합니다.</div>
+          <div style="font-size:14px; color:#666666; margin-top:12px; line-height:1.7;">걱정하지 마세요. 아래와 같은 해결 방법이 있어요.<br>원하시는 방식으로 끝까지 도와드릴게요.</div>
+
+          <div style="margin-top:22px; background:#F5F5F5; border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:16px;">
+            <div>
+              <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                <span style="font-size:13.5px; font-weight:800;">포인트로 즉시 환불</span>
+                <span style="font-size:11px; font-weight:800; color:#07926C; background:#CEF3E9; border-radius:12px; padding:3px 9px;">가장 빠름</span>
+                <span style="font-size:11px; font-weight:800; color:#FFFFFF; background:#FF4F17; border-radius:12px; padding:3px 9px;">+10%</span>
+              </div>
+              <div style="font-size:12.5px; color:#4C5059; margin-top:7px; line-height:1.55;">승인 대기 없이 바로 지급돼요.</div>
+            </div>
+
+            <div style="height:1px; background:#E5E8ED;"></div>
+
+            <div>
+              <div style="font-size:13.5px; font-weight:800;">결제수단으로 환불</div>
+              <div style="font-size:12.5px; color:#4C5059; margin-top:7px; line-height:1.55;">결제하신 수단으로 환불해드려요. 카드사 처리까지 3~5일 정도 소요돼요.</div>
+            </div>
+
+            <div style="height:1px; background:#E5E8ED;"></div>
+
+            <div>
+              <div style="font-size:13.5px; font-weight:800;">한번 더 케어</div>
+              <div style="font-size:12.5px; color:#4C5059; margin-top:7px; line-height:1.55;">전문가가 세탁물을 다시 확인하고 필요한 케어를 진행해드려요. 만족도 <b style="color:#212121;">95%</b>. 케어가 어려우면 바로 보상으로 전환돼요.</div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" on-click="{{ next }}" hint-size="100%,52px">세탁물 알려주고 해결하기</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOrder }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">2/5 · 세탁물 선택</div>
+          <div style="font-size:24px; font-weight:800; line-height:1.4; letter-spacing:-0.03em; margin-top:12px;">어떤 세탁물이<br>아쉬우셨나요?</div>
+          <div style="font-size:14px; color:#666666; margin-top:12px; line-height:1.7;">수거건과 세탁물을 알려주시면<br>실제 보상 금액까지 바로 안내해 드릴게요.</div>
+
+          <div style="font-size:12.5px; font-weight:700; color:#8F97A3; margin-top:26px;">수거건 선택</div>
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ orders }}" as="o" hint-placeholder-count="2">
+              <div onClick="{{ o.select }}" style="{{ o.cardStyle }}">
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:10px;">
+                  <div style="font-size:15px; font-weight:700; letter-spacing:-0.02em;">{{ o.date }}</div>
+                  <span style="{{ o.ddayStyle }}">{{ o.dday }}</span>
+                </div>
+                <div style="display:flex; gap:14px; margin-top:8px; font-size:12.5px;">
+                  <span style="color:#939393; width:60px; flex:none;">배송완료일</span>
+                  <span style="font-weight:600;">{{ o.delivered }}</span>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="margin-top:16px; font-size:12.5px; color:#939393; line-height:1.6;">배송 완료일로부터 30일 안에 접수할 수 있어요.</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isGarment }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">2/5 · 세탁물 선택</div>
+          <div style="font-size:24px; font-weight:800; line-height:1.4; letter-spacing:-0.03em; margin-top:12px;">어떤 세탁물이<br>아쉬우셨나요?</div>
+          <div style="font-size:14px; color:#666666; margin-top:12px; line-height:1.7;">수거건과 세탁물을 알려주시면<br>실제 보상 금액까지 바로 안내해 드릴게요.</div>
+
+          <div style="font-size:12.5px; font-weight:700; color:#8F97A3; margin-top:26px;">선택한 수거건</div>
+          <div style="margin-top:10px; background:#F5F5F5; border-radius:12px; padding:15px 16px; display:flex; align-items:center; justify-content:space-between;">
+            <span style="font-size:15px; font-weight:700;">{{ orderDate }}</span>
+            <span onClick="{{ back }}" style="font-size:14px; font-weight:700; color:#0AC290; cursor:pointer;">변경</span>
+          </div>
+
+          <div style="font-size:12.5px; font-weight:700; color:#8F97A3; margin-top:26px;">세탁물 선택</div>
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
+            <sc-for list="{{ garments }}" as="g" hint-placeholder-count="5">
+              <div onClick="{{ g.select }}" style="{{ g.cardStyle }}">
+                <div style="width:48px; height:48px; flex:none; border-radius:10px; background:#EDF0F2; display:flex; align-items:center; justify-content:center; font-size:22px;">{{ g.emoji }}</div>
+                <div style="flex:1; min-width:0;">
+                  <div style="font-size:14.5px; font-weight:700;">{{ g.name }}</div>
+                </div>
+                <div style="{{ g.radioStyle }}"></div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPhoto }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">4/5 · 사진</div>
+          <div style="font-size:22px; font-weight:800; line-height:1.4; letter-spacing:-0.03em; margin-top:12px;">아쉬운 부분을<br>사진으로 보여주세요</div>
+          <div style="font-size:13.5px; color:#939393; margin-top:10px; line-height:1.6;">정확한 확인을 위해 먼저 옷 전체를 촬영한 뒤, 아쉬운 부분을 가까이 촬영해주세요.</div>
+
+          <div style="margin-top:22px; display:flex; gap:10px; flex-wrap:wrap;">
+            <sc-for list="{{ photos }}" as="p" hint-placeholder-count="0">
+              <div style="width:100px; height:100px; border-radius:14px; background:#EDF0F2; display:flex; align-items:center; justify-content:center; font-size:28px; position:relative;">
+                {{ p.emoji }}
+                <div onClick="{{ p.remove }}" style="position:absolute; top:-6px; right:-6px; width:22px; height:22px; border-radius:50%; background:#212121; color:#FFFFFF; font-size:13px; display:flex; align-items:center; justify-content:center; cursor:pointer;">×</div>
+              </div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ noPhoto }}">
+            <div style="margin-top:14px; border-radius:14px; overflow:hidden; background:#EDF0F2; display:flex; align-items:center; justify-content:center; aspect-ratio:16/11;">
+              <div style="width:66%; aspect-ratio:1; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px; color:#8F97A3;">
+                <span style="font-size:30px;">👕</span>
+                <span style="font-size:12px; font-weight:600;">먼저 옷 전체가 보이도록 촬영해주세요.</span>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ hasPhotoHint }}">
+            <div style="margin-top:12px; background:#F5F5F5; border-radius:12px; padding:13px 14px; font-size:12px; color:#666666; line-height:1.6;">{{ photoHint }}</div>
+          </sc-if>
+        </div>
+        <sc-if value="{{ canAddPhoto }}">
+          <div style="flex:none; padding:12px 20px 28px; display:flex; gap:10px;">
+            <div onClick="{{ openGallery }}" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; border:1px solid #E5E8ED; border-radius:14px; padding:15px 8px; cursor:pointer;">
+              <span style="font-size:18px;">🖼</span>
+              <span style="font-size:13.5px; font-weight:700; color:#212121;">갤러리에서 선택</span>
+            </div>
+            <div onClick="{{ openCameraDirect }}" style="flex:1; display:flex; align-items:center; justify-content:center; gap:8px; border:1px solid #E5E8ED; border-radius:14px; padding:15px 8px; cursor:pointer;">
+              <span style="font-size:18px;">📸</span>
+              <span style="font-size:13.5px; font-weight:700; color:#212121;">카메라로 촬영</span>
+            </div>
+          </div>
+        </sc-if>
+      </sc-if>
+
+      <sc-if value="{{ isIssue }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">5/5 · 아쉬운 점</div>
+          <div style="font-size:22px; font-weight:800; line-height:1.4; letter-spacing:-0.03em; margin-top:12px;">어떤 점이 아쉬우셨는지<br>알려주세요</div>
+          <div style="font-size:13.5px; color:#939393; margin-top:10px; line-height:1.6;">해당되는 항목을 모두 골라주세요.</div>
+
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:22px;">
+            <div style="font-size:12.5px; font-weight:700; color:#8F97A3;">첨부한 사진 ({{ photoCountLabel }})</div>
+          </div>
+          <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap;">
+            <sc-for list="{{ photos }}" as="p" hint-placeholder-count="0">
+              <div style="width:76px; height:76px; border-radius:12px; background:#EDF0F2; display:flex; align-items:center; justify-content:center; font-size:22px; position:relative;">
+                {{ p.emoji }}
+                <div onClick="{{ p.remove }}" style="position:absolute; top:-6px; right:-6px; width:20px; height:20px; border-radius:50%; background:#212121; color:#FFFFFF; font-size:12px; display:flex; align-items:center; justify-content:center; cursor:pointer;">×</div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ canAddPhoto }}">
+              <div onClick="{{ openCameraDirect }}" style="width:76px; height:76px; border:1.5px dashed #C9C9C9; border-radius:12px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; color:#8F97A3; font-size:11px; cursor:pointer;">
+                <span style="font-size:18px;">＋</span>더 담기
+              </div>
+            </sc-if>
+          </div>
+
+          <div style="margin-top:26px; display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+            <sc-for list="{{ issueOptions }}" as="i" hint-placeholder-count="6">
+              <div onClick="{{ i.select }}" style="{{ i.style }}">
+                <span style="font-size:22px;">{{ i.emoji }}</span>
+                <span style="font-size:13.5px; font-weight:700; margin-top:6px;">{{ i.label }}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="font-size:12.5px; font-weight:700; color:#8F97A3; margin-top:26px;">남기실 말씀 (선택)</div>
+          <textarea placeholder="예) 소매 얼룩 부분 꼭 확인 부탁드려요" style="margin-top:10px; width:100%; box-sizing:border-box; min-height:76px; border:1px solid #E5E8ED; border-radius:12px; padding:13px 14px; font-size:13.5px; font-family:inherit; color:#212121; resize:none; outline:none; line-height:1.6;"></textarea>
+
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" disabled="{{ noIssue }}" on-click="{{ next }}" hint-size="100%,52px">{{ issueCta }}</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRecareSetup }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:22px; font-weight:800; line-height:1.4; letter-spacing:-0.03em;">회수 일정만 정하면<br>접수가 끝나요</div>
+          <div style="font-size:13.5px; color:#939393; margin-top:10px; line-height:1.65;">한번 더 케어 의류만 따로 회수해요.</div>
+
+          <div style="font-size:12.5px; font-weight:700; color:#8F97A3; margin-top:26px;">회수 일정</div>
+          <div onClick="{{ openCalendar }}" style="margin-top:10px; border:1px solid #E5E8ED; border-radius:12px; padding:15px 14px; display:flex; align-items:center; justify-content:space-between; font-size:14px; cursor:pointer;">
+            <span style="color:#666666;">회수 예정일</span>
+            <span style="font-weight:700;">{{ pickup }} · 문 앞 회수 ›</span>
+          </div>
+
+          <div style="font-size:12.5px; font-weight:700; color:#8F97A3; margin-top:26px;">이렇게 알려드릴게요</div>
+          <div style="margin-top:10px; background:#CEF3E9; border-radius:12px; padding:15px 14px;">
+            <div style="font-size:13.5px; font-weight:800; color:#212121; line-height:1.5;">묻지 않으셔도, 단계마다 저희가 먼저 연락드려요.</div>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:7px;">
+              <div style="font-size:12.5px; color:#4C5059; line-height:1.55;">회수·진단·완료 시점마다 알림톡으로 알려드려요</div>
+              <div style="font-size:12.5px; color:#4C5059; line-height:1.55;">꼭 필요한 중요 안내는 담당자가 직접 전화드려요</div>
+            </div>
+          </div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" on-click="{{ openRecareConfirm }}" hint-size="100%,52px">접수 완료</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ recareConfirmOpen }}">
+        <div style="position:absolute; inset:0; z-index:9; background:rgba(0,0,0,.55); display:flex; align-items:center; justify-content:center; padding:24px;">
+          <div style="background:#FFFFFF; border-radius:20px; padding:24px 20px; width:100%; max-width:320px;">
+            <div style="font-size:17px; font-weight:800; letter-spacing:-0.02em;">이 날짜로 회수할까요?</div>
+            <div style="margin-top:14px; background:#F5F5F5; border-radius:12px; padding:15px 14px; display:flex; align-items:center; justify-content:space-between;">
+              <span style="font-size:13.5px; color:#666666;">회수 예정일</span>
+              <span style="font-size:15px; font-weight:800;">{{ pickup }}</span>
+            </div>
+            <div style="font-size:12.5px; color:#8F97A3; margin-top:10px; line-height:1.55;">확정 후에도 회수 전까지는 날짜를 변경할 수 있어요.</div>
+            <div style="margin-top:18px; display:flex; gap:10px;">
+              <div onClick="{{ closeSheet }}" style="flex:1; text-align:center; font-size:14px; font-weight:700; color:#666666; border:1px solid #E5E8ED; border-radius:14px; padding:13px; cursor:pointer;">다시 선택</div>
+              <div onClick="{{ confirmRecarePickup }}" style="flex:1; text-align:center; font-size:14px; font-weight:700; color:#FFFFFF; background:#0AC290; border-radius:14px; padding:13px; cursor:pointer;">이 날짜로 확정</div>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOfferRefund }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">3/5 · 해결 방법 확인</div>
+          <div style="font-size:22px; font-weight:800; line-height:1.35; letter-spacing:-0.03em; margin-top:12px;">원하시는 해결 방법을<br>선택해주세요</div>
+          <div style="font-size:14px; color:#666666; margin-top:10px; line-height:1.7;">가장 빠르게 보상받을 수 있는 방법을 추천드려요.</div>
+
+          <div style="margin-top:20px; border:2px solid #CEF3E9; background:#F7FDFA; border-radius:18px; padding:16px;">
+            <div onClick="{{ selectPoint }}" style="{{ pointRowStyle }}">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:11px; font-weight:800; color:#FFFFFF; background:#0AC290; border-radius:12px; padding:3px 9px;">바로 지급</span>
+                <span style="font-size:11.5px; font-weight:800; color:#07926C;">가장 빠른 환불</span>
+              </div>
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:12px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="{{ pointRadio }}"></div>
+                  <span style="font-size:16px; font-weight:800; letter-spacing:-0.02em;">포인트로 즉시 환불</span>
+                </div>
+                <span style="font-size:11px; font-weight:800; color:#FFFFFF; background:#FF4F17; border-radius:12px; padding:3px 9px; white-space:nowrap;">+10%</span>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px; margin-top:10px; flex-wrap:wrap; padding-left:30px;">
+                <span style="font-size:30px; font-weight:800; color:#0AC290; letter-spacing:-0.03em;">{{ pointAmount }}</span>
+                <span style="font-size:12.5px; color:#4C5059; font-weight:600;">결제수단 환불보다 1,200원 더 받을 수 있어요</span>
+              </div>
+              <div style="margin-top:10px; padding-left:30px; display:flex; flex-direction:column; gap:5px;">
+                <div style="font-size:12.5px; color:#0AC290; font-weight:700;">접수하면 바로 지급돼요.</div>
+                <div style="font-size:12.5px; color:#212121;">유효기간 1년 · 다음 세탁 시 바로 사용 가능</div>
+              </div>
+            </div>
+
+            <div onClick="{{ selectRefund }}" style="{{ refundRowStyle }}">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+                <div style="display:flex; align-items:center; gap:8px;">
+                  <div style="{{ refundRadio }}"></div>
+                  <span style="font-size:14.5px; font-weight:700;">결제수단으로 환불</span>
+                </div>
+                <span style="font-size:14.5px; font-weight:700; color:#4C5059;">{{ washFee }}</span>
+              </div>
+              <div style="font-size:12px; color:#8F97A3; margin-top:6px; padding-left:30px; line-height:1.55;">결제하신 수단으로 환불해드려요.<br>카드사 처리까지 3~5일 정도 소요돼요.</div>
+            </div>
+          </div>
+
+          <div onClick="{{ seeRecare }}" style="margin-top:18px; text-align:center; font-size:13px; font-weight:700; color:#666666; text-decoration:underline; cursor:pointer;">다른 해결 방법도 있어요</div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" disabled="{{ noOption }}" on-click="{{ confirmRefund }}" hint-size="100%,52px">{{ optionCta }}</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isOfferRecare }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:12px; font-weight:800; letter-spacing:.05em; color:#07926C;">3/5 · 해결 방법 확인</div>
+          <div style="font-size:22px; font-weight:800; line-height:1.35; letter-spacing:-0.03em; margin-top:12px;">한번 더 케어를<br>맡겨보시겠어요?</div>
+          <div style="font-size:14px; color:#666666; margin-top:10px; line-height:1.7;">전문가가 처음부터 다시 진단해 케어해드릴게요.</div>
+
+          <div style="margin-top:20px; border:1.5px solid #0AC290; background:#F3FCF8; border-radius:16px; padding:16px;">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+              <span style="font-size:17px; font-weight:800; letter-spacing:-0.02em;">한번 더 케어</span>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="font-size:11px; font-weight:700; color:#07926C; border:1px solid #0AC290; border-radius:14px; padding:2px 9px; white-space:nowrap;">평균 4일</span>
+                <span style="font-size:11px; font-weight:800; color:#FFFFFF; background:#0AC290; border-radius:14px; padding:2px 9px; white-space:nowrap;">추가 비용 없음</span>
+              </div>
+            </div>
+            <div style="margin-top:10px; background:#FFFFFF; border-radius:10px; padding:12px; font-size:12.5px; color:#4C5059; line-height:1.6;">전문가가 끝까지 책임지고 다시 케어해드려요. 이용 고객 <b style="color:#0AC290; font-size:14px;">95%</b>가 케어 결과에 만족했어요.</div>
+
+            <div style="margin-top:14px; border-top:1px dashed #B6E7D6; padding-top:14px;">
+              <div style="font-size:12.5px; font-weight:800; color:#07926C;">어떻게 진행되나요?</div>
+              <div style="margin-top:10px; display:flex; flex-direction:column; gap:10px;">
+                <sc-for list="{{ recareSteps }}" as="r" hint-placeholder-count="4">
+                  <div style="display:flex; gap:10px; align-items:flex-start;">
+                    <span style="width:20px; height:20px; flex:none; border-radius:50%; background:#0AC290; color:#FFFFFF; font-size:11px; font-weight:800; display:flex; align-items:center; justify-content:center;">{{ r.n }}</span>
+                    <div style="flex:1;">
+                      <div style="font-size:13px; font-weight:700;">{{ r.t }}</div>
+                      <div style="font-size:12px; color:#666666; margin-top:2px; line-height:1.5;">{{ r.d }}</div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:14px; background:#FFFFFF; border:1px solid #0AC290; border-radius:12px; padding:12px;">
+                <div style="font-size:12.5px; font-weight:800; color:#07926C;">케어가 어려운 상태라면?</div>
+                <div style="font-size:12px; color:#4C5059; margin-top:5px; line-height:1.6;">의류 상태에 따라 케어가 불가능하다고 판단되면 이유를 알려드리고, <b style="color:#212121;">번거로운 절차 없이 바로 보상</b>해 드려요.</div>
+              </div>
+              <div onClick="{{ openChat }}" style="margin-top:10px; display:flex; align-items:center; justify-content:center; font-size:12.5px; font-weight:700; color:#07926C; border:1px solid #0AC290; border-radius:20px; padding:11px; background:#FFFFFF; cursor:pointer;">궁금한 점 채팅으로 문의하기</div>
+            </div>
+          </div>
+
+          <div onClick="{{ backToRefund }}" style="margin-top:18px; display:flex; align-items:center; justify-content:center; gap:6px; font-size:13px; font-weight:700; color:#666666; border:1px solid #E5E8ED; border-radius:20px; padding:13px; cursor:pointer;">‹ 환불로 진행할게요</div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" on-click="{{ chooseRecare }}" hint-size="100%,52px">한번 더 케어 맡기기</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRefundConfirm }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:8px 20px 16px;">
+          <div style="font-size:22px; font-weight:800; line-height:1.4; letter-spacing:-0.03em;">{{ refundTitleLine1 }}<sc-if value="{{ refundTitleLine2 }}"><br>{{ refundTitleLine2 }}</sc-if></div>
+          <div style="font-size:13.5px; color:#666666; margin-top:10px; line-height:1.65;">아래 내용만 확인하면 바로 지급돼요.</div>
+
+          <div style="margin-top:20px; border:1px solid #E5E8ED; border-radius:16px; padding:18px; display:flex; flex-direction:column; gap:12px;">
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+              <span style="font-size:13.5px; color:#666666;">{{ summaryGarment }} 세탁비</span>
+              <span style="font-size:15px; font-weight:700;">{{ washFee }}</span>
+            </div>
+            <sc-if value="{{ isPoint }}">
+              <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+                <span style="font-size:13.5px; color:#666666;">불편에 대한 추가 보상 (10%)</span>
+                <span style="font-size:15px; font-weight:700;">{{ bonusAmount }}</span>
+              </div>
+            </sc-if>
+            <div style="height:1px; background:#EFEFEF;"></div>
+            <div style="display:flex; justify-content:space-between; align-items:baseline; gap:12px;">
+              <span style="font-size:15px; font-weight:800;">받으실 금액</span>
+              <span style="font-size:22px; font-weight:800; color:#0AC290; letter-spacing:-0.02em;">{{ refundAmount }}</span>
+            </div>
+            <div style="font-size:12px; color:#939393; line-height:1.55;">{{ refundTiming }}</div>
+          </div>
+
+          <div style="margin-top:16px; border:1px solid #CBE8FF; background:#F5FAFF; border-radius:16px; padding:16px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:11px; font-weight:800; color:#FFFFFF; background:#067DFD; border-radius:12px; padding:3px 9px;">AI 검수</span>
+              <span style="font-size:13px; font-weight:800; color:#067DFD;">AI가 사진과 접수 내용을 함께 확인해요.</span>
+            </div>
+            <div style="margin-top:10px; display:flex; flex-direction:column; gap:7px;">
+              <sc-for list="{{ aiNotes }}" as="n" hint-placeholder-count="3">
+                <div style="font-size:12px; color:#4C5059; line-height:1.6;">{{ n.text }}</div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div onClick="{{ toggleAgree }}" style="margin-top:16px; display:flex; gap:10px; align-items:flex-start; cursor:pointer;">
+            <div style="{{ agreeBoxStyle }}">✓</div>
+            <div style="font-size:12.5px; color:#666666; line-height:1.6;">실제 세탁 결과에 대한 접수이며, 검수 기준을 확인했어요.</div>
+          </div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" disabled="{{ notAgreed }}" on-click="{{ next }}" hint-size="100%,52px">{{ refundCta }}</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isRefundDone }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:24px 20px 16px; text-align:center;">
+          <div style="width:64px; height:64px; margin:12px auto 0; border-radius:50%; background:#CEF3E9; color:#0AC290; font-size:30px; display:flex; align-items:center; justify-content:center;">✓</div>
+          <div style="font-size:22px; font-weight:800; margin-top:18px; letter-spacing:-0.03em;">{{ refundDoneTitle }}</div>
+          <div style="font-size:14px; color:#666666; margin-top:10px; line-height:1.65;">불편을 드려 다시 한번 죄송합니다.<br>다음 세탁은 더 꼼꼼히 살피겠습니다.</div>
+          <div style="margin-top:24px; background:#CEF3E9; border-radius:16px; padding:18px; text-align:left;">
+            <div style="font-size:13px; color:#07926C; font-weight:700;">처리 내역</div>
+            <div style="font-size:17px; font-weight:800; margin-top:6px;">{{ refundAmount }}</div>
+            <div style="font-size:12.5px; color:#4C5059; margin-top:6px; line-height:1.55;">{{ refundDoneNote }}</div>
+          </div>
+          <div style="margin-top:16px; font-size:12.5px; color:#939393; line-height:1.6;">처리 내역은 알림톡으로도 보내드렸어요.</div>
+          <div onClick="{{ openChat }}" style="margin-top:16px; font-size:12.5px; font-weight:700; color:#07926C; text-decoration:underline; cursor:pointer;">더 궁금한 점이 있다면 채팅으로 문의하기</div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" variant="neutral" on-click="{{ goHome }}" hint-size="100%,52px">확인</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDone }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:20px 20px 24px;">
+          <div style="width:64px; height:64px; margin:6px auto 0; border-radius:50%; background:#CEF3E9; color:#0AC290; font-size:30px; display:flex; align-items:center; justify-content:center;">✓</div>
+          <div style="font-size:22px; font-weight:800; margin-top:16px; letter-spacing:-0.03em; text-align:center;">한번 더 케어 접수를 마쳤어요</div>
+
+          <div style="margin-top:18px; background:#CEF3E9; border-radius:16px; padding:18px 16px; text-align:center;">
+            <div style="font-size:15px; font-weight:800; color:#212121; line-height:1.5; white-space:pre-line;">{{ nextNoticeTitle }}</div>
+            <div style="font-size:12.5px; color:#4C5059; margin-top:8px; line-height:1.6;">회수·진단·완료 시점마다 알림톡으로 알려드리고,<br>꼭 필요한 중요 안내는 담당자가 직접 전화드려요.</div>
+          </div>
+
+          <div style="margin-top:14px; background:#F5F5F5; border-radius:16px; padding:16px; display:flex; align-items:center; gap:12px;">
+            <div style="flex:1;">
+              <div style="font-size:14px; font-weight:800;">진행 상황이 궁금하실 땐</div>
+              <div style="font-size:12.5px; color:#666666; margin-top:5px; line-height:1.55;">고객센터 홈에서 언제든 현재 단계를 확인하실 수 있어요.</div>
+            </div>
+            <div onClick="{{ openStatus }}" style="flex:none; font-size:13px; font-weight:700; color:#07926C; border:1.5px solid #0AC290; border-radius:20px; padding:8px 14px; cursor:pointer; white-space:nowrap;">바로 보기</div>
+          </div>
+
+          <div style="margin-top:26px; font-size:12.5px; font-weight:700; color:#8F97A3;">접수 내용</div>
+          <div style="margin-top:10px; background:#F5F5F5; border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:8px; font-size:12.5px; color:#666666;">
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>수거건</span><span style="color:#212121; font-weight:600;">{{ orderDate }}</span></div>
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>세탁물</span><span style="color:#212121; font-weight:600;">{{ summaryGarment }}</span></div>
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>알려주신 문제</span><span style="color:#212121; font-weight:600; text-align:right;">{{ summaryIssues }}</span></div>
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>회수 예정</span><span style="color:#212121; font-weight:600;">{{ pickup }}</span></div>
+          </div>
+          <div onClick="{{ openChat }}" style="margin-top:16px; text-align:center; font-size:12.5px; font-weight:700; color:#07926C; text-decoration:underline; cursor:pointer;">궁금한 점은 채팅으로 문의하기</div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" variant="neutral" on-click="{{ goHome }}" hint-size="100%,52px">확인</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isStatus }}">
+        <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:12px 20px 24px;">
+          <div style="font-size:22px; font-weight:800; letter-spacing:-0.03em; line-height:1.4;">{{ summaryGarment }} 한번 더 케어를<br>진행하고 있어요</div>
+          <div style="font-size:13px; color:#939393; margin-top:8px;">{{ orderDate }} 수거건</div>
+
+          <div style="margin-top:20px; border:1.5px solid #0AC290; background:#FFFFFF; border-radius:16px; padding:16px;">
+            <div style="font-size:15px; font-weight:800; color:#07926C;">{{ stageCardTitle }}</div>
+            <div style="font-size:12.5px; color:#666666; margin-top:5px; line-height:1.55;">{{ stageCardDesc }}</div>
+          </div>
+
+          <div style="margin-top:22px; display:flex; align-items:flex-start; padding:0 4px;">
+            <sc-for list="{{ track }}" as="t" hint-placeholder-count="5">
+              <sc-if value="{{ t.isBar }}">
+                <div style="{{ t.barStyle }}"></div>
+              </sc-if>
+              <sc-if value="{{ t.isDot }}">
+                <div style="display:flex; flex-direction:column; align-items:center; gap:6px; width:44px;">
+                  <div style="{{ t.dotStyle }}"></div>
+                  <span style="{{ t.labelStyle }}">{{ t.label }}</span>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:26px; background:#F5F5F5; border-radius:12px; padding:14px; display:flex; flex-direction:column; gap:8px; font-size:12.5px; color:#666666;">
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>알려주신 문제</span><span style="color:#212121; font-weight:600; text-align:right;">{{ summaryIssues }}</span></div>
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>회수 예정</span><span style="color:#212121; font-weight:600;">{{ pickup }}</span></div>
+            <div style="display:flex; justify-content:space-between; gap:12px;"><span>진행 안내</span><span style="color:#212121; font-weight:600;">{{ noticeChannel }}</span></div>
+          </div>
+          <div style="margin-top:14px; font-size:12.5px; color:#939393; line-height:1.6;">복원이 어렵다고 판단되면 이유를 먼저 알려드리고, 번거로운 절차 없이 곧바로 보상해 드려요.</div>
+          <div onClick="{{ openChat }}" style="margin-top:14px; text-align:center; font-size:12.5px; font-weight:700; color:#07926C; text-decoration:underline; cursor:pointer;">채팅으로 문의하기</div>
+        </div>
+        <div style="flex:none; padding:12px 20px 28px;">
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" variant="outline" on-click="{{ advanceStage }}" hint-size="100%,52px">{{ advanceLabel }}</x-import>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ cameraOpen }}">
+        <div style="position:absolute; inset:0; z-index:7; background:#111214; display:flex; flex-direction:column;">
+          <div style="flex:1; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:22px; background:linear-gradient(145deg,#1c1e21,#0c0d0f);">
+            <div style="color:#B8BEC8; font-size:13px; text-align:center; padding:0 40px; line-height:1.6;">{{ cameraGuide }}</div>
+            <div style="position:relative; width:70%; aspect-ratio:1;">
+              <div style="position:absolute; top:0; left:0; width:34px; height:34px; border-top:2.5px solid #FFFFFF; border-left:2.5px solid #FFFFFF; border-radius:10px 0 0 0;"></div>
+              <div style="position:absolute; top:0; right:0; width:34px; height:34px; border-top:2.5px solid #FFFFFF; border-right:2.5px solid #FFFFFF; border-radius:0 10px 0 0;"></div>
+              <div style="position:absolute; bottom:0; left:0; width:34px; height:34px; border-bottom:2.5px solid #FFFFFF; border-left:2.5px solid #FFFFFF; border-radius:0 0 0 10px;"></div>
+              <div style="position:absolute; bottom:0; right:0; width:34px; height:34px; border-bottom:2.5px solid #FFFFFF; border-right:2.5px solid #FFFFFF; border-radius:0 0 10px 0;"></div>
+            </div>
+            <div onClick="{{ closeSheet }}" style="position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,.15); color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:18px; cursor:pointer;">×</div>
+          </div>
+          <div style="flex:none; height:130px; display:flex; align-items:center; justify-content:space-between; padding:0 28px 20px;">
+            <div onClick="{{ openGalleryFromCam }}" style="width:44px; height:44px; border-radius:10px; background:#3A3D42; display:flex; align-items:center; justify-content:center; font-size:20px; cursor:pointer;">🖼</div>
+            <div onClick="{{ shoot }}" style="width:70px; height:70px; border-radius:50%; background:#FFFFFF; border:4px solid rgba(255,255,255,.5); cursor:pointer;"></div>
+            <div style="width:44px; height:44px;"></div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ galleryOpen }}">
+        <div style="position:absolute; inset:0; z-index:7; background:#FFFFFF; display:flex; flex-direction:column;">
+          <div style="flex:none; padding:14px 20px 12px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #EFEFEF;">
+            <div onClick="{{ closeSheet }}" style="font-size:20px; color:#212121; cursor:pointer;">‹</div>
+            <div style="font-size:15px; font-weight:800;">사진 선택</div>
+            <div onClick="{{ closeSheet }}" style="font-size:13px; font-weight:700; color:#8F97A3; cursor:pointer;">닫기</div>
+          </div>
+          <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:2px;">
+            <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:2px;">
+              <sc-for list="{{ galleryItems }}" as="g" hint-placeholder-count="9">
+                <div onClick="{{ g.toggle }}" style="{{ g.style }}">
+                  {{ g.emoji }}
+                  <sc-if value="{{ g.selected }}">
+                    <div style="position:absolute; top:6px; right:6px; width:20px; height:20px; border-radius:50%; background:#0AC290; color:#FFFFFF; font-size:12px; display:flex; align-items:center; justify-content:center; font-weight:800;">✓</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="flex:none; padding:12px 20px 28px;">
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" disabled="{{ noGallerySelection }}" on-click="{{ confirmGallery }}" hint-size="100%,52px">{{ galleryConfirmLabel }}</x-import>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ calOpen }}">
+        <div onClick="{{ closeSheet }}" style="position:absolute; inset:0; background:rgba(0,0,0,0.55); z-index:5;"></div>
+        <div style="position:absolute; left:0; right:0; bottom:0; z-index:6; background:#FFFFFF; border-radius:20px 20px 0 0; padding:12px 20px 28px; box-shadow:0 -8px 24px rgba(17,19,24,.12);">
+          <div style="width:44px; height:4px; border-radius:2px; background:#D9D9D9; margin:0 auto 14px;"></div>
+          <div style="font-size:17px; font-weight:800; letter-spacing:-0.02em;">회수 예정일을 골라주세요</div>
+          <div style="font-size:12.5px; color:#939393; margin-top:6px;">{{ calRangeNote }}</div>
+
+          <div style="margin-top:16px; display:flex; align-items:center; justify-content:space-between;">
+            <div onClick="{{ calPrev }}" style="{{ calPrevStyle }}">‹</div>
+            <div style="font-size:15px; font-weight:800;">{{ calTitle }}</div>
+            <div onClick="{{ calNext }}" style="{{ calNextStyle }}">›</div>
+          </div>
+
+          <div style="margin-top:8px; display:grid; grid-template-columns:repeat(7,1fr);">
+            <sc-for list="{{ weekdays }}" as="w" hint-placeholder-count="7">
+              <div style="{{ w.style }}">{{ w.label }}</div>
+            </sc-for>
+          </div>
+          <div style="margin-top:4px; display:grid; grid-template-columns:repeat(7,1fr); gap:4px;">
+            <sc-for list="{{ calCells }}" as="c" hint-placeholder-count="35">
+              <sc-if value="{{ c.isBlank }}">
+                <div style="height:44px;"></div>
+              </sc-if>
+              <sc-if value="{{ c.isDay }}">
+                <div onClick="{{ c.select }}" style="{{ c.style }}">{{ c.label }}</div>
+              </sc-if>
+            </sc-for>
+          </div>
+
+          <div style="margin-top:18px;">
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" full-width="{{ true }}" size="lg" on-click="{{ closeSheet }}" hint-size="100%,52px">{{ pickupCta }}</x-import>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ chatOpen }}">
+        <div onClick="{{ closeSheet }}" style="position:absolute; inset:0; background:rgba(0,0,0,0.55); z-index:5;"></div>
+        <div style="position:absolute; left:0; right:0; bottom:0; top:130px; z-index:6; background:#FFFFFF; border-radius:20px 20px 0 0; display:flex; flex-direction:column; overflow:hidden;">
+          <div style="flex:none; padding:12px 20px 14px; border-bottom:1px solid #EFEFEF;">
+            <div style="width:44px; height:4px; border-radius:2px; background:#D9D9D9; margin:0 auto 12px;"></div>
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:12px;">
+              <div>
+                <div style="font-size:16px; font-weight:800;">런드리고 상담</div>
+                <div style="font-size:12px; color:#0AC290; font-weight:700; margin-top:3px;">지금 상담 가능 · 평균 1분 내 답변</div>
+              </div>
+              <div onClick="{{ closeSheet }}" style="font-size:20px; color:#8F97A3; cursor:pointer;">×</div>
+            </div>
+          </div>
+          <div class="lg-scroll" style="flex:1; overflow-y:auto; padding:18px 20px; display:flex; flex-direction:column; gap:12px; background:#FAFAFA;">
+            <div style="align-self:flex-start; max-width:82%; background:#FFFFFF; border-radius:14px 14px 14px 4px; padding:12px 14px; font-size:13px; line-height:1.6; box-shadow:0 1px 4px rgba(33,33,33,.05);">안녕하세요 김다예님, 세탁 결과가 아쉬우셨다니 정말 죄송합니다. 한번 더 케어에 대해 궁금한 점을 편하게 남겨주세요.</div>
+            <div style="align-self:flex-start; font-size:12px; color:#8F97A3; padding-left:4px;">이런 점이 궁금하실 수 있어요</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+              <div style="border:1px solid #0AC290; color:#07926C; background:#FFFFFF; border-radius:20px; padding:9px 13px; font-size:12.5px; font-weight:700; cursor:pointer;">얼룩이 안 지워지면 어떻게 되나요?</div>
+              <div style="border:1px solid #0AC290; color:#07926C; background:#FFFFFF; border-radius:20px; padding:9px 13px; font-size:12.5px; font-weight:700; cursor:pointer;">며칠 걸리나요?</div>
+              <div style="border:1px solid #0AC290; color:#07926C; background:#FFFFFF; border-radius:20px; padding:9px 13px; font-size:12.5px; font-weight:700; cursor:pointer;">추가 비용이 있나요?</div>
+            </div>
+          </div>
+          <div style="flex:none; padding:12px 20px 28px; border-top:1px solid #EFEFEF; display:flex; gap:10px; align-items:center;">
+            <div style="flex:1; border:1px solid #E5E8ED; border-radius:22px; padding:12px 16px; font-size:13px; color:#C9C9C9;">메시지를 입력해주세요</div>
+            <div style="width:44px; height:44px; flex:none; border-radius:50%; background:#0AC290; color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-size:18px;">↑</div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+
+    <div style="width:340px; flex:none; display:flex; flex-direction:column; gap:16px; padding-top:8px;">
+      <div style="background:#FFFFFF; border-radius:16px; padding:20px; box-shadow:0 2px 12px rgba(33,33,33,.06);">
+        <div style="font-size:11px; font-weight:800; letter-spacing:.1em; color:#8F97A3;">STEP {{ stepNo }}</div>
+        <div style="font-size:17px; font-weight:800; margin-top:8px; letter-spacing:-0.02em;">{{ annoTitle }}</div>
+        <div style="margin-top:14px; display:flex; flex-direction:column; gap:12px;">
+          <sc-for list="{{ annoItems }}" as="a" hint-placeholder-count="3">
+            <div style="display:flex; gap:10px; font-size:13px; color:#646D7A; line-height:1.6;">
+              <span style="color:#0AC290; font-weight:800;">·</span>
+              <span>{{ a.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="background:#212121; color:#FFFFFF; border-radius:16px; padding:20px;">
+        <div style="font-size:14px; font-weight:800; letter-spacing:-0.02em;">환불 비중 80% · 접수 5단계 · 승인 대기 0</div>
+        <div style="font-size:12.5px; color:#B6BEC9; margin-top:8px; line-height:1.6;">포인트 즉시 환불을 가장 매력적인 기본값으로 두고, AI 사진 검수로 빠르게 처리하되 어뷰징 억제 장치를 함께 노출합니다.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1100,&quot;height&quot;:1000}}">
+const ORDERS = [
+  { id: "o1", date: "26.07.27 (월)", delivered: "26.07.29 (수)", services: "개별클리닝, 프리미엄, 집중케어, 수선", dday: "접수 가능 D-28" },
+  { id: "o2", date: "26.07.13 (월)", delivered: "26.07.15 (수)", services: "개별클리닝, 생활빨래", dday: "접수 가능 D-14" }
+];
+
+const GARMENTS = [
+  { id: "g1", emoji: "👗", name: "스커트", code: "2734152", fee: 12000 },
+  { id: "g2", emoji: "🧶", name: "가디건", code: "2734155", fee: 9000 },
+  { id: "g3", emoji: "👚", name: "원피스, 점프수트", code: "2734154", fee: 15000 },
+  { id: "g4", emoji: "👖", name: "바지", code: "2095032", fee: 8000 },
+  { id: "g5", emoji: "🧥", name: "니트, 스웨터", code: "2734156", fee: 11000 }
+];
+
+const ISSUES = [
+  { id: "stain", emoji: "💧", label: "얼룩이 남아있어요" },
+  { id: "smell", emoji: "🌫", label: "냄새가 나요" },
+  { id: "damage", emoji: "🧵", label: "손상·변형됐어요" },
+  { id: "color", emoji: "🎨", label: "색이 변했어요" },
+  { id: "press", emoji: "👔", label: "다림질이 아쉬워요" },
+  { id: "etc", emoji: "✏️", label: "기타" }
+];
+
+const RECARE_STEPS = [
+  { t: "문 앞 회수 (1일)", d: "선택하신 날짜에 회수해요." },
+  { t: "전문가 진단 (1일)", d: "남겨주신 문제와 사진을 보고 최적의 케어 방법을 정해요." },
+  { t: "맞춤 재케어 (평균 2일)", d: "최적의 방법으로 케어해요. 손상 정도에 따라 조금 더 걸릴 수 있고, 지연되면 미리 알려드려요." },
+  { t: "결과 확인 후 배송", d: "검수 담당자 확인 후 문 앞까지 배송해드려요." }
+];
+
+const AI_NOTES = [
+  { text: "제출하신 사진과 세탁 이력을 AI가 먼저 확인해요." },
+  { text: "반복 접수나 실제 내용과 다른 접수는 담당자가 추가로 확인할 수 있어요." }
+];
+
+const STAGES = [
+  { label: "접수", title: "접수 완료", desc: "담당자가 내용을 확인하고 있어요." },
+  { label: "회수", title: "회수 예정", desc: "문 앞에 놓아주시면 기사님이 방문해 회수합니다." },
+  { label: "진단", title: "진단 중", desc: "전문가가 의류 상태를 확인하고 있어요. 결과는 알림톡으로 보내드릴게요." },
+  { label: "케어", title: "케어 진행 중", desc: "진단 결과에 맞춘 방법으로 다시 케어하고 있어요." },
+  { label: "배송", title: "배송 중", desc: "검수를 통과한 의류가 문 앞으로 가고 있어요." }
+];
+
+const TODAY = new Date(2026, 6, 29);
+const DOW = ["일", "월", "화", "수", "목", "금", "토"];
+const MS = 86400000;
+const won = n => n.toLocaleString("ko-KR") + "원";
+const pt = n => n.toLocaleString("ko-KR") + "P";
+const fmtPickup = off => {
+  const d = new Date(TODAY.getTime() + off * MS);
+  return (d.getMonth() + 1) + "/" + d.getDate() + " (" + DOW[d.getDay()] + ")";
+};
+
+const ANNO = {
+  cs: { step: "0", title: "진입 — 고객센터", items: [
+    "'세탁 결과가 아쉬워요'가 재케어 접수의 단일 진입점.",
+    "접수한 건이 있으면 홈 상단에 진행 중 카드를 상시 노출 — 진행 확인 경로를 고객센터에 둠." ] },
+  intro: { step: "1/6", title: "해결 방법 안내 — 변명 없는 사과, 가장 먼저", items: [
+    "가장 첫 화면이 조건 설명이 아니라 사과 — \"소중한 옷을 잘 돌보지 못해 정말 죄송해요\".",
+    "세탁물을 고르기도 전에 어떤 방식으로 해결받을 수 있는지 먼저 보여줘 안심시킴 (금액은 아직 확정 전이라 % 단위로만 제시).",
+    "세탁물 선택 후에는 이 화면의 내용이 실제 금액으로 다시 한번 확정 안내됨." ] },
+  order: { step: "2/5", title: "수거건 + 세탁물 선택 — 한 화면 통합", items: [
+    "수거건 선택과 세탁물 선택을 한 화면으로 합쳐 단계를 줄임 — 세탁물 목록은 수거건을 고른 뒤에만 아래로 이어서 나타남.",
+    "접수 가능 기한(D-n)은 카드에 상시 노출 — \"기간이 지나서요\" VOC 방지.",
+    "선택한 세탁물의 세탁비가 이후 보상 금액 계산의 기준이 됩니다." ] },
+  photo: { step: "4/5", title: "사진 — 한 정보만, 뎁스 없이", items: [
+    "한 화면에 여러 정보를 동시에 묻지 않고, 사진만 먼저 요청 — 판단 부담을 나눔.",
+    "'+' 탭 시 카메라 화면이 바로 뜨고, 카메라 안에서 갤러리로 전환 가능 — iOS 카메라 앱과 동일한 관용 패턴이라 별도 단계로 느껴지지 않음.",
+    "갤러리는 여러 장 다중 선택 후 한 번에 추가. 안내 문구가 진행 상태에 맞춰 바뀌며 다음에 뭘 찍으면 좋을지 알려줌.",
+    "사진을 해결 방법 선택보다 앞에 배치 — 빠른 처리(AI 검수)의 입력값이 먼저 확보돼야 함." ] },
+  issue: { step: "5/5", title: "아쉬운 점 — 다중 선택", items: [
+    "9개 그룹 칩 → 아이콘 카드 6개로 축소, 해당되는 항목을 모두 선택할 수 있어요.",
+    "사진을 이미 받았으니 이 화면은 이슈와 말씀에만 집중.",
+    "남기실 말씀 입력창을 항상 펼쳐 바로 작성할 수 있게 함." ] },
+  offerRefund: { step: "3/5", title: "해결 방법 — 실제 금액으로 재확인", items: [
+    "첫 화면(1/5)에서 소개한 방식을 세탁물 확정 후 실제 금액으로 다시 보여줌 — 사진·이슈 입력보다 앞.",
+    "옵션을 한 화면에 모두 늘어놓지 않고, 가장 빠른 해결책부터 한 단계씩 순서대로 제안.",
+    "환불 두 가지를 하나의 '바로 환불' 카드로 묶고, 카드 안에서 포인트를 시각적 1순위로: 금액 30px·+10% 배지·즉시 지급 혜택. 결제수단 환불은 저강도 행.",
+    "환불이 필요 없는 고객만 '다른 해결 방법도 있어요'로 한번 더 케어를 확인하도록 유도 — 환불 비중 80% 목표." ] },
+  offerRecare: { step: "3/5", title: "해결 방법 — 한번 더 케어", items: [
+    "환불을 넘긴 고객에게만 순서대로 다음 옵션을 제안 — 데이터(만족도 95%)와 4단계 절차를 이 화면에 온전히 펼쳐 설명.",
+    "케어 불가 시 '먼저 솔직하게 알리고 번거로운 절차 없이 곧바로 보상'을 명시해 불신 차단.",
+    "그럼에도 남는 의문은 채팅 상담 경로로 연결." ] },
+  refundConfirm: { step: "5", title: "환불 확인 — AI 자동 검수", items: [
+    "기다리지 않고 빠르게 처리. 대신 AI 사진 검수·이력 대조를 명시해 어뷰징을 억제.",
+    "확인 체크 없이는 CTA 비활성 — 최소한의 심리적 장치.",
+    "포인트는 즉시, 결제수단 환불은 3~5일 소요를 금액 카드에서 함께 안내." ] },
+  refundDone: { step: "6", title: "환불 완료", items: [
+    "처리 금액과 시점을 화면·알림톡으로 이중 확인 — 임의 보상으로 인한 재인입 차단.",
+    "채팅 문의 경로를 마지막 화면까지 열어둠." ] },
+  recareSetup: { step: "5", title: "한번 더 케어 — 회수 일정", items: [
+    "수거신청에서 독립된 전용 회수(커머스 반품형). 다음 수거신청은 그대로 이용 가능.",
+    "연락 방식을 고객이 고르는 옵션이 아니라 회사의 약속으로 전환 — 알림톡 + 필요 시 담당자 직접 전화.",
+    "케어 불가 시 곧바로 보상 전환을 접수 직전에 다시 안내." ] },
+  done: { step: "6", title: "접수 완료", items: [
+    "다음 안내가 언제·어떻게 오는지를 최상단에 명시.",
+    "진행 상황은 고객센터 홈의 별도 진입점에서 확인 — 완료 화면은 접수 사실 확인에 집중." ] },
+  status: { step: "—", title: "진행 상황 (고객센터 홈 진입)", items: [
+    "현재 단계 카드 + 5단계 트래킹으로 \"언제 되나\"류 문의(접수·과정 문의의 38%)를 구조적으로 차단.",
+    "케어 불가 시 즉시 보상 전환 약속을 진행 중에도 계속 노출.",
+    "아래 버튼으로 단계 진행을 시뮬레이션해 보세요." ] }
+};
+
+const CHIP_BASE = "border-radius:20px; padding:9px 14px; font-size:13px; cursor:pointer; transition:all .12s ease-out; ";
+const CARD_BASE = "border-radius:14px; padding:14px; cursor:pointer; transition:all .12s ease-out; ";
+const ROW_BASE = "border-radius:12px; padding:12px; display:flex; gap:12px; align-items:center; cursor:pointer; transition:all .12s ease-out; ";
+
+class Component extends DCLogic {
+  state = {
+    screen: "cs", orderId: null, garmentId: null, issues: [], photoCount: 0, gallerySel: [],
+    option: null, agree: false, phone: false, pickupOffset: 1, calMonth: 6,
+    sheet: "none", stage: 1, submitted: false
+  };
+
+  go(s) { this.setState({ screen: s }); }
+
+  NEXT_MAP() {
+    const recare = this.state.option === "recare";
+    return {
+      intro: "order", order: "garment", garment: "offerRefund",
+      photo: "issue", issue: recare ? "recareSetup" : "refundConfirm",
+      recareSetup: "done", refundConfirm: "refundDone"
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const order = ORDERS.find(o => o.id === s.orderId);
+    const garment = GARMENTS.find(g => g.id === s.garmentId);
+    const anno = ANNO[s.screen] || ANNO.cs;
+    const stage = STAGES[s.stage];
+    const fee = garment ? garment.fee : 12000;
+    const bonus = Math.round(fee * 0.1);
+
+    const next = () => {
+      const map = this.NEXT_MAP();
+      const to = map[s.screen];
+      if (to) {
+        const patch = { screen: to };
+        if (to === "offerRefund" && !s.option) patch.option = "point";
+        this.setState(patch);
+      }
+    };
+    const BACK_MAP = {
+      order: "intro", garment: "order", offerRefund: "garment", offerRecare: "offerRefund",
+      photo: s.option === "recare" ? "offerRecare" : "offerRefund",
+      issue: "photo", recareSetup: "issue", refundConfirm: "issue", status: "cs"
+    };
+    const back = () => {
+      if (BACK_MAP[s.screen]) { this.go(BACK_MAP[s.screen]); return; }
+      this.go("cs");
+    };
+
+    return {
+      isCS: s.screen === "cs", isIntro: s.screen === "intro", isOrder: s.screen === "order", isGarment: s.screen === "garment",
+      isPhoto: s.screen === "photo", isIssue: s.screen === "issue", isOfferRefund: s.screen === "offerRefund", isOfferRecare: s.screen === "offerRecare",
+      isRefundConfirm: s.screen === "refundConfirm", isRefundDone: s.screen === "refundDone",
+      isDone: s.screen === "done", isStatus: s.screen === "status", isRecareSetup: s.screen === "recareSetup",
+      recareConfirmOpen: s.sheet === "recareConfirm",
+      openRecareConfirm: () => this.setState({ sheet: "recareConfirm" }),
+      confirmRecarePickup: () => { this.setState({ sheet: "none" }); next(); },
+      isPoint: s.option === "point", isRecare: s.option === "recare",
+      calOpen: s.sheet === "cal", chatOpen: s.sheet === "chat",
+      closeSheet: () => this.setState({ sheet: "none" }),
+      openChat: () => this.setState({ sheet: "chat" }),
+
+      next, back,
+      startFlow: () => this.go("intro"),
+      reset: () => this.setState({ screen: "cs", orderId: null, garmentId: null, issues: [], photoCount: 0, gallerySel: [], option: null, agree: false, phone: false, pickupOffset: 1, calMonth: 6, sheet: "none", stage: 1, submitted: false }),
+      submitted: s.submitted,
+      openStatus: () => this.go("status"),
+      goHome: () => this.go("cs"),
+      homeStatusLine: (garment ? garment.name : "세탁물") + " · " + stage.title,
+      noticeChannel: "알림톡 + 담당자 전화",
+
+      orders: ORDERS.map(o => ({
+        ...o,
+        select: () => this.setState({ orderId: o.id, screen: "garment" }),
+        cardStyle: CARD_BASE + (s.orderId === o.id ? "border:1.5px solid #0AC290; background:#F3FCF8;" : "border:1px solid #E5E8ED; background:#FFFFFF;"),
+        ddayStyle: "font-size:11px; font-weight:700; border-radius:16px; padding:3px 9px; white-space:nowrap; flex:none; color:#07926C; background:#CEF3E9;"
+      })),
+      noOrder: !s.orderId,
+      hasOrder: !!s.orderId,
+      orderDate: order ? order.date : "-",
+
+      garments: GARMENTS.map(g => ({
+        ...g,
+        select: () => this.setState({ garmentId: g.id, option: null, screen: "offerRefund" }),
+        cardStyle: ROW_BASE + (s.garmentId === g.id ? "border:1.5px solid #0AC290; background:#F3FCF8;" : "border:1px solid #E5E8ED; background:#FFFFFF;"),
+        radioStyle: "width:20px; height:20px; border-radius:50%; flex:none; " +
+          (s.garmentId === g.id ? "border:6px solid #0AC290;" : "border:1.5px solid #C9C9C9;")
+      })),
+      noGarment: !s.orderId || !s.garmentId,
+      summaryGarment: garment ? garment.name : "-",
+
+      issueOptions: ISSUES.map(i => {
+        const on = s.issues.indexOf(i.id) >= 0;
+        return {
+          ...i,
+          select: () => this.setState(st => ({ issues: on ? st.issues.filter(x => x !== i.id) : st.issues.concat([i.id]) })),
+          style: "border-radius:14px; padding:16px 12px; cursor:pointer; transition:all .12s ease-out; display:flex; flex-direction:column; align-items:flex-start; gap:2px; " +
+            (on ? "border:1.5px solid #0AC290; background:#F3FCF8;" : "border:1px solid #E5E8ED; background:#FFFFFF;")
+        };
+      }),
+
+      photos: Array.from({ length: s.photoCount }, (_, i) => ({
+        emoji: i === 0 ? "🖼" : "🔍",
+        remove: () => this.setState(st => ({ photoCount: st.photoCount - 1 }))
+      })),
+      canAddPhoto: s.photoCount < 4,
+      photoCountLabel: s.photoCount + "장",
+      addPhotoLabel: s.photoCount === 0 ? "전체 샷" : "상세 샷",
+      noPhoto: s.photoCount === 0,
+      cameraOpen: s.sheet === "camera",
+      galleryOpen: s.sheet === "gallery",
+      openCamera: () => this.setState({ sheet: "camera" }),
+      openCameraDirect: () => this.setState({ sheet: "camera" }),
+      openGallery: () => this.setState({ sheet: "gallery", gallerySel: [] }),
+      openGalleryFromCam: () => this.setState({ sheet: "gallery", gallerySel: [] }),
+      cameraGuide: s.photoCount === 0 ? "의류 전체가 프레임 안에 들어오도록 담아주세요" : "아쉬운 부분을 가까이서 담아주세요",
+      shoot: () => this.setState(st => {
+        const cnt = Math.min(4, st.photoCount + 1);
+        if (st.screen === "issue") return { photoCount: cnt, sheet: "none" };
+        return cnt >= 2 ? { photoCount: cnt, sheet: "none", screen: "issue" } : { photoCount: cnt };
+      }),
+      galleryItems: Array.from({ length: 9 }, (_, i) => {
+        const sel = (s.gallerySel || []).indexOf(i) >= 0;
+        return {
+          emoji: ["👕", "👖", "🧥", "👗", "🧶", "👚", "🧦", "🧣", "👘"][i],
+          selected: sel,
+          toggle: () => this.setState(st => {
+            const cur = st.gallerySel || [];
+            return { gallerySel: sel ? cur.filter(x => x !== i) : cur.concat([i]) };
+          }),
+          style: "aspect-ratio:1; background:#EDF0F2; display:flex; align-items:center; justify-content:center; font-size:26px; position:relative; cursor:pointer; " +
+            (sel ? "outline:3px solid #0AC290; outline-offset:-3px;" : "")
+        };
+      }),
+      noGallerySelection: !(s.gallerySel || []).length,
+      galleryConfirmLabel: (s.gallerySel || []).length ? (s.gallerySel.length + "장 추가하기") : "사진을 선택해주세요",
+      confirmGallery: () => this.setState(st => {
+        const cnt = Math.min(4, st.photoCount + (st.gallerySel || []).length);
+        if (st.screen === "issue") return { photoCount: cnt, sheet: "none", gallerySel: [] };
+        return cnt >= 2 ? { photoCount: cnt, sheet: "none", gallerySel: [], screen: "issue" } : { photoCount: cnt, sheet: "none", gallerySel: [] };
+      }),
+      hasPhotoHint: s.photoCount > 0,
+      photoHint: s.photoCount === 1 ? "좋아요! 아쉬운 부분을 가까이서 찍은 상세 샷도 추가해주시면 더 정확해요."
+        : s.photoCount > 1 ? "충분해요. 여유가 되면 상세 샷을 더 추가해도 좋아요 (" + (s.photoCount - 1) + "/3)" : "",
+      toggleNote: () => this.setState(st => ({ noteOpen: !st.noteOpen })),
+      noteOpen: s.noteOpen,
+      noteToggleLabel: s.noteOpen ? "닫기" : "남기기",
+      noIssue: s.issues.length === 0,
+      issueCta: s.option === "recare" ? "다음" : "다음",
+
+      washFee: won(fee),
+      pointAmount: pt(fee + bonus),
+      bonusAmount: pt(bonus),
+      selectPoint: () => this.setState({ option: "point" }),
+      selectRefund: () => this.setState({ option: "refund" }),
+      seeRecare: () => this.go("offerRecare"),
+      backToRefund: () => this.go("offerRefund"),
+      confirmRefund: () => this.go("photo"),
+      chooseRecare: () => this.setState({ screen: "photo", option: "recare" }),
+      recareSteps: RECARE_STEPS.map((r, i) => ({ n: String(i + 1), t: r.t, d: r.d })),
+      pointRowStyle: "margin-top:12px; border-radius:14px; padding:14px; cursor:pointer; transition:all .12s ease-out; " +
+        (s.option === "point" ? "background:#FFFFFF; border:2px solid #0AC290; box-shadow:0 6px 20px rgba(10,194,144,.18);"
+          : "background:#FFFFFF; border:2px solid #DFF3EB;"),
+      refundRowStyle: "margin-top:8px; border-radius:14px; padding:14px; cursor:pointer; transition:all .12s ease-out; " +
+        (s.option === "refund" ? "background:#FFFFFF; border:2px solid #0AC290;" : "background:#FFFFFF; border:1px solid #EFEFEF;"),
+      pointRadio: "width:20px; height:20px; border-radius:50%; flex:none; " +
+        (s.option === "point" ? "border:6px solid #0AC290;" : "border:1.5px solid #C9C9C9;"),
+      refundRadio: "width:20px; height:20px; border-radius:50%; flex:none; " +
+        (s.option === "refund" ? "border:6px solid #0AC290;" : "border:1.5px solid #C9C9C9;"),
+      noOption: !s.option,
+      optionCta: s.option === "point" ? (pt(fee + bonus) + " 바로 받기")
+        : s.option === "refund" ? "결제수단으로 환불받기" : "해결 방법을 선택해주세요",
+
+      refundTitleLine1: s.option === "point" ? (pt(fee + bonus) + "를") : "결제수단으로 환불해 드릴게요",
+      refundTitleLine2: s.option === "point" ? "바로 지급해드릴게요." : "",
+      refundAmount: s.option === "point" ? pt(fee + bonus) : won(fee),
+      refundTiming: s.option === "point" ? "확인 즉시 지급 · 유효기간 1년" : "환불 완료까지 3~5일 소요 (카드사 확인 절차)",
+      refundCta: s.option === "point" ? "확인하고 포인트 받기" : "확인하고 환불 신청",
+      aiNotes: AI_NOTES,
+      toggleAgree: () => this.setState(st => ({ agree: !st.agree })),
+      notAgreed: !s.agree,
+      agreeBoxStyle: "width:22px; height:22px; flex:none; border-radius:6px; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; " +
+        (s.agree ? "background:#0AC290; color:#FFFFFF; border:1.5px solid #0AC290;" : "background:#FFFFFF; color:#D9D9D9; border:1.5px solid #D9D9D9;"),
+      refundDoneTitle: s.option === "point" ? "포인트 지급이 끝났어요" : "환불 신청이 접수됐어요",
+      refundDoneNote: s.option === "point" ? "적립된 포인트는 다음 세탁부터 바로 사용하실 수 있어요."
+        : "원결제 수단으로 환불이 요청됐어요. 카드사에 따라 3~5일이 걸릴 수 있어요.",
+
+      pickup: fmtPickup(s.pickupOffset),
+      pickupCta: fmtPickup(s.pickupOffset) + " 로 정하기",
+      openCalendar: () => this.setState({ sheet: "cal", calMonth: new Date(TODAY.getTime() + s.pickupOffset * MS).getMonth() }),
+      calTitle: "2026년 " + (s.calMonth + 1) + "월",
+      calRangeNote: "오늘(" + fmtPickup(0) + ")부터 " + fmtPickup(7) + "까지 선택할 수 있어요.",
+      calPrevStyle: "width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; " +
+        (s.calMonth <= 6 ? "color:#D9D9D9;" : "color:#212121; cursor:pointer;"),
+      calNextStyle: "width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; " +
+        (s.calMonth >= 7 ? "color:#D9D9D9;" : "color:#212121; cursor:pointer;"),
+      calPrev: () => this.setState(st => ({ calMonth: Math.max(6, st.calMonth - 1) })),
+      calNext: () => this.setState(st => ({ calMonth: Math.min(7, st.calMonth + 1) })),
+      weekdays: DOW.map((d, i) => ({ label: d, style: "text-align:center; font-size:12px; font-weight:700; padding:6px 0; color:" + (i === 0 ? "#EC5F5F" : i === 6 ? "#189FFB" : "#8F97A3") + ";" })),
+      calCells: (() => {
+        const m = s.calMonth;
+        const first = new Date(2026, m, 1);
+        const days = new Date(2026, m + 1, 0).getDate();
+        const cells = [];
+        for (let i = 0; i < first.getDay(); i++) cells.push({ isBlank: true, isDay: false });
+        for (let d = 1; d <= days; d++) {
+          const date = new Date(2026, m, d);
+          const off = Math.round((date - TODAY) / MS);
+          const ok = off >= 0 && off <= 7;
+          const on = off === s.pickupOffset;
+          cells.push({
+            isBlank: false, isDay: true, label: String(d),
+            select: () => { if (ok) this.setState({ pickupOffset: off }); },
+            style: "height:44px; display:flex; align-items:center; justify-content:center; border-radius:12px; font-size:14px; " +
+              (on ? "background:#0AC290; color:#FFFFFF; font-weight:800; cursor:pointer;"
+                 : ok ? "color:#212121; font-weight:600; cursor:pointer; background:#F5F5F5;"
+                      : "color:#D9D9D9; font-weight:500;")
+          });
+        }
+        return cells;
+      })(),
+
+      summaryIssues: s.issues.length ? s.issues.map(id => (ISSUES.find(i => i.id === id) || {}).label).join(", ") : "-",
+      summaryPhotos: s.photoCount + "장",
+
+      nextNoticeTitle: "이제부터는 저희가 챙길게요.\n단계마다 먼저 연락드립니다.",
+      stageCardTitle: stage.title + (s.stage === 1 ? " · " + fmtPickup(s.pickupOffset) : ""),
+      stageCardDesc: stage.desc,
+      track: (() => {
+        const out = [];
+        STAGES.forEach((st, i) => {
+          if (i > 0) out.push({ isBar: true, isDot: false, barStyle: "flex:1; height:2px; margin-top:8px; background:" + (i <= s.stage ? "#0AC290" : "#E5E8ED") + ";" });
+          out.push({
+            isBar: false, isDot: true, label: st.label,
+            dotStyle: i < s.stage ? "width:14px; height:14px; border-radius:50%; background:#0AC290; margin-top:1px;"
+              : i === s.stage ? "width:16px; height:16px; border-radius:50%; background:#FFFFFF; border:4px solid #0AC290;"
+              : "width:14px; height:14px; border-radius:50%; background:#D9D9D9; margin-top:1px;",
+            labelStyle: "font-size:11px; " + (i === s.stage ? "color:#07926C; font-weight:800;" : "color:#8F97A3; font-weight:600;")
+          });
+        });
+        return out;
+      })(),
+      advanceStage: () => this.setState(st => ({ stage: st.stage >= STAGES.length - 1 ? 1 : st.stage + 1 })),
+      advanceLabel: s.stage >= STAGES.length - 1 ? "처음 단계로 되돌리기" : "다음 단계 진행 (시뮬레이션)",
+
+      stepNo: anno.step,
+      annoTitle: anno.title,
+      annoItems: anno.items.map(t => ({ text: t }))
+    };
+  }
+}
+</script>
+</body>
+</html>
