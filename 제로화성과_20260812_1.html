@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOC 위클리 — 제로화 목표 대비 성과 (2026.08.12)</title>
+<style>
+  .viz-root {
+    color-scheme: light;
+    --page:           #f9f9f7;
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --accent:         #2a78d6;
+    --accent-light:   #9ec5f4;
+    --accent-wash:    rgba(42,120,214,0.08);
+    --deemph:         #b5b3ac;
+    --good:           #006300;
+    --marker:         #898781;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: system-ui, -apple-system, "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; background: var(--page); color: var(--text-primary); }
+  .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 28px 64px; }
+  header.report h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; }
+  header.report .sub { color: var(--text-secondary); font-size: 14px; margin-top: 6px; line-height: 1.65; }
+  .datebadge { display:inline-block; font-size:12px; color:var(--text-secondary); border:1px solid var(--border); border-radius:999px; padding:3px 10px; margin-bottom:10px; background:var(--surface-1); }
+
+  .howto { display:flex; gap:20px; flex-wrap:wrap; margin-top:14px; font-size:12.5px; color:var(--text-secondary); background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:12px 16px; line-height:1.6; }
+  .howto b { color:var(--text-primary); }
+
+  /* 핵심 요약 */
+  .summary { margin-top:20px; background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:20px 22px; }
+  .summary h2 { font-size:15px; font-weight:700; margin-bottom:10px; }
+  .summary ol { padding-left:20px; font-size:14px; line-height:1.8; color:var(--text-secondary); }
+  .summary ol li { margin-top:6px; }
+  .summary ol li::marker { font-weight:700; color:var(--text-primary); }
+  .summary b { color:var(--text-primary); }
+
+  section { margin-top: 40px; }
+  .sec-head h2 { font-size: 18px; font-weight: 700; }
+  .insight { margin-top:10px; background:var(--accent-wash); border-left:3px solid var(--accent); border-radius:8px; padding:12px 16px; font-size:13.5px; line-height:1.7; color:var(--text-secondary); }
+  .insight b { color:var(--text-primary); }
+  .insight .tag { font-size:11px; font-weight:700; color:var(--accent); letter-spacing:0.03em; margin-right:6px; }
+
+  .card { background: var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:18px; margin-top:12px; }
+  .card h3 { font-size:13.5px; font-weight:600; }
+  .card .cap { font-size:12px; color: var(--text-muted); margin-top:2px; }
+  .chart { position:relative; margin-top:10px; }
+  .chart svg { display:block; width:100%; height:auto; }
+
+  .hero { display:grid; grid-template-columns: 260px 1fr; gap:24px; align-items:center; background:var(--surface-1); border:1px solid var(--border); border-radius:10px; padding:22px; margin-top:12px; }
+  .hero .big { font-size:48px; font-weight:700; letter-spacing:-0.02em; line-height:1; }
+  .hero .big small { font-size:16px; font-weight:500; color:var(--text-secondary); letter-spacing:0; }
+  .hero .lab { font-size:13px; color:var(--text-secondary); margin-bottom:8px; }
+  .hero .est { font-size:12px; color:var(--text-muted); margin-top:8px; line-height:1.6; }
+
+  table.data { width:100%; border-collapse:collapse; margin-top:12px; font-size:13px; }
+  table.data th { text-align:left; font-weight:600; color:var(--text-secondary); font-size:12px; padding:8px 10px; border-bottom:1px solid var(--baseline); }
+  table.data th.num, table.data td.num { text-align:right; font-variant-numeric: tabular-nums; }
+  table.data td { padding:9px 10px; border-bottom:1px solid var(--grid); vertical-align:top; }
+  table.data tr:last-child td { border-bottom:none; }
+  table.data td.good { color:var(--good); font-weight:600; white-space:nowrap; }
+  table.data td.flat { color:var(--text-secondary); font-weight:600; white-space:nowrap; }
+  table.data td .sm, table.data th .sm { font-size:11px; color:var(--text-muted); display:block; margin-top:2px; font-weight:400; }
+  .rowmuted td { color:var(--text-muted); }
+  .rowtotal td { font-weight:700; border-top:2px solid var(--baseline); }
+
+  .tooltip { position:absolute; pointer-events:none; background:var(--surface-1); border:1px solid var(--border); border-radius:8px; padding:8px 10px; font-size:12px; box-shadow:0 4px 14px rgba(0,0,0,0.10); display:none; z-index:5; min-width:120px; }
+  .tooltip .tt-x { color:var(--text-muted); font-size:11px; margin-bottom:4px; }
+  .tooltip .tt-row { display:flex; align-items:center; gap:6px; margin-top:2px; }
+  .tooltip .tt-key { width:12px; height:0; border-top:2.5px solid; border-radius:2px; flex:none; }
+  .tooltip .tt-val { font-weight:600; }
+  .tooltip .tt-name { color:var(--text-secondary); }
+  .legend { display:flex; gap:16px; margin-top:8px; font-size:12px; color:var(--text-secondary); flex-wrap:wrap; }
+  .legend .key { display:inline-block; width:14px; height:0; border-top:2.5px solid; border-radius:2px; vertical-align:middle; margin-right:5px; }
+
+  footer { margin-top:44px; font-size:12px; color:var(--text-muted); line-height:1.7; }
+</style>
+</head>
+<body class="viz-root">
+<div class="wrap">
+
+<header class="report">
+  <span class="datebadge">2026. 8. 12 (수)</span>
+  <h1>VOC 제로화 — 목표 대비 성과</h1>
+  <div class="sub">프로덕트가 없애기로 한 VOC(제로화 타겟)가 계획대로 줄고 있는지 점검하는 리포트입니다. 6/1~8/10 1:1 문의 데이터 기준.</div>
+</header>
+
+<div class="summary">
+  <h2>핵심 요약</h2>
+  <ol>
+    <li><b>전사 VOC율이 석 달 연속 하락 중입니다.</b> 수거 100건당 문의 11.4건(6월) → 8.1건(8월). 목표 6.9건까지 <b>1.2건</b> 남았습니다.</li>
+    <li><b>제로화 타겟은 1/3을 없앴습니다.</b> 타겟(진행 그룹 A·B) VOC율 3.8% → 2.6% (진척률 33%). 과제를 배포한 영역이 그렇지 않은 영역보다 약 2배 빠르게 줄고 있어, 감소가 과제 효과임이 확인됩니다.</li>
+    <li><b>8월 과제가 이어서 배포됩니다.</b> 8/19 안심재케어 고도화, 8/24 쿠폰 자동 적용·결제내역 안내 고도화, 8월 말 구독 차감 정책 개선.</li>
+  </ol>
+</div>
+
+<section>
+  <div class="sec-head"><h2>① 전사 VOC율 — 목표까지 1.2%p</h2></div>
+  <div class="insight"><span class="tag">INSIGHT</span><b>석 달 연속 하락해 목표(6.9%)에 근접.</b> 다만 8월은 열흘치 집계라 월말 확정치는 달라질 수 있습니다.</div>
+  <div class="hero">
+    <div>
+      <div class="lab">8월 전사 VOC율 (8/1~10)</div>
+      <div class="big">8.1<small>%</small></div>
+      <div class="est">= 문의 2,192건 ÷ 수거신청 27,001건<br>(성수+군포, 부산 제외)</div>
+    </div>
+    <div>
+      <div class="chart" id="ch-rate"></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>② 프로덕트 목표지표</h2></div>
+  <div class="card">
+    <div style="font-size:13.5px; line-height:1.7; color:var(--text-secondary)">전체 VOC를 전수 분석해, <b style="color:var(--text-primary)">프로덕트(앱 기능·자동화·정책)로 해결할 수 있는 문의를 4개 그룹으로 정의</b>했습니다(리더십 워크숍, 7/24). 이 4개 그룹이 전체 VOC의 <b style="color:var(--text-primary)">37%</b>(상반기 기준 월 3,669건)이며, 목표는 이 그룹 문의의 <b style="color:var(--text-primary)">상담사 답변 0건</b> — 앱에서 스스로 해결하게 하거나(1단계 셀프처리화), 인입돼도 AI가 자동 답변해 완결(2단계 답변 자동화)하는 것입니다. 달성 시 전사 VOC율이 11.0% → 6.9%로 내려갑니다.</div>
+    <table class="data">
+      <thead><tr><th>그룹</th><th>대표 문의</th><th class="num">전체 VOC 중 비중<br>(상반기)</th><th>상태</th></tr></thead>
+      <tbody>
+        <tr><td><b>A</b> 결제·구독·이용내역</td><td>청구·차감 사유, 구독 해지·변경, 쿠폰/포인트, 품목 오류</td><td class="num">27.5%</td><td>과제 진행 중</td></tr>
+        <tr><td><b>B</b> 런드렛 이용·반납</td><td>런드렛 사용법·반납·비밀번호</td><td class="num">4.6%</td><td>과제 진행 중</td></tr>
+        <tr class="rowmuted"><td><b>C</b> 세탁동의·세탁불가</td><td>세탁 가능 여부, 미세탁 사유</td><td class="num">3.1%</td><td>미착수</td></tr>
+        <tr class="rowmuted"><td><b>D</b> 이용 안내</td><td>이용 방법, 가능 품목, 서비스 지역</td><td class="num">2.1%</td><td>미착수</td></tr>
+      </tbody>
+    </table>
+    <div class="cap" style="margin-top:10px">이 리포트의 타겟 집계는 과제가 진행 중인 <b style="color:var(--text-primary)">A·B그룹 기준</b>입니다 (미착수 C·D는 타겟 외로 분류).</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>③ 어디서 줄었나 — 타겟 그룹이 2배 빠르게 감소</h2></div>
+  <div class="insight"><span class="tag">INSIGHT</span><b>과제를 배포한 타겟 그룹(A·B)의 VOC율은 ▼24%(3.71% → 2.80%), 손대지 않은 영역(품질 제외)은 ▼12% 하락</b> (주간 VOC율, 6월 평균 대비 최근 2주). 감소가 물량·시장 상황이 아니라 과제 효과라는 근거입니다. 타겟 외(주황)의 하락분 중 상당수는 품질 VOC(▼34%) — 이 역시 과제①(안심케어 연결)의 효과입니다.</div>
+  <div class="card">
+    <h3>주간 VOC율 추이</h3>
+    <div class="cap">세로 점선 = 과제 배포 시점</div>
+    <div class="chart" id="ch-weekly"></div>
+    <div class="legend"><span><span class="key" style="border-color:var(--accent)"></span>타겟 그룹 (진행 A·B)</span><span><span class="key" style="border-color:#eb6834"></span>타겟 외 (품질·수거/배송·응대·미진행 C/D 등)</span><span><span class="key" style="border-color:var(--deemph)"></span>전체</span></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>④ 그룹별 — 감소의 대부분은 A그룹(결제·구독)에서</h2></div>
+  <div class="insight"><span class="tag">INSIGHT</span><b>타겟 감소분(−1.24%p)의 대부분(약 94%)이 A그룹(−1.16%p)에서 나왔습니다.</b> 지금까지의 과제가 A그룹에 집중됐기 때문으로, 계획대로 진행되고 있습니다.</div>
+  <div class="card">
+    <table class="data">
+      <thead><tr><th>그룹</th><th class="num">6월</th><th class="num">7월</th><th class="num">8월 (1~10)</th><th class="num">6월 대비</th><th>진행한 과제</th></tr></thead>
+      <tbody>
+        <tr><td><b>A</b> 결제·구독·이용내역</td><td class="num">3.32%<span class="sm">2,748건</span></td><td class="num">2.90%<span class="sm">2,458건</span></td><td class="num">2.16%<span class="sm">584건</span></td><td class="num good">▼ 35%</td><td>고객센터 UI(7/20) · AI 결제내역(8/4) · 즉시해지 정책(6/1)</td></tr>
+        <tr><td><b>B</b> 런드렛 이용·반납</td><td class="num">0.50%<span class="sm">413건</span></td><td class="num">0.42%<span class="sm">357건</span></td><td class="num">0.41%<span class="sm">110건</span></td><td class="num good">▼ 18%</td><td>다이얼키 AI 답변(6/12)</td></tr>
+        <tr class="rowtotal"><td>타겟 합계 (A+B)</td><td class="num">3.81%<span class="sm">3,161건</span></td><td class="num">3.33%<span class="sm">2,815건</span></td><td class="num">2.57%<span class="sm">694건</span></td><td class="num good">▼ 33%</td><td></td></tr>
+        <tr class="rowmuted"><td>(참고) 세탁·수선 품질 — 타겟 외</td><td class="num">1.36%<span class="sm">1,124건</span></td><td class="num">1.17%<span class="sm">994건</span></td><td class="num">0.80%<span class="sm">216건</span></td><td class="num flat">▼ 41%</td><td>고객센터 UI 안심케어 연결(7/20)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>⑤ A그룹 세부 — 최대 성과는 월정액 해지·변경 ▼71%</h2></div>
+  <div class="insight"><span class="tag">INSIGHT</span><b>월정액 해지·변경(▼71%)이 최대 성과</b> — 즉시해지 정책(6/1)과 고객센터 UI(7/20)가 함께 만든 결과입니다. 해지 수요 감소 영향을 제거해도 <b>해지 문의율(문의 ÷ 해지 완료)이 15.1% → 11.5%로 ▼24% 하락</b>해 셀프 처리 전환 효과가 확인됩니다(아래 검증). 과금/차감은 8/4 AI 배포 효과가 이제 나타나기 시작했고, 쿠폰/포인트는 8/24 과제가 커버할 예정입니다.</div>
+  <div class="card">
+    <table class="data">
+      <thead><tr><th>세부 영역</th><th class="num">6월</th><th class="num">8월 (1~10)</th><th class="num">6월 대비</th><th>진행/예정 과제</th></tr></thead>
+      <tbody>
+        <tr><td>월정액 해지·변경</td><td class="num">0.82%<span class="sm">677건</span></td><td class="num">0.24%<span class="sm">65건</span></td><td class="num good">▼ 71%</td><td>즉시해지 정책(6/1) + 고객센터 UI(7/20)</td></tr>
+        <tr><td>품목 오류</td><td class="num">0.27%<span class="sm">222건</span></td><td class="num">0.18%<span class="sm">48건</span></td><td class="num good">▼ 34%</td><td>고객센터 UI(7/20) · 정정기간 30일 연장(8/12)</td></tr>
+        <tr><td>쿠폰/포인트</td><td class="num">0.66%<span class="sm">543건</span></td><td class="num">0.51%<span class="sm">139건</span></td><td class="num good">▼ 21%</td><td>쿠폰 자동 적용(8/24 예정)</td></tr>
+        <tr><td>과금/차감 투명화</td><td class="num">0.40%<span class="sm">330건</span></td><td class="num">0.37%<span class="sm">99건</span></td><td class="num flat">▼ 8%</td><td>AI 결제내역(8/4) · 결제내역 고도화(8/24 예정)</td></tr>
+        <tr class="rowtotal"><td>A그룹 합계 <span class="sm">이용내역 일반·기타 포함</span></td><td class="num">3.32%</td><td class="num">2.16%</td><td class="num good">▼ 35%</td><td></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <h3>검증 — "해지 자체가 줄어서 문의가 준 것 아닌가?"</h3>
+    <div class="cap">실제 해지 완료 건수(Daily 구독 증감 데이터)로 수요 변화를 통제한 검증</div>
+    <table class="data">
+      <thead><tr><th>지표</th><th class="num">6월</th><th class="num">7월</th><th class="num">8월 (1~10)</th><th class="num">6월 대비</th></tr></thead>
+      <tbody>
+        <tr><td>월정액 해지 완료 (실제 해지 수요)</td><td class="num">일평균 149건<span class="sm">총 4,476건</span></td><td class="num">일평균 59건<span class="sm">총 1,829건</span></td><td class="num">일평균 57건<span class="sm">총 565건</span></td><td class="num flat">▼ 62%</td></tr>
+        <tr><td>해지·변경 문의</td><td class="num">일평균 22.6건<span class="sm">총 677건</span></td><td class="num">일평균 12.1건<span class="sm">총 376건</span></td><td class="num">일평균 6.5건<span class="sm">총 65건</span></td><td class="num flat">▼ 71%</td></tr>
+        <tr class="rowtotal"><td>해지 문의율 <span class="sm">= 문의 ÷ 해지 완료</span></td><td class="num">15.1%</td><td class="num">20.6%</td><td class="num">11.5%</td><td class="num good">▼ 24%</td></tr>
+      </tbody>
+    </table>
+    <div class="cap" style="margin-top:10px">해지 수요 자체가 6월 해지 웨이브 이후 크게 줄어(▼62%), 문의 절대량 감소에는 수요 감소분이 포함돼 있습니다. 그러나 수요를 통제한 <b style="color:var(--text-primary)">해지 문의율은 15.1% → 11.5%(▼24%)</b>로 하락 — 해지 1건이 발생할 때 상담을 거치는 비율 자체가 줄었다는 뜻으로, 셀프 처리 전환의 순효과입니다. 7/20 UI 개편 이후 주간 기준으로도 14.3% → 13.1% → 9.7%로 하락. (7월 수치 20.6%는 7/8~12 해지 집계 이상치(일 4~22건)로 왜곡 가능성 있어 참고만.)</div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>⑥ 배포 과제 성과 — 두 과제 모두 전체 추세를 상회</h2></div>
+  <div class="insight"><span class="tag">INSIGHT</span><b>고객센터 UI 개편은 대상 문의를 ▼44% 줄여 성과가 확정적</b>이고, AI 결제내역(▼27%)은 배포 7일 차의 긍정적 초기 신호로 다음 주 확정 판단합니다.</div>
+  <div class="card">
+    <table class="data">
+      <thead><tr><th>과제</th><th class="num" style="white-space:nowrap">대상 문의 감소</th><th class="num" style="white-space:nowrap; min-width:90px">같은 기간<br>전체 추세</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>① 고객센터 UI 개편 <span class="sm">7/20 배포 — 품질 접수·품목·구독·런드렛 문의를 앱 기능으로 연결</span></td><td class="num good">▼ 44%<span class="sm">주 461 → 256건</span></td><td class="num">▼ 17%</td><td>일부는 선행 조치(즉시해지 정책·다이얼키 AI 답변) 효과와 중첩</td></tr>
+        <tr><td>② AI 결제내역 상세 안내 <span class="sm">8/4 배포 — 청구·차감 문의를 AI 채팅으로 즉시 답변</span></td><td class="num good">▼ 27%<span class="sm">일 14.0 → 10.3건 (요일 보정)</span></td><td class="num">▼ 19%</td><td>배포 7일 차 — 다음 주 확정 판단</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>⑦ 다음 스텝</h2></div>
+  <div class="card" style="font-size:13.5px; line-height:1.8; color:var(--text-secondary)">
+    <ol style="padding-left:20px">
+      <li><b style="color:var(--text-primary)">8월 배포 과제 실행</b> — 8/19 안심재케어 고도화, 8/24 쿠폰 자동 적용·결제내역 안내 고도화, 8월 말 구독 차감 정책 개선.</li>
+      <li><b style="color:var(--text-primary)">측정 체계 정비</b> — C·D그룹 추적을 위한 티켓 분류 정비, 2단계(답변 자동화) 지표용 AI 채팅 완결/1:1 전환 로그 연동.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  측정체계: 리더십 워크숍 'Improving the self-service rate'(7/24) — 전사 VOC율 = VOC 인입 ÷ 수거건수, 타겟 4그룹 월 3,669건 제로화(달성 시 6.9%). 데이터: Zendesk 1:1 문의 티켓(성수+군포 south, 6/1~8/10 분류 완료분) + 일자별 수거신청 실적(성수+군포, 부산 제외: 6월 82,886 / 7월 84,633 / 8/1~10 27,001건). 상반기 평균 11.0%만 워크숍 기준치. 그룹 매핑 — A: '이용내역/결제/요금제' 분류 전체 / B: 런드렛 이용·반납·오배송·위생·다이얼키. 타겟 집계는 과제 진행 그룹(A·B) 기준이며 미진행 그룹(C 세탁동의·D 이용안내)은 집계에서 제외 — 타겟 외에 포함. 배포 전후 비교(⑥)는 건수 기준 — 주간 수거량이 ±3% 내로 안정적이라 비율과 사실상 동일. 월정액 해지·변경 ▼71% 중 7/20 UI 개편의 순효과는 정책 추세 제외 시 약 ▼20% — 해지 문의율(문의 ÷ 해지 완료) 검증(▼24%)과 일치. 해지 완료 건수: Daily 구독 증감 데이터의 월정액_해지. 작성: 2026.8.12.
+</footer>
+
+</div>
+
+<script>
+(function(){
+  const css = v => getComputedStyle(document.body).getPropertyValue(v).trim();
+
+  // ① 전사 VOC율 월별 막대
+  (function(){
+    const el = document.getElementById('ch-rate');
+    const data = [
+      {lab:'상반기 평균', v:11.0, est:false},
+      {lab:'6월', v:11.4, est:false},
+      {lab:'7월', v:10.2, est:false},
+      {lab:'8월 (1~10일)', v:8.1, est:true}
+    ];
+    const GOAL = 6.9;
+    const W = 640, H = 210, m = {t:18, r:70, b:24, l:10};
+    const iw = W-m.l-m.r, ih = H-m.t-m.b, ymax = 12;
+    const y = v => m.t + ih - v/ymax*ih;
+    const NS='http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    function add(tag, at){ const e=document.createElementNS(NS,tag); for(const k in at) e.setAttribute(k,at[k]); svg.appendChild(e); return e; }
+    add('line',{x1:m.l,x2:W-m.r,y1:y(0),y2:y(0),stroke:css('--baseline'),'stroke-width':1});
+    const bw = 24, slot = iw/data.length;
+    data.forEach((d,i)=>{
+      const cx = m.l + slot*i + slot/2;
+      const top = y(d.v), r = 4;
+      add('path',{d:`M${cx-bw/2},${y(0)} L${cx-bw/2},${top+r} Q${cx-bw/2},${top} ${cx-bw/2+r},${top} L${cx+bw/2-r},${top} Q${cx+bw/2},${top} ${cx+bw/2},${top+r} L${cx+bw/2},${y(0)} Z`,
+           fill: d.est ? css('--accent-light') : css('--accent')});
+      const vt = add('text',{x:cx,y:top-7,'text-anchor':'middle','font-size':13,'font-weight':d.est?700:600,fill:css('--text-primary')});
+      vt.textContent = d.v.toFixed(1)+'%';
+      const lt = add('text',{x:cx,y:H-6,'text-anchor':'middle','font-size':11,fill:css('--text-muted')});
+      lt.textContent = d.lab;
+    });
+    add('line',{x1:m.l,x2:W-m.r,y1:y(GOAL),y2:y(GOAL),stroke:css('--text-primary'),'stroke-width':1.5,'stroke-dasharray':'5,4'});
+    const gt = add('text',{x:W-m.r+6,y:y(GOAL)+4,'font-size':11.5,'font-weight':700,fill:css('--text-primary')});
+    gt.textContent = '목표 6.9%';
+    el.appendChild(svg);
+  })();
+
+  // ② 주간 VOC율 추이
+  const WEEKS = ["6/1","6/8","6/15","6/22","6/29","7/6","7/13","7/20","7/27","8/3"];
+  const TARGET = [796,779,672,669,676,557,654,730,576,493]; // 진행 그룹 A+B
+  const TOTAL  = [2522,2222,2032,1963,2011,1840,1973,2023,1860,1576];
+  const NONTARGET = TOTAL.map((v,i)=> v - TARGET[i]);
+  const PICKUP = [19773,19484,19615,18949,19117,18550,19331,19360,19328,18728];
+  const rate = arr => arr.map((v,i)=> +(v/PICKUP[i]*100).toFixed(2));
+  const R_TOTAL = rate(TOTAL), R_TARGET = rate(TARGET), R_NON = rate(NONTARGET);
+
+  function lineChart(el, labels, series, opts){
+    opts = opts || {};
+    const W = opts.w || el.clientWidth || 960, H = opts.h || 240;
+    const m = {t:14, r:14, b:26, l:44};
+    const iw = W-m.l-m.r, ih = H-m.t-m.b;
+    const ymax = opts.ymax;
+    const x = i => m.l + i*iw/(labels.length-1);
+    const y = v => m.t + ih - v/ymax*ih;
+    const NS='http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS,'svg');
+    svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+    function add(tag, at){ const e=document.createElementNS(NS,tag); for(const k in at) e.setAttribute(k,at[k]); svg.appendChild(e); return e; }
+    const nt = opts.nt || 4;
+    for(let i=0;i<=nt;i++){
+      const v = ymax/nt*i, yy = y(v);
+      add('line',{x1:m.l,x2:W-m.r,y1:yy,y2:yy,stroke:css('--grid'),'stroke-width':1});
+      const t = add('text',{x:m.l-6,y:yy+3.5,'text-anchor':'end','font-size':10,fill:css('--text-muted'),style:'font-variant-numeric:tabular-nums'});
+      t.textContent = opts.pct ? v+'%' : v.toLocaleString();
+    }
+    add('line',{x1:m.l,x2:W-m.r,y1:y(0),y2:y(0),stroke:css('--baseline'),'stroke-width':1});
+    labels.forEach((lb,i)=>{ const t=add('text',{x:x(i),y:H-8,'text-anchor':'middle','font-size':10,fill:css('--text-muted')}); t.textContent=lb; });
+    (opts.markers||[]).forEach(mk=>{
+      add('line',{x1:x(mk.i),x2:x(mk.i),y1:m.t,y2:m.t+ih,stroke:css('--marker'),'stroke-width':1,'stroke-dasharray':'3,3'});
+      const nearRight = x(mk.i) > W - m.r - 60;
+      const t=add('text',{x:x(mk.i)+(nearRight?-4:4),y:m.t+10,'text-anchor':nearRight?'end':'start','font-size':10,fill:css('--text-secondary'),'font-weight':600}); t.textContent=mk.label;
+    });
+    series.forEach(s=>{
+      const pts = s.data.map((v,i)=> [x(i),y(v)]);
+      add('path',{d:'M'+pts.map(p=>p.join(',')).join('L'),fill:'none',stroke:s.color,'stroke-width':s.width||2,'stroke-linejoin':'round','stroke-linecap':'round'});
+      if(s.dots) pts.forEach(p=> add('circle',{cx:p[0],cy:p[1],r:4,fill:s.color,stroke:css('--surface-1'),'stroke-width':2}));
+    });
+    el.appendChild(svg);
+    const tip = document.createElement('div'); tip.className='tooltip'; el.appendChild(tip);
+    const cross = add('line',{x1:0,x2:0,y1:m.t,y2:m.t+ih,stroke:css('--text-muted'),'stroke-width':1,opacity:0});
+    const hoverDots = series.map(s=> add('circle',{r:4.5,fill:s.color,stroke:css('--surface-1'),'stroke-width':2,opacity:0}));
+    svg.addEventListener('pointermove', ev=>{
+      const r = svg.getBoundingClientRect();
+      const px = (ev.clientX-r.left)*(W/r.width);
+      let i = Math.round((px-m.l)/(iw/(labels.length-1)));
+      i = Math.max(0,Math.min(labels.length-1,i));
+      cross.setAttribute('x1',x(i)); cross.setAttribute('x2',x(i)); cross.setAttribute('opacity',0.6);
+      tip.innerHTML='';
+      const tx=document.createElement('div'); tx.className='tt-x'; tx.textContent=labels[i]+' 주'; tip.appendChild(tx);
+      series.forEach((s,si)=>{
+        const v=s.data[i];
+        hoverDots[si].setAttribute('cx',x(i)); hoverDots[si].setAttribute('cy',y(v)); hoverDots[si].setAttribute('opacity',1);
+        const row=document.createElement('div'); row.className='tt-row';
+        const k=document.createElement('span'); k.className='tt-key'; k.style.borderTopColor=s.color;
+        const val=document.createElement('span'); val.className='tt-val';
+        val.textContent = opts.pct ? (v.toFixed(2)+'%' + (s.counts? ' · '+s.counts[i].toLocaleString()+'건' : '')) : v.toLocaleString()+'건';
+        const nm=document.createElement('span'); nm.className='tt-name'; nm.textContent=s.name;
+        row.appendChild(k); row.appendChild(val); row.appendChild(nm); tip.appendChild(row);
+      });
+      tip.style.display='block';
+      const er = el.getBoundingClientRect();
+      let tl = (x(i)/W)*er.width + 12;
+      if(tl + tip.offsetWidth > er.width) tl = (x(i)/W)*er.width - tip.offsetWidth - 12;
+      tip.style.left = tl+'px'; tip.style.top='14px';
+    });
+    svg.addEventListener('pointerleave', ()=>{ tip.style.display='none'; cross.setAttribute('opacity',0); hoverDots.forEach(d=>d.setAttribute('opacity',0)); });
+  }
+
+  lineChart(document.getElementById('ch-weekly'), WEEKS,
+    [{name:'전체 VOC율', data:R_TOTAL, counts:TOTAL, color:css('--deemph'), width:2},
+     {name:'타겟 외 VOC율', data:R_NON, counts:NONTARGET, color:'#eb6834', width:2, dots:true},
+     {name:'타겟 그룹(A·B) VOC율', data:R_TARGET, counts:TARGET, color:css('--accent'), width:2.5, dots:true}],
+    {h:250, ymax:14, nt:7, pct:true, markers:[{i:7,label:'① 7/20'},{i:9,label:'② 8/4'}]});
+})();
+</script>
+</body>
+</html>
