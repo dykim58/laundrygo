@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/colors.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/typography.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/tokens/effects.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/brand/fig-tokens.css">
+<link rel="stylesheet" href="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/styles.css">
+<script src="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+<style>
+  body { margin: 0; background: #E8E3DA; font-family: 'Pretendard', sans-serif; }
+  a { color: #1F1C17; } a:hover { color: #7A7268; }
+  button { font-family: 'Pretendard', sans-serif; }
+</style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:24px;padding:52px 24px 80px">
+
+  <div style="display:flex;flex-direction:column;gap:11px;align-items:center;text-align:center;max-width:620px">
+    <span style="font-family:'Hanken Grotesk',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#9A9081">Rental · Prototype</span>
+    <h1 style="margin:0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:34px;letter-spacing:-0.025em;color:#1F1C17;line-height:1.2">담지 않고, 받고 내놓기</h1>
+    <p style="margin:0;font-size:14.5px;line-height:1.7;color:#7A7268;text-wrap:pretty">앱을 열면 <b style="color:#1F1C17;font-weight:700">지금 숙소에 뭐가 몇 개 있는지</b>가 먼저 보이고, 할 일은 <b style="color:#1F1C17;font-weight:700">받기 / 내놓기</b> 둘뿐입니다.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1000px;width:100%">
+    <div style="background:#FFFDFA;border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(31,28,23,.06)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2F4C3F;color:#F3EFE8;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700">1</span>
+      <p style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;color:#1F1C17">장바구니에 담는 구조를 없앴어요</p>
+      <p style="margin:8px 0 0;font-size:12.5px;line-height:1.6;color:#7A7268">커머스처럼 담고 결제하는 흐름 대신, 한 번 정한 구성을 그대로 다시 받습니다.</p>
+    </div>
+    <div style="background:#FFFDFA;border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(31,28,23,.06)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2F4C3F;color:#F3EFE8;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700">2</span>
+      <p style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;color:#1F1C17">침대 단위로 세트 구성</p>
+      <p style="margin:8px 0 0;font-size:12.5px;line-height:1.6;color:#7A7268">처음 맡길 때 품목·수량을 고민하지 않도록, 싱글·더블 침대 수만 입력하면 필요한 구성이 자동으로 잡힙니다.</p>
+    </div>
+    <div style="background:#FFFDFA;border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(31,28,23,.06)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2F4C3F;color:#F3EFE8;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700">3</span>
+      <p style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;color:#1F1C17">보유 수량이 홈의 주인공</p>
+      <p style="margin:8px 0 0;font-size:12.5px;line-height:1.6;color:#7A7268">이용 중인 사장님이 앱을 열면 "지금 몇 개 갖고 있는지"가 큰 숫자로 가장 먼저 보입니다.</p>
+    </div>
+    <div style="background:#FFFDFA;border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(31,28,23,.06)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2F4C3F;color:#F3EFE8;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700">4</span>
+      <p style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;color:#1F1C17">받기 / 내놓기 두 개로</p>
+      <p style="margin:8px 0 0;font-size:12.5px;line-height:1.6;color:#7A7268">"렌탈 신청 · 반납" 대신 사장님이 실제로 하는 행동 그대로, 홈에서 같은 크기로 나란히.</p>
+    </div>
+    <div style="background:#FFFDFA;border-radius:18px;padding:20px;box-shadow:0 5px 18px rgba(31,28,23,.06)">
+      <span style="display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:#2F4C3F;color:#F3EFE8;font-family:'Hanken Grotesk',sans-serif;font-size:12px;font-weight:700">5</span>
+      <p style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;line-height:1.3;letter-spacing:-0.02em;color:#1F1C17">세탁은 내놓을 때 함께</p>
+      <p style="margin:8px 0 0;font-size:12.5px;line-height:1.6;color:#7A7268">별도 진입점 없이, 내놓기 화면에서 토글 하나로 개인 세탁물도 같은 자리에 함께.</p>
+    </div>
+  </div>
+
+  <p style="margin:0;font-size:13px;line-height:1.6;color:#7A7268;text-align:center">아래 <b style="color:#1F1C17;font-weight:700">첫 이용 / 이용 중</b>을 눌러 두 시나리오를 각각 끝까지 진행해 보실 수 있어요.</p>
+
+  <div style="display:flex;gap:8px;align-items:center;--green:#2F4C3F;--green-ios:#2F4C3F;--white:#FFFDFA;--text-secondary:#7A7268">
+    <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="{{ tabFirstVariant }}" size="sm" on-click="{{ go.first }}" hint-size="88px,36px">첫 이용</x-import>
+    <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="{{ tabLiveVariant }}" size="sm" on-click="{{ go.live }}" hint-size="88px,36px">이용 중</x-import>
+  </div>
+
+  <div style="width:390px;height:844px;background:#F3EFE8;border-radius:44px;overflow:hidden;box-shadow:0 30px 80px rgba(31,28,23,.24);display:flex;flex-direction:column;flex:none;position:relative;--green:#2F4C3F;--green-light:#E5EAE6;--green-ios:#2F4C3F;--white:#FFFDFA;--gray-200:#EFE9DF;--gray-400:#DDD5C8;--gray-500:#9A9081;--text-primary:#1F1C17;--text-secondary:#7A7268;--black:#2A2621;--bottom-nav-height:76px;--shadow-nav:none;--dur-normal:0ms;--dur-fast:0ms">
+
+    <div style="height:50px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;flex:none">
+      <span style="font-family:'Instrument Serif','Noto Serif KR',serif;font-size:15px;color:#1F1C17">9:41</span>
+      <div style="display:flex;gap:5px;align-items:center"><div style="width:17px;height:10px;border:1.4px solid #1F1C17;border-radius:3px"></div><div style="width:15px;height:10px;border-radius:2px;background:#1F1C17"></div></div>
+    </div>
+
+    <!-- ============ 첫 이용 · 홈 (1c) ============ -->
+    <sc-if value="{{ sHome }}" hint-placeholder-val="{{ true }}">
+      <div style="height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex:none">
+        <div style="width:122px;height:25px;overflow:hidden;flex:none">
+          <div style="width:500px;height:98.5px;transform:scale(.244);transform-origin:0 0">
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.LogoLaundryGo" property1="default" hint-size="500px,98px"></x-import>
+          </div>
+        </div>
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1F1C17" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.8 20c1.1-3.5 3.9-5.3 7.2-5.3s6.1 1.8 7.2 5.3"></path></svg>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:14px 24px 20px;display:flex;flex-direction:column">
+        <h2 style="margin:0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:36px;line-height:1.16;letter-spacing:-0.03em;color:#1F1C17">빨래 없는<br>숙소 운영</h2>
+        <p style="margin:14px 0 0;font-size:14.5px;line-height:1.65;color:#7A7268">침대 수만 알려주시면 침대에 맞는 세트를 맞춰 다음 날 문 앞에 두고 갑니다.</p>
+
+        <div style="margin-top:20px;border-radius:22px;background:#FFFDFA;overflow:hidden;box-shadow:0 8px 26px rgba(31,28,23,.07);flex:none">
+          <div style="height:118px;background:#E9E3D9;display:flex;align-items:center;justify-content:center;flex:none">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#C6BAA6" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11V8.5A2.5 2.5 0 015.5 6h13A2.5 2.5 0 0121 8.5V11"></path><path d="M2 11h20v6H2zM5 17v2M19 17v2"></path></svg>
+          </div>
+          <div style="padding:18px 20px 20px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.14em;color:#2F4C3F">침대 한 개당 한 세트</span>
+              <div style="flex:1;height:1px;background:#EAE4DA"></div>
+            </div>
+            <div style="margin-top:12px;display:flex;flex-direction:column">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+                <span style="min-width:0"><span style="display:block;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:20px;letter-spacing:-0.02em;color:#1F1C17">싱글 세트</span><span style="display:block;font-size:12px;line-height:1.5;color:#9A9081;margin-top:3px">시트 · 이불커버 · 베개커버 1<br>바스타월 2 · 핸드타월 1</span></span>
+                <span style="display:flex;align-items:baseline;gap:3px;flex:none"><span style="font-family:'Instrument Serif',serif;font-size:21px;color:#1F1C17">5,400</span><span style="font-size:12.5px;color:#7A7268">원</span></span>
+              </div>
+              <div style="display:flex;align-items:baseline;justify-content:space-between;padding:11px 0">
+                <span style="min-width:0"><span style="display:block;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:20px;letter-spacing:-0.02em;color:#1F1C17">더블 세트</span><span style="display:block;font-size:12px;line-height:1.5;color:#9A9081;margin-top:3px">시트 · 이불커버 · 베개커버 2<br>바스타월 4 · 핸드타월 2</span></span>
+                <span style="display:flex;align-items:baseline;gap:3px;flex:none"><span style="font-family:'Instrument Serif',serif;font-size:21px;color:#1F1C17">8,800</span><span style="font-size:12.5px;color:#7A7268">원</span></span>
+              </div>
+            </div>
+            <p style="margin:10px 0 0;font-size:12.5px;line-height:1.55;color:#7A7268">침구와 타월이 한 봉지에 담겨 침대별로 도착해요.<br>수량은 신청할 때 품목별로 자유롭게 바꿀 수 있어요.</p>
+          </div>
+        </div>
+      </div>
+      <div style="flex:none;padding:12px 24px 14px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="primary" size="xl" full-width="{{ true }}" on-click="{{ go.step1 }}" hint-size="100%,56px">침대 수 알려주고 시작하기</x-import>
+      </div>
+      <div style="flex:none;border-top:1px solid #E4DED4">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.BottomNav" items="{{ navItems }}" value="home" hint-size="100%,76px"></x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ STEP 1 · 침대 수 ============ -->
+    <sc-if value="{{ sStep1 }}">
+      <div style="height:54px;display:flex;align-items:center;padding:0 22px;flex:none">
+        <button onClick="{{ go.home }}" aria-label="뒤로" style="border:none;background:none;padding:0;cursor:pointer;display:flex;color:#1F1C17">
+          <x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="left" size="24" hint-size="24px,24px"></x-import>
+        </button>
+      </div>
+      <div style="padding:0 24px;flex:none"><div style="height:3px;border-radius:999px;background:#E4DED4;overflow:hidden"><div style="width:33%;height:100%;background:#2F4C3F"></div></div></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:30px 24px 0;display:flex;flex-direction:column">
+        <span style="font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.14em;color:#2F4C3F">STEP 1 / 3</span>
+        <h2 style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.025em;color:#1F1C17">침대가 몇 개인가요?</h2>
+        <p style="margin:11px 0 0;font-size:14px;line-height:1.6;color:#7A7268">객실마다 침대 수가 달라서, 침대 기준으로 세트를 맞춰요.</p>
+
+        <div style="margin-top:24px;border-radius:20px;background:#FFFDFA;padding:6px 20px;box-shadow:0 6px 20px rgba(31,28,23,.05);flex:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid #F0EAE0">
+            <span><span style="display:block;font-size:16px;font-weight:700;letter-spacing:-0.025em;color:#1F1C17">싱글 침대</span><span style="display:block;font-size:12.5px;color:#9A9081;margin-top:3px">침구 + 타월 2·1 · 5,400원</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ single }}" on-change="{{ set.single }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 0">
+            <span><span style="display:block;font-size:16px;font-weight:700;letter-spacing:-0.025em;color:#1F1C17">더블 침대</span><span style="display:block;font-size:12.5px;color:#9A9081;margin-top:3px">침구 + 타월 4·2 · 8,800원</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ double }}" on-change="{{ set.double }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+        </div>
+
+        <div style="margin-top:20px;display:flex;gap:11px;align-items:flex-start;padding:0 2px;flex:none">
+          <span style="flex:none;margin-top:1px;display:flex">
+            <x-import component-from-global-scope="IcSystemNotice" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" shape="line_circle" size="18" dc-props="{{ accentIcon }}" hint-size="18px,18px"></x-import>
+          </span>
+          <p style="margin:0;font-size:13px;line-height:1.6;color:#7A7268">여유 1회전을 포함해 침대 수의 두 배로 준비해요. 다음 단계에서 조정할 수 있어요.</p>
+        </div>
+      </div>
+      <div style="flex:none;padding:16px 24px 30px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="primary" size="xl" full-width="{{ true }}" on-click="{{ go.step2 }}" hint-size="100%,56px">다음</x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ STEP 2 · 세트 확인 ============ -->
+    <sc-if value="{{ sStep2 }}">
+      <div style="height:54px;display:flex;align-items:center;padding:0 22px;flex:none">
+        <button onClick="{{ go.step1 }}" aria-label="뒤로" style="border:none;background:none;padding:0;cursor:pointer;display:flex;color:#1F1C17">
+          <x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="left" size="24" hint-size="24px,24px"></x-import>
+        </button>
+      </div>
+      <div style="padding:0 24px;flex:none"><div style="height:3px;border-radius:999px;background:#E4DED4;overflow:hidden"><div style="width:66%;height:100%;background:#2F4C3F"></div></div></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:28px 24px 0;display:flex;flex-direction:column">
+        <span style="font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.14em;color:#2F4C3F">STEP 2 / 3</span>
+        <h2 style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.025em;color:#1F1C17">이렇게 준비할게요</h2>
+        <p style="margin:11px 0 0;font-size:14px;line-height:1.6;color:#7A7268">침대 {{ bedTotal }}개에 필요한 수량 + <b style="color:#2F4C3F;font-weight:700">교체용 여유 1회전</b>이에요.</p>
+
+        <div style="margin-top:16px;border-radius:20px;background:#FFFDFA;padding:4px 20px;box-shadow:0 6px 20px rgba(31,28,23,.05);flex:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+            <span style="min-width:0"><span style="display:block;font-size:15px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">싱글 침구</span><span style="display:block;font-size:12px;color:#9A9081;margin-top:2px">사용 {{ needS }} · 여유 {{ spareS }} · 3,000원</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ setS }}" on-change="{{ set.setS }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+            <span style="min-width:0"><span style="display:block;font-size:15px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">더블 침구</span><span style="display:block;font-size:12px;color:#9A9081;margin-top:2px">사용 {{ needD }} · 여유 {{ spareD }} · 4,000원</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ setD }}" on-change="{{ set.setD }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+            <span style="min-width:0"><span style="display:block;font-size:15px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">바스타월</span><span style="display:block;font-size:12px;color:#9A9081;margin-top:2px">사용 {{ needBath }} · 여유 {{ spareBath }} · 900원</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ bath }}" on-change="{{ set.bath }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+            <span style="min-width:0"><span style="display:block;font-size:15px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">핸드타월</span><span style="display:block;font-size:12px;color:#9A9081;margin-top:2px">사용 {{ needHand }} · 여유 {{ spareHand }} · 600원</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ hand }}" on-change="{{ set.hand }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+        </div>
+
+        <div style="margin-top:13px;border-radius:14px;background:#E9EDE9;padding:13px 15px;display:flex;align-items:center;gap:10px;flex:none">
+          <span style="flex:none;display:flex">
+            <x-import component-from-global-scope="IcSystemNotice" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" shape="line_circle" size="18" dc-props="{{ accentIcon }}" hint-size="18px,18px"></x-import>
+          </span>
+          <p style="margin:0;font-size:12.5px;line-height:1.55;color:#4A5A50">한 세트 쓰는 동안 다른 세트를 깔 수 있게 <b style="color:#2F4C3F;font-weight:700">여유분 {{ spareSetTotal }}세트</b>를 넣었어요.</p>
+        </div>
+
+        <div style="margin-top:16px;display:flex;justify-content:space-between;align-items:baseline;padding:0 4px;flex:none">
+          <span style="font-size:14px;color:#7A7268">이용 금액</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:26px;color:#1F1C17">{{ setTotal }}</span>
+        </div>
+      </div>
+      <div style="flex:none;padding:16px 24px 30px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="primary" size="xl" full-width="{{ true }}" on-click="{{ go.step3 }}" hint-size="100%,56px">다음</x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ STEP 3 · 배송 정보 ============ -->
+    <sc-if value="{{ sStep3 }}">
+      <div style="height:54px;display:flex;align-items:center;padding:0 22px;flex:none">
+        <button onClick="{{ go.step2 }}" aria-label="뒤로" style="border:none;background:none;padding:0;cursor:pointer;display:flex;color:#1F1C17">
+          <x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="left" size="24" hint-size="24px,24px"></x-import>
+        </button>
+      </div>
+      <div style="padding:0 24px;flex:none"><div style="height:3px;border-radius:999px;background:#E4DED4;overflow:hidden"><div style="width:100%;height:100%;background:#2F4C3F"></div></div></div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:30px 24px 0;display:flex;flex-direction:column">
+        <span style="font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.14em;color:#2F4C3F">STEP 3 / 3</span>
+        <h2 style="margin:12px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:32px;line-height:1.2;letter-spacing:-0.025em;color:#1F1C17">언제 받으실까요?</h2>
+
+        <div style="margin-top:22px;border-radius:18px;background:#FFFDFA;padding:17px 19px;box-shadow:0 6px 20px rgba(31,28,23,.05);flex:none">
+          <span style="font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.13em;color:#9A9081">받는 곳</span>
+          <div style="margin-top:8px;font-size:15px;font-weight:700;color:#1F1C17">성수 스테이</div>
+          <div style="font-size:13.5px;color:#7A7268;margin-top:4px;line-height:1.5">서울 성동구 연무장길 45, 3층</div>
+        </div>
+
+        <div style="margin-top:22px;display:flex;gap:8px;flex:none">
+          <button onClick="{{ go.day1 }}" style="flex:1;height:74px;border-radius:16px;border:{{ dayB1 }};background:{{ dayG1 }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer"><span style="font-size:12px;color:#7A7268">내일</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">9/4</span></button>
+          <button onClick="{{ go.day2 }}" style="flex:1;height:74px;border-radius:16px;border:{{ dayB2 }};background:{{ dayG2 }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer"><span style="font-size:12px;color:#7A7268">토</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">9/5</span></button>
+          <button onClick="{{ go.day3 }}" style="flex:1;height:74px;border-radius:16px;border:{{ dayB3 }};background:{{ dayG3 }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer"><span style="font-size:12px;color:#7A7268">일</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">9/6</span></button>
+        </div>
+        <p style="margin:12px 0 0;font-size:12.5px;color:#7A7268;line-height:1.6;flex:none">고른 날 아침 7시까지 문 앞에 두고 갑니다.</p>
+
+        <div style="margin-top:22px;border-radius:18px;background:#FFFDFA;padding:18px 19px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 20px rgba(31,28,23,.05);flex:none">
+          <div style="display:flex;justify-content:space-between"><span style="font-size:13.5px;color:#7A7268">이용 금액</span><span style="font-size:14px;font-weight:700;color:#1F1C17">{{ setTotal }}</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="font-size:13.5px;color:#7A7268">배송비</span><span style="font-size:14px;font-weight:700;color:#1F1C17">0원</span></div>
+          <div style="height:1px;background:#F0EAE0"></div>
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:13.5px;font-weight:700;color:#1F1C17">받는 날 결제</span><span style="font-family:'Instrument Serif',serif;font-size:24px;color:#1F1C17">{{ setTotal }}</span></div>
+        </div>
+      </div>
+      <div style="flex:none;padding:16px 24px 30px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="primary" size="xl" full-width="{{ true }}" on-click="{{ go.firstDone }}" hint-size="100%,56px">렌탈 신청하기</x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ 첫 이용 완료 ============ -->
+    <sc-if value="{{ sFirstDone }}">
+      <div style="flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;text-align:center">
+        <div style="width:68px;height:68px;border-radius:50%;background:#2F4C3F;display:flex;align-items:center;justify-content:center">
+          <x-import component-from-global-scope="IcSystemCheckMark" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" shape="line" size="26" dc-props="{{ checkIcon }}" hint-size="26px,26px"></x-import>
+        </div>
+        <h2 style="margin:26px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:32px;letter-spacing:-0.025em;color:#1F1C17;line-height:1.25">준비할게요</h2>
+        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#7A7268">{{ dayLabel }} 아침 7시까지<br>문 앞에 두고 갑니다.</p>
+        <div style="margin-top:28px;width:100%;border-radius:20px;background:#FFFDFA;padding:6px 20px;box-shadow:0 6px 20px rgba(31,28,23,.05);text-align:left">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #F0EAE0"><span style="font-size:14px;font-weight:600;color:#1F1C17">싱글 침구</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">{{ setS }}</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #F0EAE0"><span style="font-size:14px;font-weight:600;color:#1F1C17">더블 침구</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">{{ setD }}</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #F0EAE0"><span style="font-size:14px;font-weight:600;color:#1F1C17">바스타월</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">{{ bath }}</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:13px 0"><span style="font-size:14px;font-weight:600;color:#1F1C17">핸드타월</span><span style="font-family:'Instrument Serif',serif;font-size:20px;color:#1F1C17">{{ hand }}</span></div>
+        </div>
+      </div>
+      <div style="flex:none;padding:16px 24px 30px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="outline" size="xl" full-width="{{ true }}" on-click="{{ go.live }}" hint-size="100%,56px">홈으로</x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ 이용 중 홈 (2a) ============ -->
+    <sc-if value="{{ sLive }}">
+      <div style="height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;flex:none">
+        <div style="width:122px;height:25px;overflow:hidden;flex:none">
+          <div style="width:500px;height:98.5px;transform:scale(.244);transform-origin:0 0">
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.LogoLaundryGo" property1="default" hint-size="500px,98px"></x-import>
+          </div>
+        </div>
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="#1F1C17" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"></circle><path d="M4.8 20c1.1-3.5 3.9-5.3 7.2-5.3s6.1 1.8 7.2 5.3"></path></svg>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:12px 24px 0;display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:7px;flex:none">
+          <span style="font-size:15px;font-weight:700;letter-spacing:-0.025em;color:#1F1C17">성수 스테이</span>
+          <span style="font-size:14px;color:#C0B7A8">·</span>
+          <span style="font-size:14px;color:#7A7268">침대 {{ bedTotal }}</span>
+        </div>
+
+        <div style="margin-top:14px;background:#2A2621;border-radius:26px;padding:22px 22px 18px;flex:none">
+          <div style="display:flex;align-items:center;gap:9px">
+            <span style="font-family:'Hanken Grotesk',sans-serif;font-size:10.5px;font-weight:700;letter-spacing:.15em;color:#8C8172">지금 숙소에 있는 것</span>
+            <div style="flex:1;height:1px;background:#3B352D"></div>
+          </div>
+          <div style="margin-top:12px;display:flex;flex-direction:column">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;padding:8px 0;border-bottom:1px solid #38322A"><span style="font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#EDE7DC">싱글 침구</span><span style="display:flex;align-items:baseline;gap:5px"><span style="font-family:'Instrument Serif',serif;font-size:28px;color:#FFFDFA">{{ stockS }}</span><span style="font-size:11.5px;color:#8C8172">세트</span></span></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;padding:8px 0;border-bottom:1px solid #38322A"><span style="font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#EDE7DC">더블 침구</span><span style="display:flex;align-items:baseline;gap:5px"><span style="font-family:'Instrument Serif',serif;font-size:28px;color:#FFFDFA">{{ stockD }}</span><span style="font-size:11.5px;color:#8C8172">세트</span></span></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;padding:8px 0;border-bottom:1px solid #38322A"><span style="font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#EDE7DC">바스타월</span><span style="display:flex;align-items:baseline;gap:5px"><span style="font-family:'Instrument Serif',serif;font-size:28px;color:#FFFDFA">{{ stockBath }}</span><span style="font-size:11.5px;color:#8C8172">장</span></span></div>
+            <div style="display:flex;align-items:baseline;justify-content:space-between;padding:8px 0"><span style="font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#EDE7DC">핸드타월</span><span style="display:flex;align-items:baseline;gap:5px"><span style="font-family:'Instrument Serif',serif;font-size:28px;color:#FFFDFA">{{ stockHand }}</span><span style="font-size:11.5px;color:#8C8172">장</span></span></div>
+          </div>
+          <div style="margin-top:14px;padding-top:13px;border-top:1px solid #38322A;display:flex;align-items:center;gap:8px">
+            <div style="width:6px;height:6px;border-radius:50%;background:#7FB89C;flex:none"></div>
+            <span style="font-size:12px;color:#A39889">{{ statusLine }}</span>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:none">
+          <button onClick="{{ go.recv }}" style="height:150px;box-sizing:border-box;border-radius:22px;border:none;background:#FFFDFA;box-shadow:0 6px 20px rgba(31,28,23,.06);padding:19px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;cursor:pointer" style-active="transform:scale(.97)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2F4C3F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M8 12l4 4 4-4"></path><path d="M4 15v3.5A1.5 1.5 0 005.5 20h13a1.5 1.5 0 001.5-1.5V15"></path></svg>
+            <span><span style="display:block;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:24px;letter-spacing:-0.02em;color:#1F1C17">받기</span><span style="display:block;font-size:12.5px;color:#7A7268;margin-top:3px">새 것으로 채우기</span></span>
+          </button>
+          <button onClick="{{ go.ret }}" style="height:150px;box-sizing:border-box;border-radius:22px;border:none;background:#FFFDFA;box-shadow:0 6px 20px rgba(31,28,23,.06);padding:19px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;cursor:pointer" style-active="transform:scale(.97)">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#2F4C3F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M8 8l4-4 4 4"></path><path d="M4 15v3.5A1.5 1.5 0 005.5 20h13a1.5 1.5 0 001.5-1.5V15"></path></svg>
+            <span><span style="display:block;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:24px;letter-spacing:-0.02em;color:#1F1C17">내놓기</span><span style="display:block;font-size:12.5px;color:#7A7268;margin-top:3px">다 쓴 것 반납</span></span>
+          </button>
+        </div>
+      </div>
+      <div style="flex:none;border-top:1px solid #E4DED4">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.BottomNav" items="{{ navItems }}" value="home" hint-size="100%,76px"></x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ 받기 ============ -->
+    <sc-if value="{{ sRecv }}">
+      <div style="height:54px;display:flex;align-items:center;gap:13px;padding:0 22px;flex:none">
+        <button onClick="{{ go.live }}" aria-label="뒤로" style="border:none;background:none;padding:0;cursor:pointer;display:flex;color:#1F1C17">
+          <x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="left" size="24" hint-size="24px,24px"></x-import>
+        </button>
+        <span style="font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;letter-spacing:-0.02em;color:#1F1C17">받기</span>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 24px 0;display:flex;flex-direction:column">
+        <h2 style="margin:0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:29px;line-height:1.24;letter-spacing:-0.025em;color:#1F1C17">늘 받으시던 구성<br>그대로 보낼게요</h2>
+        <p style="margin:11px 0 0;font-size:13.5px;line-height:1.6;color:#7A7268">더 필요하면 수량만 올리세요.</p>
+
+        <div style="margin-top:16px;border-radius:20px;background:#FFFDFA;padding:2px 18px;box-shadow:0 6px 20px rgba(31,28,23,.05);flex:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+            <span style="min-width:0"><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">싱글 침구</span><span style="display:flex;align-items:center;gap:5px;margin-top:3px"><span style="font-size:11.5px;color:#9A9081">보유 {{ stockS }}</span><span style="display:flex;color:#9A9081"><x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="right" size="18" hint-size="18px,18px"></x-import></span><span style="font-size:11.5px;font-weight:700;color:#2F4C3F">{{ afterS }}</span></span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ recvS }}" on-change="{{ set.recvS }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+            <span style="min-width:0"><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">더블 침구</span><span style="display:flex;align-items:center;gap:5px;margin-top:3px"><span style="font-size:11.5px;color:#9A9081">보유 {{ stockD }}</span><span style="display:flex;color:#9A9081"><x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="right" size="18" hint-size="18px,18px"></x-import></span><span style="font-size:11.5px;font-weight:700;color:#2F4C3F">{{ afterD }}</span></span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ recvD }}" on-change="{{ set.recvD }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+            <span style="min-width:0"><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">바스타월</span><span style="display:flex;align-items:center;gap:5px;margin-top:3px"><span style="font-size:11.5px;color:#9A9081">보유 {{ stockBath }}</span><span style="display:flex;color:#9A9081"><x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="right" size="18" hint-size="18px,18px"></x-import></span><span style="font-size:11.5px;font-weight:700;color:#2F4C3F">{{ afterBath }}</span></span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ recvBath }}" on-change="{{ set.recvBath }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+            <span style="min-width:0"><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">핸드타월</span><span style="display:flex;align-items:center;gap:5px;margin-top:3px"><span style="font-size:11.5px;color:#9A9081">보유 {{ stockHand }}</span><span style="display:flex;color:#9A9081"><x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="right" size="18" hint-size="18px,18px"></x-import></span><span style="font-size:11.5px;font-weight:700;color:#2F4C3F">{{ afterHand }}</span></span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ recvHand }}" on-change="{{ set.recvHand }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+        </div>
+
+        <div style="margin-top:14px;display:flex;justify-content:space-between;align-items:baseline;padding:0 4px;flex:none">
+          <span style="font-size:13.5px;color:#7A7268">받는 날 결제</span>
+          <span style="font-family:'Instrument Serif',serif;font-size:25px;color:#1F1C17">{{ recvTotal }}</span>
+        </div>
+      </div>
+      <div style="flex:none;padding:14px 24px 30px;display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:7px;justify-content:center"><div style="width:6px;height:6px;border-radius:50%;background:#2F4C3F"></div><span style="font-size:12px;color:#7A7268">9/4(금) 아침 7시까지 도착</span></div>
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="primary" size="xl" full-width="{{ true }}" on-click="{{ go.recvDone }}" hint-size="100%,56px">보내주세요</x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ 내놓기 ============ -->
+    <sc-if value="{{ sRet }}">
+      <div style="height:54px;display:flex;align-items:center;gap:13px;padding:0 22px;flex:none">
+        <button onClick="{{ go.live }}" aria-label="뒤로" style="border:none;background:none;padding:0;cursor:pointer;display:flex;color:#1F1C17">
+          <x-import component-from-global-scope="IcSystemChevron" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" direction="left" size="24" hint-size="24px,24px"></x-import>
+        </button>
+        <span style="font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:21px;letter-spacing:-0.02em;color:#1F1C17">내놓기</span>
+      </div>
+      <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 24px 0;display:flex;flex-direction:column">
+        <h2 style="margin:0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:29px;line-height:1.24;letter-spacing:-0.025em;color:#1F1C17">다 쓰신 것만<br>문 앞에 내놓아 주세요</h2>
+        <p style="margin:11px 0 0;font-size:13.5px;line-height:1.6;color:#7A7268">전부 내놓는 게 기본이에요. 남겨둘 게 있으면 수량만 줄이세요.</p>
+
+        <div style="margin-top:16px;border-radius:20px;background:#FFFDFA;padding:2px 18px;box-shadow:0 6px 20px rgba(31,28,23,.05);flex:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+            <span><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">싱글 침구</span><span style="display:block;font-size:11.5px;color:#9A9081;margin-top:3px">보유 {{ stockS }}</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ retS }}" on-change="{{ set.retS }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+            <span><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">더블 침구</span><span style="display:block;font-size:11.5px;color:#9A9081;margin-top:3px">보유 {{ stockD }}</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ retD }}" on-change="{{ set.retD }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #F0EAE0">
+            <span><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">바스타월</span><span style="display:block;font-size:11.5px;color:#9A9081;margin-top:3px">보유 {{ stockBath }}</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ retBath }}" on-change="{{ set.retBath }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+            <span><span style="display:block;font-size:14.5px;font-weight:600;letter-spacing:-0.02em;color:#1F1C17">핸드타월</span><span style="display:block;font-size:11.5px;color:#9A9081;margin-top:3px">보유 {{ stockHand }}</span></span>
+            <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Stepper" value="{{ retHand }}" on-change="{{ set.retHand }}" min="{{ 0 }}" hint-size="112px,34px"></x-import>
+          </div>
+        </div>
+
+        <div style="margin-top:13px;border-radius:18px;background:#FFFDFA;box-shadow:0 6px 20px rgba(31,28,23,.05);padding:15px 18px;display:flex;align-items:center;gap:14px;flex:none">
+          <span style="flex:1;min-width:0"><span style="display:block;font-size:14.5px;font-weight:700;letter-spacing:-0.02em;color:#1F1C17">개인 세탁물도 같이 맡기기</span><span style="display:block;font-size:12.5px;color:#7A7268;margin-top:3px">같은 자리에 두시면 함께 가져가요</span></span>
+          <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Switch" checked="{{ wash }}" on-change="{{ set.wash }}" hint-size="52px,30px"></x-import>
+        </div>
+
+        <div style="margin-top:13px;display:flex;align-items:center;gap:10px;flex:none">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#B2A897" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex:none"><path d="M4 20V9l8-5 8 5v11"></path><path d="M9.5 20v-6h5v6"></path></svg>
+          <span style="font-size:13px;line-height:1.5;color:#7A7268">오늘 밤 10시 이후 문 앞에서 가져가요</span>
+        </div>
+      </div>
+      <div style="flex:none;padding:16px 24px 30px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="primary" size="xl" full-width="{{ true }}" on-click="{{ go.retDone }}" hint-size="100%,56px">문 앞에 뒀어요</x-import>
+      </div>
+    </sc-if>
+
+    <!-- ============ 받기 / 내놓기 완료 ============ -->
+    <sc-if value="{{ sDone }}">
+      <div style="flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 32px;text-align:center">
+        <div style="width:68px;height:68px;border-radius:50%;background:#2F4C3F;display:flex;align-items:center;justify-content:center">
+          <x-import component-from-global-scope="IcSystemCheckMark" from="_ds/laundrygo-design-system-0f857c77-f947-44e2-827d-f1f503927841/assets/icons/Components.bundle.js" shape="line" size="26" dc-props="{{ checkIcon }}" hint-size="26px,26px"></x-import>
+        </div>
+        <h2 style="margin:26px 0 0;font-family:'Instrument Serif','Noto Serif KR',serif;font-weight:500;font-size:32px;letter-spacing:-0.025em;color:#1F1C17;line-height:1.25">{{ doneTitle }}</h2>
+        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.7;color:#7A7268">{{ doneBody }}</p>
+      </div>
+      <div style="flex:none;padding:16px 24px 30px">
+        <x-import component-from-global-scope="LaundrygoDesignSystem_0f857c.Button" variant="outline" size="xl" full-width="{{ true }}" on-click="{{ go.live }}" hint-size="100%,56px">홈으로</x-import>
+      </div>
+    </sc-if>
+
+  </div>
+
+  <p style="margin:0;font-size:12.5px;color:#9A9081;text-align:center;max-width:390px;line-height:1.6">첫 이용은 홈 → 침대 수 → 세트 확인 → 배송일 3스텝, 이용 중에는 재고 확인 후 받기 / 내놓기.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:460,&quot;height&quot;:1100}}">
+const won = (n) => n.toLocaleString("ko-KR") + "원";
+const P = { setS: 3000, setD: 4000, bath: 900, hand: 600 };
+
+class Component extends DCLogic {
+  state = {
+    screen: "home", single: 2, double: 1,
+    setS: 4, setD: 2, bath: 12, hand: 6, day: 1,
+    stockS: 4, stockD: 2, stockBath: 12, stockHand: 6,
+    recvS: 4, recvD: 2, recvBath: 12, recvHand: 6,
+    retS: 4, retD: 2, retBath: 10, retHand: 6,
+    wash: false, doneKind: "recv", started: false
+  };
+
+  put = (patch) => this.setState(patch);
+  field = (key) => (v) => this.setState({ [key]: Math.max(0, v) });
+
+  syncSet = () => this.setState((s) => {
+    const beds = s.single + s.double;
+    return { screen: "step2", setS: s.single * 2, setD: s.double * 2, bath: beds * 4, hand: beds * 2 };
+  });
+
+  renderVals() {
+    const s = this.state;
+    const dayOn = (v) => (v ? "2px solid #2F4C3F" : "1.4px solid #E4DED4");
+    const dayBg = (v) => (v ? "#FFFDFA" : "transparent");
+    const setTotal = s.setS * P.setS + s.setD * P.setD + s.bath * P.bath + s.hand * P.hand;
+    const recvTotal = s.recvS * P.setS + s.recvD * P.setD + s.recvBath * P.bath + s.recvHand * P.hand;
+    const liveish = ["live", "recv", "ret", "done"].includes(s.screen);
+    const beds = s.single + s.double;
+    const needS = s.single, needD = s.double, needBath = beds * 2, needHand = beds;
+
+    const go = {
+      home: () => this.put({ screen: "home" }),
+      first: () => this.put({ screen: "home" }),
+      step1: () => this.put({ screen: "step1" }),
+      step2: this.syncSet,
+      step3: () => this.put({ screen: "step3" }),
+      firstDone: () => this.put({ screen: "firstDone" }),
+      live: () => this.setState((p) => ({
+        screen: "live", started: true,
+        stockS: p.started ? p.stockS : p.setS, stockD: p.started ? p.stockD : p.setD,
+        stockBath: p.started ? p.stockBath : p.bath, stockHand: p.started ? p.stockHand : p.hand,
+        recvS: p.started ? p.recvS : p.setS, recvD: p.started ? p.recvD : p.setD,
+        recvBath: p.started ? p.recvBath : p.bath, recvHand: p.started ? p.recvHand : p.hand,
+        retS: p.started ? p.retS : p.setS, retD: p.started ? p.retD : p.setD,
+        retBath: p.started ? p.retBath : p.bath, retHand: p.started ? p.retHand : p.hand
+      })),
+      recv: () => this.put({ screen: "recv" }),
+      ret: () => this.put({ screen: "ret" }),
+      recvDone: () => this.setState((p) => ({
+        screen: "done", doneKind: "recv",
+        stockS: p.stockS + p.recvS, stockD: p.stockD + p.recvD,
+        stockBath: p.stockBath + p.recvBath, stockHand: p.stockHand + p.recvHand
+      })),
+      retDone: () => this.setState((p) => ({
+        screen: "done", doneKind: "ret",
+        stockS: Math.max(0, p.stockS - p.retS), stockD: Math.max(0, p.stockD - p.retD),
+        stockBath: Math.max(0, p.stockBath - p.retBath), stockHand: Math.max(0, p.stockHand - p.retHand)
+      })),
+      day1: () => this.put({ day: 1 }), day2: () => this.put({ day: 2 }), day3: () => this.put({ day: 3 })
+    };
+
+    const set = {
+      single: this.field("single"), double: this.field("double"),
+      setS: this.field("setS"), setD: this.field("setD"),
+      bath: this.field("bath"), hand: this.field("hand"),
+      recvS: this.field("recvS"), recvD: this.field("recvD"),
+      recvBath: this.field("recvBath"), recvHand: this.field("recvHand"),
+      retS: this.field("retS"), retD: this.field("retD"),
+      retBath: this.field("retBath"), retHand: this.field("retHand"),
+      wash: (v) => this.put({ wash: v })
+    };
+
+    return {
+      go, set,
+      accentIcon: { style: { color: "#2F4C3F" } },
+      checkIcon: { style: { color: "#F3EFE8", transform: "scale(1.3)" } },
+      navItems: [
+        { value: "home", label: "홈" },
+        { value: "list", label: "이용내역" },
+        { value: "my", label: "MY" }
+      ],
+      sHome: s.screen === "home", sStep1: s.screen === "step1", sStep2: s.screen === "step2",
+      sStep3: s.screen === "step3", sFirstDone: s.screen === "firstDone",
+      sLive: s.screen === "live", sRecv: s.screen === "recv", sRet: s.screen === "ret",
+      sDone: s.screen === "done",
+      tabFirstVariant: liveish ? "ghost" : "primary",
+      tabLiveVariant: liveish ? "primary" : "ghost",
+      single: s.single, double: s.double, bedTotal: s.single + s.double,
+      setS: s.setS, setD: s.setD, bath: s.bath, hand: s.hand, setTotal: won(setTotal),
+      needS: needS, spareS: Math.max(0, s.setS - needS),
+      needD: needD, spareD: Math.max(0, s.setD - needD),
+      needBath: needBath, spareBath: Math.max(0, s.bath - needBath),
+      needHand: needHand, spareHand: Math.max(0, s.hand - needHand),
+      spareSetTotal: Math.max(0, s.setS - needS) + Math.max(0, s.setD - needD),
+      dayB1: dayOn(s.day === 1), dayB2: dayOn(s.day === 2), dayB3: dayOn(s.day === 3),
+      dayG1: dayBg(s.day === 1), dayG2: dayBg(s.day === 2), dayG3: dayBg(s.day === 3),
+      dayLabel: { 1: "9/4(금)", 2: "9/5(토)", 3: "9/6(일)" }[s.day],
+      stockS: s.stockS, stockD: s.stockD, stockBath: s.stockBath, stockHand: s.stockHand,
+      recvS: s.recvS, recvD: s.recvD, recvBath: s.recvBath, recvHand: s.recvHand,
+      afterS: s.stockS + s.recvS, afterD: s.stockD + s.recvD,
+      afterBath: s.stockBath + s.recvBath, afterHand: s.stockHand + s.recvHand,
+      retS: s.retS, retD: s.retD, retBath: s.retBath, retHand: s.retHand,
+      wash: s.wash, recvTotal: won(recvTotal),
+      statusLine: "8/21 받음 · 12일째 사용 중",
+      doneTitle: s.doneKind === "recv" ? "보낼게요" : "가지러 갈게요",
+      doneBody: s.doneKind === "recv"
+        ? "9/4(금) 아침 7시까지 문 앞에 두고 갑니다."
+        : "오늘 밤 10시 이후 문 앞에서 가져갈게요."
+    };
+  }
+}
+</script>
+</body>
+</html>
