@@ -401,13 +401,13 @@ function render(i){
   var H=[];
   H.push(['01 · 고객','평균보다 '+fy(b.ii)+' 많이 맡깁니다','1인당 세탁 의류 수가 전체 고객 평균의 '+fy(b.ii)+', 세탁 이용일은 '+fy(b.di)+'입니다.'+(pk?' '+MON[pk]+'에 가장 많이 맡깁니다.':'')]);
   H.push(['02 · 사는 곳',RG[top.j].replace(/ \(.*\)/,'')+' '+fy(top.l),keys.length?('시·군·구로는 '+t3.join('·')+' 순으로 몰려 있고'+(b.dong.length?', 동 단위 1위는 '+short(b.dong[0][0])+'('+fy(b.dong[0][1])+')입니다.':'입니다.')):'']);
-  if(peers.length) H.push(['03 · 경쟁',(function(a){return a.slice(0,-1).concat([j(a[a.length-1],'과','와')]).join('·');})(peers.slice(0,2).map(function(p){return p[0];}))+' 겹칩니다','맡긴 옷의 양이 비슷한 고객과 비교해도 '+peers[0][0]+' 보유율이 '+fx(peers[0][3])+'입니다.'+' '+peers[0][0]+' 고객의 '+pct(peers[0][1]/peers[0][2])+'는 이미 이 브랜드 고객입니다.']);
+  if(peers.length) H.push(['03 · 경쟁',(function(a){return a.slice(0,-1).concat([j(a[a.length-1],'과','와')]).join('·');})(peers.slice(0,2).map(function(p){return p[0];}))+' 고객층이 겹칩니다',b.name+' 고객은 세탁량이 비슷한 다른 고객보다 '+peers[0][0]+' 옷을 맡길 가능성이 '+fx(peers[0][3])+' 높습니다. '+peers[0][0]+' 고객의 '+pct(peers[0][1]/peers[0][2])+'는 '+b.name+' 옷도 함께 맡겼습니다.']);
   var bw=subs.filter(function(s){return s[3]===1;}).sort(function(a,c){return c[2]-a[2];})[0]; if(bw) wins=[bw[0]].concat(wins.filter(function(x){return x!==bw[0];}));
   if(subs.length) H.push(['04 · 상품',(wins.length?wins[0]+' 강점':'')+(wins.length&&gaps.length?', ':'')+(gaps.length?gaps[0][0]+' 공백':''),(wins.length?'고객 옷장의 '+wins[0]+' 중 이 브랜드가 1위입니다. ':'')+(gaps.length?j(gaps[0][0],'은','는')+' '+gaps[0][4]+'('+gaps[0][5]+'%)에서 더 많이 삽니다.':'')]);
   $('hl').innerHTML=H.map(function(x){return '<div class="sum"><span class="n">'+x[0]+'</span><h3>'+esc(x[1])+'</h3><p>'+esc(x[2])+'</p></div>';}).join('');
   // ===== next
   var N=[];
-  if(peers.length) N.push(['전환 타깃',peers.slice(0,2).map(function(p){return p[0];}).join(' · '),'맡긴 양이 비슷한 고객과 비교해도 보유율이 '+peers.slice(0,2).map(function(p){return fx(p[3]);}).join('·')+'입니다.'+' '+peers[0][0]+' 고객의 '+pct(peers[0][1]/peers[0][2])+'는 이미 이 브랜드 고객입니다. (03·04)','고객이 가장 많이 겹치는 브랜드입니다. 이 브랜드 보유 고객에게 시즌 룩과 신상품을 우선 알립니다.','chip']);
+  if(peers.length) N.push(['전환 타깃',peers.slice(0,2).map(function(p){return p[0];}).join(' · '),b.name+' 고객이 세탁량이 비슷한 다른 고객보다 함께 입을 가능성이 '+peers.slice(0,2).map(function(p){return p[0]+' '+fx(p[3]);}).join(', ')+' 높습니다. '+peers[0][0]+' 고객의 '+pct(peers[0][1]/peers[0][2])+'는 '+b.name+' 옷도 함께 맡겼습니다. (03·04)','고객이 가장 많이 겹치는 브랜드입니다. 이 브랜드 보유 고객에게 시즌 룩과 신상품을 우선 알립니다.','chip']);
   var gap=gaps.slice().sort(function(a,c){return c[1]-a[1];})[0];
   if(gap) N.push(['품목 공백',gap[0],'이 브랜드 고객이 맡긴 '+gap[0]+' '+gap[1].toLocaleString()+'벌 중 이 브랜드는 '+gap[2]+'%'+(gap[3]?'('+gap[3]+'위)':'')+'이고, '+j(gap[4],'이','가')+' '+gap[5]+'%로 1위입니다. (05-②)','이미 확보한 고객이 '+j(gap[0],'을','를')+' 다른 브랜드에서 사고 있습니다. 기존 고객에게 '+gap[0]+' 라인을 먼저 알립니다.','chip w']);
   var win=subs.filter(function(s){return s[3]===1;}).sort(function(a,c){return c[2]-a[2];})[0];
