@@ -124,9 +124,18 @@ details.more .tbl{border:0;border-top:1px solid var(--line);border-radius:0 0 8p
 .maptip{position:absolute;pointer-events:none;background:var(--fg);color:var(--surface);font-size:12.5px;font-weight:600;line-height:1.4;padding:6px 10px;border-radius:6px;white-space:nowrap;transform:translate(-50%,calc(-100% - 10px));opacity:0;transition:opacity .1s;z-index:3}
 .maptip.on{opacity:1}
 </style>
+<style>
+.langsw{display:flex;justify-content:flex-end;margin:0 0 14px}
+.langsw .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;background:var(--surface);padding:3px;gap:2px}
+.langsw a{font-size:13px;font-weight:600;line-height:1;text-decoration:none;color:var(--muted);padding:7px 14px;border-radius:999px}
+.langsw a:hover{color:var(--fg)}
+.langsw a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.langsw a[aria-current="page"]{background:var(--accent);color:var(--surface)}
+</style>
 </head>
 <body>
 <header class="top"><div class="wrap">
+  <nav class="langsw" aria-label="Language"><div class="seg"><a href="amazingcre_golf_insight.html" lang="ko" aria-current="page">한국어</a><a href="amazingcre_golf_insight_en.html" lang="en">English</a></div></nav>
   <div class="eyebrow">LAUNDRYGO × AMAZINGCRE · GOLF WARDROBE INSIGHT</div>
   <h1>세탁 데이터로 본<br>골프 고객의 옷장</h1>
   <p class="lede">런드리고 공장에 실제로 들어온 옷을 AI가 촬영·인식한 결과를 고객 단위로 묶어, 골프 고객이 어떤 브랜드를 함께 입고 어떤 품목을 어디서 사는지 정리했습니다. 설문이 아니라 실제 입고 세탁한 옷 기준입니다.</p>
